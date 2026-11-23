@@ -115,11 +115,11 @@ window.SITE_DATA = {
       "name": "活動",
       "posts": [
         {
-          "title": "活動標題 1",
-          "sub": "活動小標題，簡短描述活動內容與時間",
-          "date": "",
-          "url": "",
-          "img": ""
+          "title": "生化模式速通挑戰",
+          "sub": "四人組隊，挑戰限時。上傳你的通關時間。分享至社群贏得更多獎勵",
+          "date": "2026.11.21",
+          "url": "https://million-run.online/static/#board",
+          "img": "https://cdn.discordapp.com/attachments/1230876560324821092/1573673165966680095/TW.png?ex=6b04d718&is=6b038598&hm=8c6a27951873d935f388aadb6dda6f33aef8bbccc3f70b82a67f3341f0842af1&"
         },
         {
           "title": "活動標題 2",
