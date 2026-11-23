@@ -220,6 +220,12 @@ nav.top a[aria-current=page]{color:#fff}
 .card .meta{margin-top:auto;padding-top:10px;display:flex;justify-content:space-between;align-items:center;font-family:var(--fd);font-size:13px;color:var(--txt3);letter-spacing:.06em;border-top:1px solid var(--line)}
 .card .meta i{font-style:normal;color:var(--or2);transition:transform .2s}
 .card:hover .meta i{transform:translateX(3px)}
+/* 卡片點擊動作：放大圖片 / 不可點擊 */
+button.card{width:100%;padding:0;font:inherit;color:inherit;text-align:left;cursor:zoom-in}
+.card.static{cursor:default}
+.card.static:hover{border-color:var(--line2);transform:none}
+.card.static:hover .thumb svg,.card.static:hover .thumb img{transform:none}
+.card .meta:empty,.card .meta:has(> span:empty:only-child){display:none}
 .loadmore{margin-top:28px;display:flex;flex-direction:column;align-items:center;gap:8px}
 .loadmore small{color:var(--txt3);font-family:var(--fd);letter-spacing:.08em}
 .empty{grid-column:1/-1;padding:48px;text-align:center;color:var(--txt3);border:1px dashed var(--line2)}
@@ -886,18 +892,32 @@ nav.top a.brk::before,nav.top a.brk::after{display:none}
   function renderTabs(){
     tabs.innerHTML = CATS.map(c=>`<button role="tab" aria-selected="${c===cat}" data-c="${esc(c)}">${esc(c)}<sup>${(POSTS[c]||[]).length}</sup></button>`).join('');
   }
+  // 卡片點擊動作：link 開啟連結（預設）、image 放大圖片、none 不可點擊
+  const cardAct = p => p.action==='image' && (p.zoom||p.img) ? 'image' : p.action==='none' ? 'none' : 'link';
+  const zoomList = () => (POSTS[cat]||[]).filter(p=>cardAct(p)==='image').map(p=>({img:p.zoom||p.img, caption:p.title}));
   function renderCards(){
     const all=POSTS[cat]||[], items=all.slice(0,shown);
-    cards.innerHTML = items.length ? items.map((p,i)=>`
-      <a class="card${i<animFrom?' old':''}" style="--i:${Math.max(0,i-animFrom)}" href="${esc(p.url)}" ${isTodo(p.url)?'data-todo':''}>
+    cards.innerHTML = items.length ? items.map((p,i)=>{
+      const act=cardAct(p), cta=p.cta===undefined?'READ':p.cta;   // 舊資料沒有 cta 欄位時沿用 READ；空字串則不顯示
+      const cls=`card${i<animFrom?' old':''}${act==='none'?' static':''}`, sty=`style="--i:${Math.max(0,i-animFrom)}"`;
+      const inner=`
         <div class="thumb">${p.img?`<img src="${esc(p.img)}" alt="" loading="lazy">`:ph(i)+'<span class="ph">16:9</span>'}<span class="cat">${esc(cat)}</span></div>
-        <div class="body"><h3>${esc(p.title)}</h3><p>${esc(p.sub)}</p><div class="meta"><span>${esc(p.date||'')}</span><i>READ ›</i></div></div>
-      </a>`).join('') : '<div class="empty">此分類目前沒有內容</div>';
+        <div class="body"><h3>${esc(p.title)}</h3><p>${esc(p.sub)}</p><div class="meta"><span>${esc(p.date||'')}</span>${cta?`<i>${esc(cta)} ›</i>`:''}</div></div>`;
+      if(act==='image') return `<button type="button" class="${cls}" ${sty} data-zoom="${i}" aria-label="放大圖片：${esc(p.title)}">${inner}</button>`;
+      if(act==='none') return `<div class="${cls}" ${sty}>${inner}</div>`;
+      const ext=/^https?:/.test(p.url||'');
+      return `<a class="${cls}" ${sty} href="${esc(p.url)}" ${isTodo(p.url)?'data-todo':''} ${ext?'target="_blank" rel="noopener noreferrer"':''}>${inner}</a>`;
+    }).join('') : '<div class="empty">此分類目前沒有內容</div>';
     moreBtn.hidden = shown>=all.length;
     count.textContent = all.length ? `${items.length} / ${all.length}` : '';
   }
   function setCat(c){ cat=c; shown=STEP; animFrom=0; renderTabs(); renderCards(); }
   tabs.addEventListener('click',e=>{ const b=e.target.closest('button'); if(b) setCat(b.dataset.c); });
+  cards.addEventListener('click',e=>{
+    const b=e.target.closest('[data-zoom]'); if(!b) return;
+    const p=(POSTS[cat]||[])[+b.dataset.zoom], list=zoomList();
+    openLB(list, Math.max(0, list.findIndex(x=>x.img===(p.zoom||p.img))));
+  });
   tabs.addEventListener('keydown',e=>{
     if(!['ArrowLeft','ArrowRight'].includes(e.key)) return;
     const i=(CATS.indexOf(cat)+(e.key==='ArrowRight'?1:-1)+CATS.length)%CATS.length;

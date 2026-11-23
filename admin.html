@@ -194,7 +194,9 @@ input.bad{border-color:var(--red)}
   const SCHEMA = {
     quick:    [{k:'title',l:'名稱'},{k:'short',l:'手機短名稱',h:'建議 4 字內'},{k:'sub',l:'說明',t:'area'},{k:'icon',l:'圖示',t:'icon'},{k:'url',l:'連結',t:'link',full:1},{k:'img',l:'自訂圖示圖片',t:'img',h:'有圖片時會取代上方的圖示，建議正方形',full:1},{k:'hot',l:'橘色強調',t:'bool'}],
     tools:    [{k:'title',l:'名稱'},{k:'sub',l:'說明',t:'area'},{k:'icon',l:'圖示',t:'icon'},{k:'badge',l:'角標',h:'例如 NEW，可留空'},{k:'url',l:'連結',t:'link',full:1}],
-    posts:    [{k:'title',l:'標題',full:1},{k:'sub',l:'小標題 / 摘要',t:'area',full:1},{k:'date',l:'日期',h:'例如 2026.11.23'},{k:'url',l:'連結',t:'link'},{k:'img',l:'封面圖（16:9）',t:'img',full:1}],
+    posts:    [{k:'title',l:'標題',full:1},{k:'sub',l:'小標題 / 摘要',t:'area',full:1},{k:'date',l:'日期',h:'例如 2026.11.23'},{k:'img',l:'封面圖（16:9）',t:'img',full:1},
+               {k:'action',l:'點擊卡片時',t:'select',opts:{link:'開啟連結',image:'放大顯示圖片',none:'不動作（卡片不可點擊）'}},{k:'cta',l:'按鈕文字',h:'例如 閱讀全文、查看大圖；留空不顯示箭頭'},
+               {k:'url',l:'連結',t:'link',h:'「開啟連結」時使用；外部網址會開新分頁',full:1},{k:'zoom',l:'放大圖片',t:'img',h:'選填；「放大顯示圖片」時使用，留空則放大封面圖',full:1}],
     channels: [{k:'name',l:'名稱'},{k:'k',l:'圖示文字',h:'1 個字，例如 D'},{k:'sub',l:'說明',t:'area'},{k:'url',l:'連結',t:'link',h:'網址或 mailto:信箱'}],
     guides:   [{k:'img',l:'圖片',t:'img',h:'長圖也可以，會依原比例完整顯示',full:1},{k:'caption',l:'說明文字',t:'area',h:'選填，顯示在圖片下方',full:1}],
     roles:    [{k:'title',l:'職缺類型',h:'例如 導師、創作者、社群版主'},{k:'open',l:'招募中（取消勾選會顯示「暫停招募」）',t:'bool'},{k:'desc',l:'簡介',t:'area',h:'這個職缺在做什麼',full:1},{k:'how',l:'加入方式',t:'area',h:'條件、流程、需要準備的資料等',full:1},{k:'url',l:'加入連結',t:'link',h:'報名表單、Discord 邀請連結等；留空顯示「即將公布」'},{k:'btn',l:'按鈕文字',h:'留空顯示「立即加入」'}],
@@ -204,7 +206,7 @@ input.bad{border-color:var(--red)}
   const BLANK = {
     quick:{icon:'globe',title:'新入口',short:'',sub:'',url:'',img:'',hot:false},
     tools:{icon:'map',title:'新工具',sub:'',url:'',badge:''},
-    posts:{title:'新文章',sub:'',date:'',url:'',img:''},
+    posts:{title:'新文章',sub:'',date:'',img:'',action:'link',cta:'READ',url:'',zoom:''},
     channels:{k:'?',name:'新頻道',sub:'',url:''},
     guides:{img:'',caption:''},
     hl:{title:'新重點',desc:'',img:''},
@@ -226,7 +228,7 @@ input.bad{border-color:var(--red)}
 
   function normalize(d){
     d.quick ||= []; d.tools ||= []; d.channels ||= []; d.categories ||= [];
-    d.categories.forEach(c=>c.posts ||= []);
+    d.categories.forEach(c=>{ c.posts ||= []; c.posts.forEach(p=>{ p.action ||= 'link'; p.cta ??= 'READ'; p.zoom ??= ''; }); });
     d.season ||= {}; d.season.highlights ||= []; d.season.timeline ||= []; d.season.guides ||= [];
     d.hero ||= {}; ['image','imageMobile','video'].forEach(k=>d.hero[k] ??= '');
     d.join ||= {}; d.join.intro ??= ''; d.join.roles ||= [];
@@ -391,6 +393,7 @@ input.bad{border-color:var(--red)}
     const lab=`${esc(f.l)}${hint?` <em>${esc(hint)}</em>`:''}`;
     const cls=`f${f.full?' full':''}`;
     if(f.t==='bool') return `<label class="check${f.full?' full':''}"><input type="checkbox" ${a} ${v?'checked':''}> ${esc(f.l)}</label>`;
+    if(f.t==='select') return `<label class="${cls}">${lab}<select ${a}>${Object.entries(f.opts).map(([k,n])=>`<option value="${k}" ${k===(v||Object.keys(f.opts)[0])?'selected':''}>${esc(n)}</option>`).join('')}</select></label>`;
     if(f.t==='icon') return `<label class="${cls}">${lab}<select ${a}>${Object.entries(ICONS).map(([k,n])=>`<option value="${k}" ${k===v?'selected':''}>${esc(n)}</option>`).join('')}</select></label>`;
     if(f.t==='area') return `<label class="${cls}">${lab}<textarea ${a}>${esc(v)}</textarea></label>`;
     if(f.t==='img') return `<div class="${cls}"><span style="font-size:13px;color:var(--txt2);font-weight:500">${lab}</span>

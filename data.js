@@ -43,11 +43,11 @@ window.SITE_DATA = {
       "img": ""
     },
     {
-      "icon": "cmd",
-      "title": "暗區指揮官",
-      "short": "指揮官",
-      "sub": "地圖、槍械、任務等工具",
-      "url": "#commander",
+      "icon": "users",
+      "title": "加入我們",
+      "short": "加入我們",
+      "sub": "導師、創作者、版主招募中",
+      "url": "#join",
       "hot": false,
       "img": ""
     }
@@ -119,14 +119,20 @@ window.SITE_DATA = {
           "sub": "四人組隊，挑戰限時。上傳你的通關時間。分享至社群贏得更多獎勵",
           "date": "2026.11.21",
           "url": "https://million-run.online/static/#board",
-          "img": "images/discord-1573673165966680095.jpg"
+          "img": "images/discord-1573673165966680095.jpg",
+          "action": "link",
+          "cta": "READ",
+          "zoom": ""
         },
         {
           "title": "組隊出擊！全新生化 PvE 模式登場",
           "sub": "沒有特遣，也沒有偽裝——等著你的，是灣區生化模式中更致命、更恐怖的威脅",
           "date": "2026.11.20",
           "url": "",
-          "img": "images/discord-1573269140049895455.webp"
+          "img": "images/discord-1573269140049895455.webp",
+          "action": "link",
+          "cta": "READ",
+          "zoom": ""
         }
       ]
     },
@@ -138,14 +144,20 @@ window.SITE_DATA = {
           "sub": "推出兩款全新聯動造型：聯邦特務與赤紅諜影！\n保持活躍即可獲得免費40抽！抽到任一造型，還會額外贈送克勞瑟·突擊匕首！\n這一次，拯救卡莫納！",
           "date": "2026.11.20",
           "url": "https://www.youtube.com/watch?v=tl9-eVZp0sw",
-          "img": "images/discord-1570711848171343972.webp"
+          "img": "images/discord-1570711848171343972.webp",
+          "action": "link",
+          "cta": "READ",
+          "zoom": ""
         },
         {
           "title": "免費領取「侵蝕抑制·德爾文」",
           "sub": "各位先鋒，免費德爾文外觀等你來領！\n完成聯絡人任務，即可免費領取「侵蝕抑制·德爾文」外觀！\n全新 PvE 模式「灣區：爆發」現已正式上線！集結隊友，一起迎戰感染者！",
           "date": "2026.11.23",
           "url": "https://www.youtube.com/watch?v=kaLjW0-EMVA",
-          "img": "images/20261123-211335-EN.jpg"
+          "img": "images/20261123-211335-EN.jpg",
+          "action": "link",
+          "cta": "READ",
+          "zoom": ""
         }
       ]
     },
@@ -157,7 +169,10 @@ window.SITE_DATA = {
           "sub": "嗨，特遣們！👋\n\n提醒一下：我們已將 C2S1 測試伺服器招募 的相關訊息寄送至你的遊戲內信箱，請盡快查看信件並完成報名。\n\n新版本將推出大量全新玩法內容！希望你能加入測試並分享回饋。若遇到任何問題，請隨時告訴我們，一起讓 C2S1 變得更好。\n\n-Arena Breakout 團隊-",
           "date": "2026.11.23",
           "url": "",
-          "img": "images/discord-1574345336225402981.jpg"
+          "img": "images/discord-1574345336225402981.jpg",
+          "action": "link",
+          "cta": "READ",
+          "zoom": ""
         }
       ]
     },
@@ -169,14 +184,20 @@ window.SITE_DATA = {
           "sub": "我們為中文類別推出了新的審核功能！您可以使用下方圖片中的方法，回報聊天室內的重大違規行為給版主。\n我們誠摯邀請您測試此功能，讓我們持續優化與改進此功能\n注意：請勿檢舉所有小問題",
           "date": "2026.07.01",
           "url": "",
-          "img": "images/discord-1521680662707437658.jpg"
+          "img": "images/discord-1521680662707437658.jpg",
+          "action": "link",
+          "cta": "READ",
+          "zoom": ""
         },
         {
           "title": "遊戲帳號綁定LIPASS",
           "sub": "立即將你的暗區帳號綁定Level Infinite Pass(LIPass)，不僅快速穩定，還能享有額外的遊戲福利！\n\n🌐快速穩定登入：避免第三方渠道異常無法進入遊戲\n🛡️更高的安全性：避免社交帳號遭盜用連帶遊戲帳號\n🎁額外遊戲福利：每日登入遊戲與完成任務還可享有更多自選物資\n\n馬上前往遊戲設定中的「帳號管理」，將帳號綁定吧！ \n",
           "date": "2026.07.01",
           "url": "",
-          "img": "images/discord-1521680463285063840.jpg"
+          "img": "images/discord-1521680463285063840.jpg",
+          "action": "link",
+          "cta": "READ",
+          "zoom": ""
         }
       ]
     }
