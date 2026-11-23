@@ -197,7 +197,7 @@ input.bad{border-color:var(--red)}
     posts:    [{k:'title',l:'標題',full:1},{k:'sub',l:'小標題 / 摘要',t:'area',full:1},{k:'date',l:'日期',h:'例如 2026.11.23'},{k:'url',l:'連結',t:'link'},{k:'img',l:'封面圖（16:9）',t:'img',full:1}],
     channels: [{k:'name',l:'名稱'},{k:'k',l:'圖示文字',h:'1 個字，例如 D'},{k:'sub',l:'說明'},{k:'url',l:'連結',t:'link',h:'網址或 mailto:信箱'}],
     guides:   [{k:'img',l:'圖片',t:'img',h:'長圖也可以，會依原比例完整顯示',full:1},{k:'caption',l:'說明文字',h:'選填，顯示在圖片下方',full:1}],
-    hl:       [{k:'title',l:'標題'},{k:'desc',l:'說明',t:'area',full:1}],
+    hl:       [{k:'title',l:'標題'},{k:'desc',l:'說明',t:'area',h:'按 Enter 換行；超過 6 行會自動折疊',full:1},{k:'img',l:'圖片',t:'img',h:'選填，顯示在說明下方，點擊可放大',full:1}],
     tl:       [{k:'date',l:'日期'},{k:'label',l:'事件'}],
   };
   const BLANK = {
@@ -206,7 +206,7 @@ input.bad{border-color:var(--red)}
     posts:{title:'新文章',sub:'',date:'',url:'',img:''},
     channels:{k:'?',name:'新頻道',sub:'',url:''},
     guides:{img:'',caption:''},
-    hl:{title:'新重點',desc:''},
+    hl:{title:'新重點',desc:'',img:''},
     tl:{date:'',label:''},
   };
   const TABS = [['hero','主視覺'],['content','內容中心'],['quick','首頁快速入口'],['tools','暗區指揮官'],['season','新賽季'],['channels','社群頻道']];
@@ -348,7 +348,7 @@ input.bad{border-color:var(--red)}
     const {list,i,k} = uploadTarget;
     toast('圖片上傳中…');
     try{
-      const big = list==='guides'||list==='hero';
+      const big = list==='guides'||list==='hero'||list==='hl';
       const f = await shrink(file, big?2400:1600, big?.92:.85);
       if(f.size>8*1024*1024) throw new Error('圖片太大（超過 8MB）');
       const ext=(f.name.match(/\.\w+$/)||['.jpg'])[0].toLowerCase();

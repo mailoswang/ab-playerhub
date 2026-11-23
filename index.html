@@ -221,13 +221,25 @@ nav.top a[aria-current=page]{color:#fff}
 .box p{margin:0;color:var(--txt2);white-space:pre-line}
 /* 賽季重點：超過 6 行時折疊 */
 #highlights{align-items:start}
-.box .hl-d{--clamp:9.6em}
+.box .hl-d{--clamp:9.6em;min-height:var(--clamp)}
 .box.long .hl-d{overflow:hidden;transition:max-height .45s var(--ease)}
 .box.long:not(.open) .hl-d{max-height:var(--clamp);-webkit-mask-image:linear-gradient(180deg,#000 55%,transparent);mask-image:linear-gradient(180deg,#000 55%,transparent)}
 .hl-more{display:none;align-items:center;gap:6px;margin-top:12px;min-height:40px;padding:0 14px;border:1px solid var(--line3);background:transparent;color:var(--or2);font-family:var(--fd);font-size:15px;letter-spacing:.04em;cursor:pointer}
 .hl-more:hover{border-color:var(--or2)}
 .hl-more i{font-style:normal;display:inline-block;transition:transform .3s var(--ease)}
 .box.long .hl-more{display:inline-flex}
+/* 統一高度：只要有一則需要折疊，其他卡片也保留按鈕的位置 */
+#highlights.has-long .hl-more{display:inline-flex}
+#highlights.has-long .box:not(.long) .hl-more{visibility:hidden}
+/* 重點圖片：統一 16:9 外框，完整顯示圖片，點擊放大 */
+.hl-img{position:relative;display:block;width:100%;aspect-ratio:16/9;margin-top:16px;padding:0;border:1px solid var(--line2);background:#0c0e10;overflow:hidden;cursor:zoom-in}
+.hl-img img{display:block;width:100%;height:100%;object-fit:contain;transition:transform .4s var(--ease)}
+.hl-img:hover img{transform:scale(1.03)}
+.hl-img:hover{border-color:var(--line3)}
+.hl-img .zoom{position:absolute;right:8px;top:8px;padding:2px 8px;background:rgba(8,9,10,.75);border:1px solid var(--line3);font-size:12px;color:var(--txt2);opacity:0;transition:opacity .2s}
+.hl-img:hover .zoom,.hl-img:focus-visible .zoom{opacity:1}
+@media(hover:none){.hl-img .zoom{opacity:1}}
+.hl-img.empty{visibility:hidden;cursor:default}
 .box.open .hl-more i{transform:rotate(180deg)}
 .box .n{font-family:var(--fd);font-size:28px;color:var(--or2);line-height:1;margin-bottom:12px}
 .slot{border-style:dashed;background:repeating-linear-gradient(135deg,transparent 0 14px,rgba(255,255,255,.02) 14px 28px),var(--panel)}
@@ -676,6 +688,27 @@ nav.top a.brk::before,nav.top a.brk::after{display:none}
     hm.hidden = false; $('.hero').classList.add('has-media');
   }
 
+  // 全螢幕圖片檢視（懶人包、賽季重點共用）；items: [{img, caption}]
+  const lb=$('#lb'), lbImg=$('#lbImg'), lbBody=$('#lbBody');
+  let lbItems=[], gi=0;
+  function lbShow(i){
+    gi=i; const g=lbItems[i];
+    lbBody.classList.remove('full'); lbBody.scrollTop=0;
+    lbImg.src=g.img; lbImg.alt=g.caption||`圖片 ${i+1}`;
+    $('#lbCap').textContent=g.caption||'';
+    $('#lbCount').textContent=`${i+1} / ${lbItems.length}`;
+    $('#lbPrev').disabled=i===0; $('#lbNext').disabled=i===lbItems.length-1;
+    $('#lbPrev').hidden=$('#lbNext').hidden=lbItems.length<2;
+  }
+  function openLB(items,i){ lbItems=items; lbShow(i); lb.showModal(); document.body.style.overflow='hidden'; }
+  lb.addEventListener('close',()=>{ document.body.style.overflow=''; });
+  $('#lbClose').addEventListener('click',()=>lb.close());
+  $('#lbPrev').addEventListener('click',()=>gi>0&&lbShow(gi-1));
+  $('#lbNext').addEventListener('click',()=>gi<lbItems.length-1&&lbShow(gi+1));
+  lbImg.addEventListener('click',()=>lbBody.classList.toggle('full'));
+  lbBody.addEventListener('click',e=>{ if(e.target===lbBody) lb.close(); });
+  lb.addEventListener('keydown',e=>{ if(e.key==='ArrowLeft'&&gi>0) lbShow(gi-1); if(e.key==='ArrowRight'&&gi<lbItems.length-1) lbShow(gi+1); });
+
   // 新賽季頁：懶人包大圖
   const GUIDES = (SEASON.guides||[]).filter(g=>g.img);
   if (GUIDES.length) {
@@ -688,30 +721,16 @@ nav.top a.brk::before,nav.top a.brk::after{display:none}
         </button>
         ${g.caption?`<figcaption>${GUIDES.length>1?`<b>${String(i+1).padStart(2,'0')}</b>`:''}${esc(g.caption)}</figcaption>`:''}
       </figure>`).join('');
-    const lb=$('#lb'), lbImg=$('#lbImg'), lbBody=$('#lbBody');
-    let gi=0;
-    const show=i=>{
-      gi=i; const g=GUIDES[i];
-      lbBody.classList.remove('full'); lbBody.scrollTop=0;
-      lbImg.src=g.img; lbImg.alt=g.caption||`賽季懶人包 ${i+1}`;
-      $('#lbCap').textContent=g.caption||'';
-      $('#lbCount').textContent=`${i+1} / ${GUIDES.length}`;
-      $('#lbPrev').disabled=i===0; $('#lbNext').disabled=i===GUIDES.length-1;
-      $('#lbPrev').hidden=$('#lbNext').hidden=GUIDES.length<2;
-    };
-    $('#guides').addEventListener('click',e=>{ const b=e.target.closest('[data-guide]'); if(!b) return; show(+b.dataset.guide); lb.showModal(); document.body.style.overflow='hidden'; });
-    lb.addEventListener('close',()=>{ document.body.style.overflow=''; });
-    $('#lbClose').addEventListener('click',()=>lb.close());
-    $('#lbPrev').addEventListener('click',()=>gi>0&&show(gi-1));
-    $('#lbNext').addEventListener('click',()=>gi<GUIDES.length-1&&show(gi+1));
-    lbImg.addEventListener('click',()=>lbBody.classList.toggle('full'));
-    lbBody.addEventListener('click',e=>{ if(e.target===lbBody) lb.close(); });
-    lb.addEventListener('keydown',e=>{ if(e.key==='ArrowLeft'&&gi>0) show(gi-1); if(e.key==='ArrowRight'&&gi<GUIDES.length-1) show(gi+1); });
+    $('#guides').addEventListener('click',e=>{ const b=e.target.closest('[data-guide]'); if(b) openLB(GUIDES, +b.dataset.guide); });
   }
 
   // 新賽季頁
   $('#seasonIntro').textContent = SEASON.intro || '';
-  $('#highlights').innerHTML = (SEASON.highlights||[]).map((h,i)=>`<div class="box"><div class="n">${String(i+1).padStart(2,'0')}</div><h3>${esc(h.title)}</h3><p class="hl-d">${esc(h.desc)}</p><button type="button" class="hl-more" aria-expanded="false"><span>展開全文</span> <i aria-hidden="true">▾</i></button></div>`).join('');
+  const HL = SEASON.highlights||[];
+  const HL_IMGS = HL.map((h,i)=>({img:h.img, caption:h.title, i})).filter(x=>x.img);
+  $('#highlights').innerHTML = HL.map((h,i)=>`<div class="box"><div class="n">${String(i+1).padStart(2,'0')}</div><h3>${esc(h.title)}</h3><p class="hl-d">${esc(h.desc)}</p><button type="button" class="hl-more" aria-expanded="false"><span>展開全文</span> <i aria-hidden="true">▾</i></button>${
+      h.img ? `<button type="button" class="hl-img" data-hlimg="${i}" aria-label="放大檢視：${esc(h.title)}"><img src="${esc(h.img)}" alt="${esc(h.title)}" loading="lazy" decoding="async"><span class="zoom" aria-hidden="true">⤢ 放大</span></button>`
+      : HL_IMGS.length ? '<span class="hl-img empty" aria-hidden="true"></span>' : ''}</div>`).join('');
   // 折疊：只有在頁面顯示時才量得到高度，所以換頁、縮放、字型載入後都重新判斷
   function foldHL(){
     $$('#highlights .box').forEach(b=>{
@@ -720,8 +739,11 @@ nav.top a.brk::before,nav.top a.brk::after{display:none}
       const lim=parseFloat(getComputedStyle(d).lineHeight)*6;
       b.classList.toggle('long', d.scrollHeight > lim + 4);
     });
+    $('#highlights').classList.toggle('has-long', !!$('#highlights .box.long'));
   }
   $('#highlights').addEventListener('click',e=>{
+    const ib=e.target.closest('[data-hlimg]');
+    if(ib){ const idx=HL_IMGS.findIndex(x=>x.i===+ib.dataset.hlimg); return openLB(HL_IMGS, idx); }
     const btn=e.target.closest('.hl-more'); if(!btn) return;
     const b=btn.closest('.box'), d=b.querySelector('.hl-d'), open=!b.classList.contains('open');
     if(open){ b.classList.add('open'); d.style.maxHeight=d.scrollHeight+'px'; }
