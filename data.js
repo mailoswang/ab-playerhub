@@ -122,18 +122,11 @@ window.SITE_DATA = {
           "img": "https://cdn.discordapp.com/attachments/1230876560324821092/1573673165966680095/TW.png?ex=6b04d718&is=6b038598&hm=8c6a27951873d935f388aadb6dda6f33aef8bbccc3f70b82a67f3341f0842af1&"
         },
         {
-          "title": "活動標題 2",
-          "sub": "活動小標題，簡短描述活動內容與時間",
-          "date": "",
+          "title": "組隊出擊！全新生化 PvE 模式登場",
+          "sub": "沒有特遣，也沒有偽裝——等著你的，是灣區生化模式中更致命、更恐怖的威脅",
+          "date": "2026.11.20",
           "url": "",
-          "img": ""
-        },
-        {
-          "title": "活動標題 3",
-          "sub": "活動小標題，簡短描述活動內容與時間",
-          "date": "",
-          "url": "",
-          "img": ""
+          "img": "https://media.discordapp.net/attachments/1179397382992056392/1573269140049895455/-TW.jpg?ex=6b055910&is=6b040790&hm=c82203a74ea1d4a3fd164401d9aee0a930620df9d20b293d66af3984c869d750&format=webp&width=1536&height=864"
         }
       ]
     },
@@ -141,25 +134,18 @@ window.SITE_DATA = {
       "name": "資訊",
       "posts": [
         {
-          "title": "資訊標題 1",
-          "sub": "資訊小標題，例如攻略、改版重點",
-          "date": "",
-          "url": "",
-          "img": ""
+          "title": "Arena Breakout ×《惡靈古堡4》聯動",
+          "sub": "推出兩款全新聯動造型：聯邦特務與赤紅諜影！\n保持活躍即可獲得免費40抽！抽到任一造型，還會額外贈送克勞瑟·突擊匕首！\n這一次，拯救卡莫納！",
+          "date": "2026.11.20",
+          "url": "https://www.youtube.com/watch?v=tl9-eVZp0sw",
+          "img": "https://media.discordapp.net/attachments/1070193485589774366/1570711848171343972/TW_Version1.jpg?ex=6b0545e7&is=6b03f467&hm=af1cac95ab09ddbbb939b5e95282e198d1fd78c37d106d60b39cfa55f73debeb&format=webp&width=1536&height=864"
         },
         {
-          "title": "資訊標題 2",
-          "sub": "資訊小標題，例如攻略、改版重點",
-          "date": "",
-          "url": "",
-          "img": ""
-        },
-        {
-          "title": "資訊標題 3",
-          "sub": "資訊小標題，例如攻略、改版重點",
-          "date": "",
-          "url": "",
-          "img": ""
+          "title": "免費領取「侵蝕抑制·德爾文」",
+          "sub": "各位先鋒，免費德爾文外觀等你來領！\n完成聯絡人任務，即可免費領取「侵蝕抑制·德爾文」外觀！\n全新 PvE 模式「灣區：爆發」現已正式上線！集結隊友，一起迎戰感染者！",
+          "date": "2026.11.23",
+          "url": "https://www.youtube.com/watch?v=kaLjW0-EMVA",
+          "img": "images/20261123-211335-EN.jpg"
         }
       ]
     },
@@ -167,25 +153,11 @@ window.SITE_DATA = {
       "name": "公告",
       "posts": [
         {
-          "title": "公告標題 1",
-          "sub": "公告小標題，例如維護、停機通知",
-          "date": "",
+          "title": "C2S1 測試伺服器招募",
+          "sub": "嗨，特遣們！👋\n\n提醒一下：我們已將 C2S1 測試伺服器招募 的相關訊息寄送至你的遊戲內信箱，請盡快查看信件並完成報名。\n\n新版本將推出大量全新玩法內容！希望你能加入測試並分享回饋。若遇到任何問題，請隨時告訴我們，一起讓 C2S1 變得更好。\n\n-Arena Breakout 團隊-",
+          "date": "2026.11.23",
           "url": "",
-          "img": ""
-        },
-        {
-          "title": "公告標題 2",
-          "sub": "公告小標題，例如維護、停機通知",
-          "date": "",
-          "url": "",
-          "img": ""
-        },
-        {
-          "title": "公告標題 3",
-          "sub": "公告小標題，例如維護、停機通知",
-          "date": "",
-          "url": "",
-          "img": ""
+          "img": "https://cdn.discordapp.com/attachments/1467051493306667040/1574345336225402981/3_7.png?ex=6b054eda&is=6b03fd5a&hm=f62ef5b90a0c5c6bd027d3b47a42d43727d7c991dc735c036b2f7aca3b7fd60c&"
         }
       ]
     },
@@ -193,25 +165,18 @@ window.SITE_DATA = {
       "name": "社群",
       "posts": [
         {
-          "title": "社群標題 1",
-          "sub": "社群小標題，例如創作者精選、玩家投稿",
-          "date": "",
+          "title": "DC聊天室違規行為舉報功能",
+          "sub": "我們為中文類別推出了新的審核功能！您可以使用下方圖片中的方法，回報聊天室內的重大違規行為給版主。\n我們誠摯邀請您測試此功能，讓我們持續優化與改進此功能\n注意：請勿檢舉所有小問題",
+          "date": "2026.07.01",
           "url": "",
-          "img": ""
+          "img": "https://cdn.discordapp.com/attachments/1521679625854386376/1521680662707437658/4310e1e98d31b0e3.jpg?ex=6b04e08d&is=6b038f0d&hm=1bed01d8faa74ea4927db7387ba39f016425a8183c43888d445e63d6151c33e1&"
         },
         {
-          "title": "社群標題 2",
-          "sub": "社群小標題，例如創作者精選、玩家投稿",
-          "date": "",
+          "title": "遊戲帳號綁定LIPASS",
+          "sub": "立即將你的暗區帳號綁定Level Infinite Pass(LIPass)，不僅快速穩定，還能享有額外的遊戲福利！\n\n🌐快速穩定登入：避免第三方渠道異常無法進入遊戲\n🛡️更高的安全性：避免社交帳號遭盜用連帶遊戲帳號\n🎁額外遊戲福利：每日登入遊戲與完成任務還可享有更多自選物資\n\n馬上前往遊戲設定中的「帳號管理」，將帳號綁定吧！ \n",
+          "date": "2026.07.01",
           "url": "",
-          "img": ""
-        },
-        {
-          "title": "社群標題 3",
-          "sub": "社群小標題，例如創作者精選、玩家投稿",
-          "date": "",
-          "url": "",
-          "img": ""
+          "img": "https://cdn.discordapp.com/attachments/1521679625854386376/1521680463285063840/image.png?ex=6b04e05d&is=6b038edd&hm=4176a7018a9fd20e673be5b9043701591f4663e98b8476ed656ffcc44dcd2cc1&"
         }
       ]
     }
