@@ -70,7 +70,7 @@ input.bad{border-color:var(--red)}
 .help code{background:var(--panel2);padding:0 5px;color:var(--txt)}
 
 /* 分頁 */
-.tabs{display:flex;gap:4px;overflow-x:auto;border-bottom:1px solid var(--line2);margin-bottom:20px;scrollbar-width:none}
+.tabs{display:flex;flex-wrap:wrap;gap:4px;border-bottom:1px solid var(--line2);margin-bottom:20px}
 .tabs button{flex:none;min-height:46px;padding:0 16px;background:none;border:0;border-bottom:2px solid transparent;margin-bottom:-1px;cursor:pointer;font-weight:700;color:var(--txt2)}
 .tabs button[aria-selected=true]{color:var(--or2);border-bottom-color:var(--or)}
 
@@ -231,7 +231,7 @@ input.bad{border-color:var(--red)}
     roles:{title:'新職缺',open:true,desc:'',how:'',url:'',btn:''},
     tl:{date:'',label:''},
   };
-  const TABS = [['hero','主視覺'],['content','內容中心'],['quick','首頁快速入口'],['c2s1','C2S1 體驗服'],['tools','暗區指揮官'],['season','新賽季'],['join','加入我們'],['channels','社群頻道']];
+  const TABS = [['hero','主視覺'],['content','內容中心'],['quick','首頁快速入口'],['c2s1','C2S1 體驗服'],['tools','暗區指揮官'],['season','C2S0 新賽季'],['join','加入我們'],['channels','社群頻道']];
   const PREVIEW_KEY='compass-preview', CFG_KEY='compass-admin', TOKEN_KEY='compass-admin-token';
 
   // ================= 狀態 =================
@@ -508,7 +508,7 @@ input.bad{border-color:var(--red)}
     }
     else if(tab==='season'){
       const s=data.season, endLocal=(s.end.match(/^\d{4}-\d\d-\d\dT\d\d:\d\d/)||[''])[0];
-      P.innerHTML = `<h2>新賽季</h2><p class="desc">「C2S0 新賽季」頁面的內容。</p>
+      P.innerHTML = `<h2>C2S0 新賽季</h2><p class="desc">「C2S0 新賽季」頁面的內容。</p>
         <div class="fields" style="margin-bottom:24px">
           <label class="f">賽季結束時間 <em>台灣時間，用於倒數；留空顯示 --</em><input type="datetime-local" id="seasonEnd" value="${esc(endLocal)}"></label>
           <label class="f">賽季影片 <em>YouTube 網址，留空顯示佔位</em><input type="text" data-season="video" value="${esc(s.video)}" spellcheck="false"></label>

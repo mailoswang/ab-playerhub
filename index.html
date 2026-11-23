@@ -1041,7 +1041,9 @@ nav.top a.brk::before,nav.top a.brk::after{display:none}
     set('m',String(Math.floor(d/6e4)%60).padStart(2,'0'));
     set('s',String(Math.floor(d/1e3)%60).padStart(2,'0'));
   }
-  tick(); if(SEASON_END) setInterval(tick,1000);
+  // 後台沒填賽季結束時間時，整個倒數不顯示
+  cd.hidden = !SEASON_END;
+  if(SEASON_END){ tick(); setInterval(tick,1000); }
 
   // 主視覺：等高線、刻度、火星
   $('#topo').innerHTML=Array.from({length:10},(_,k)=>{
