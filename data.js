@@ -8,12 +8,12 @@ window.SITE_DATA = {
   "quick": [
     {
       "span": "2",
-      "icon": "star",
+      "icon": "fire",
       "title": "C2S1 體驗服專區",
       "short": "C2S1 體驗服",
       "sub": "測試時程、體驗服情報一次看",
       "url": "#c2s1",
-      "hot": false,
+      "hot": true,
       "img": ""
     },
     {
