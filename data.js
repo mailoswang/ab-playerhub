@@ -301,6 +301,7 @@ window.SITE_DATA = {
         "label": "賽季開始"
       }
     ],
-    "video": ""
+    "video": "",
+    "guides": []
   }
 };

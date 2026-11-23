@@ -214,10 +214,21 @@ nav.top a[aria-current=page]{color:#fff}
 .page-hero{position:relative;padding:clamp(56px,8vw,110px) 0 clamp(36px,5vw,56px);border-bottom:1px solid var(--line);overflow:hidden;background:radial-gradient(70% 120% at 80% 0%,rgba(226,97,3,.18),transparent 60%),linear-gradient(180deg,#14171a,var(--bg))}
 .page-hero h1{margin:16px 0 10px;font-family:"Noto Sans TC",sans-serif;font-weight:900;font-size:clamp(36px,5.4vw,64px);line-height:1.05;letter-spacing:.04em}
 .page-hero p{margin:0;color:var(--txt2);max-width:38em}
+#seasonIntro{white-space:pre-line}
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:16px}
 .box{background:var(--panel);border:1px solid var(--line2);padding:24px}
 .box h3{margin:0 0 8px;font-size:20px}
-.box p{margin:0;color:var(--txt2)}
+.box p{margin:0;color:var(--txt2);white-space:pre-line}
+/* 賽季重點：超過 6 行時折疊 */
+#highlights{align-items:start}
+.box .hl-d{--clamp:9.6em}
+.box.long .hl-d{overflow:hidden;transition:max-height .45s var(--ease)}
+.box.long:not(.open) .hl-d{max-height:var(--clamp);-webkit-mask-image:linear-gradient(180deg,#000 55%,transparent);mask-image:linear-gradient(180deg,#000 55%,transparent)}
+.hl-more{display:none;align-items:center;gap:6px;margin-top:12px;min-height:40px;padding:0 14px;border:1px solid var(--line3);background:transparent;color:var(--or2);font-family:var(--fd);font-size:15px;letter-spacing:.04em;cursor:pointer}
+.hl-more:hover{border-color:var(--or2)}
+.hl-more i{font-style:normal;display:inline-block;transition:transform .3s var(--ease)}
+.box.long .hl-more{display:inline-flex}
+.box.open .hl-more i{transform:rotate(180deg)}
 .box .n{font-family:var(--fd);font-size:28px;color:var(--or2);line-height:1;margin-bottom:12px}
 .slot{border-style:dashed;background:repeating-linear-gradient(135deg,transparent 0 14px,rgba(255,255,255,.02) 14px 28px),var(--panel)}
 .cols{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.3fr);gap:32px;align-items:start}
@@ -232,6 +243,29 @@ nav.top a[aria-current=page]{color:#fff}
 .count b{display:block;font-family:var(--fd);font-size:30px;line-height:1.1}
 .count span{font-size:12px;color:var(--txt3)}
 .video{position:relative;aspect-ratio:16/9;display:grid;place-items:center;border:1px dashed var(--line3)}
+/* 賽季懶人包：大圖依原比例完整顯示，點擊放大 */
+.guides{display:grid;gap:28px;max-width:1000px;margin:0 auto}
+.guide{margin:0;background:var(--panel);border:1px solid var(--line2)}
+.guide button{display:block;width:100%;padding:0;border:0;background:none;cursor:zoom-in;position:relative}
+.guide img{display:block;width:100%;height:auto}
+.guide .zoom{position:absolute;right:12px;top:12px;display:flex;align-items:center;gap:6px;padding:4px 10px;background:rgba(8,9,10,.75);border:1px solid var(--line3);font-size:13px;color:var(--txt2);opacity:0;transition:opacity .2s}
+.guide button:hover .zoom,.guide button:focus-visible .zoom{opacity:1}
+.guide figcaption{padding:12px 16px;color:var(--txt2);font-size:15px;border-top:1px solid var(--line)}
+.guide figcaption b{color:var(--or2);font-family:var(--fd);font-weight:500;margin-right:8px}
+@media(hover:none){.guide .zoom{opacity:1}}
+/* 放大檢視 */
+#lb{position:fixed;inset:0;width:100%;height:100%;max-width:none;max-height:none;margin:0;padding:0;border:0;background:rgba(6,7,8,.96);color:var(--txt)}
+#lb::backdrop{background:transparent}
+#lb[open]{display:grid;grid-template-rows:auto minmax(0,1fr)}
+#lb .lb-bar{display:flex;align-items:center;gap:8px;padding:10px 16px;background:#08090a;border-bottom:1px solid var(--line2);padding-top:max(10px,env(safe-area-inset-top))}
+#lb .lb-bar span{margin-right:auto;font-family:var(--fd);letter-spacing:.08em;color:var(--txt2)}
+#lb .lb-bar button{min-width:44px;height:44px;border:1px solid var(--line3);background:transparent;color:var(--txt);font-size:18px;cursor:pointer}
+#lb .lb-bar button:hover{border-color:var(--or2)}
+#lb .lb-bar button:disabled{opacity:.3;cursor:default}
+#lb .lb-body{overflow:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;display:grid;justify-items:center;align-content:start;padding:16px 16px calc(24px + env(safe-area-inset-bottom))}
+#lb .lb-body img{display:block;max-width:100%;height:auto;cursor:zoom-in}
+#lb .lb-body.full img{max-width:none;cursor:zoom-out}
+#lb .lb-cap{max-width:900px;margin-top:12px;color:var(--txt2);text-align:center}
 .video .play{width:72px;height:72px;display:grid;place-items:center;border:1px solid var(--line3);background:rgba(0,0,0,.5)}
 .video .play svg{width:30px;height:30px}
 .video .ph{position:absolute;left:14px;top:12px;font-size:13px;color:var(--txt3)}
@@ -513,6 +547,10 @@ nav.top a.brk::before,nav.top a.brk::after{display:none}
       </div>
     </div>
   </div>
+  <div class="band" id="guidesBand" hidden><div class="wrap">
+    <div class="sec-h"><span class="ico"><svg><use href="#i-book"/></svg></span><div><h2>賽季懶人包</h2><small>QUICK GUIDE</small></div></div>
+    <div class="guides" id="guides"></div>
+  </div></div>
   <div class="band"><div class="wrap">
     <div class="sec-h"><span class="ico"><svg><use href="#i-star"/></svg></span><div><h2>賽季重點</h2><small>HIGHLIGHTS</small></div></div>
     <div class="grid" id="highlights"></div>
@@ -578,6 +616,16 @@ nav.top a.brk::before,nav.top a.brk::after{display:none}
 </section>
 </main>
 
+<dialog id="lb" aria-label="圖片檢視">
+  <div class="lb-bar">
+    <span id="lbCount"></span>
+    <button id="lbPrev" aria-label="上一張">‹</button>
+    <button id="lbNext" aria-label="下一張">›</button>
+    <button id="lbClose" aria-label="關閉">✕</button>
+  </div>
+  <div class="lb-body" id="lbBody"><img id="lbImg" alt=""><p class="lb-cap" id="lbCap"></p></div>
+</dialog>
+
 <footer>
   <div class="wrap">
     <div class="fgrid">
@@ -628,9 +676,59 @@ nav.top a.brk::before,nav.top a.brk::after{display:none}
     hm.hidden = false; $('.hero').classList.add('has-media');
   }
 
+  // 新賽季頁：懶人包大圖
+  const GUIDES = (SEASON.guides||[]).filter(g=>g.img);
+  if (GUIDES.length) {
+    $('#guidesBand').hidden = false;
+    $('#guides').innerHTML = GUIDES.map((g,i)=>`
+      <figure class="guide">
+        <button type="button" data-guide="${i}" aria-label="放大檢視${g.caption?'：'+esc(g.caption):` 第 ${i+1} 張`}">
+          <img src="${esc(g.img)}" alt="${esc(g.caption||`賽季懶人包 ${i+1}`)}" loading="lazy" decoding="async">
+          <span class="zoom" aria-hidden="true">⤢ 點擊放大</span>
+        </button>
+        ${g.caption?`<figcaption>${GUIDES.length>1?`<b>${String(i+1).padStart(2,'0')}</b>`:''}${esc(g.caption)}</figcaption>`:''}
+      </figure>`).join('');
+    const lb=$('#lb'), lbImg=$('#lbImg'), lbBody=$('#lbBody');
+    let gi=0;
+    const show=i=>{
+      gi=i; const g=GUIDES[i];
+      lbBody.classList.remove('full'); lbBody.scrollTop=0;
+      lbImg.src=g.img; lbImg.alt=g.caption||`賽季懶人包 ${i+1}`;
+      $('#lbCap').textContent=g.caption||'';
+      $('#lbCount').textContent=`${i+1} / ${GUIDES.length}`;
+      $('#lbPrev').disabled=i===0; $('#lbNext').disabled=i===GUIDES.length-1;
+      $('#lbPrev').hidden=$('#lbNext').hidden=GUIDES.length<2;
+    };
+    $('#guides').addEventListener('click',e=>{ const b=e.target.closest('[data-guide]'); if(!b) return; show(+b.dataset.guide); lb.showModal(); document.body.style.overflow='hidden'; });
+    lb.addEventListener('close',()=>{ document.body.style.overflow=''; });
+    $('#lbClose').addEventListener('click',()=>lb.close());
+    $('#lbPrev').addEventListener('click',()=>gi>0&&show(gi-1));
+    $('#lbNext').addEventListener('click',()=>gi<GUIDES.length-1&&show(gi+1));
+    lbImg.addEventListener('click',()=>lbBody.classList.toggle('full'));
+    lbBody.addEventListener('click',e=>{ if(e.target===lbBody) lb.close(); });
+    lb.addEventListener('keydown',e=>{ if(e.key==='ArrowLeft'&&gi>0) show(gi-1); if(e.key==='ArrowRight'&&gi<GUIDES.length-1) show(gi+1); });
+  }
+
   // 新賽季頁
   $('#seasonIntro').textContent = SEASON.intro || '';
-  $('#highlights').innerHTML = (SEASON.highlights||[]).map((h,i)=>`<div class="box"><div class="n">${String(i+1).padStart(2,'0')}</div><h3>${esc(h.title)}</h3><p>${esc(h.desc)}</p></div>`).join('');
+  $('#highlights').innerHTML = (SEASON.highlights||[]).map((h,i)=>`<div class="box"><div class="n">${String(i+1).padStart(2,'0')}</div><h3>${esc(h.title)}</h3><p class="hl-d">${esc(h.desc)}</p><button type="button" class="hl-more" aria-expanded="false"><span>展開全文</span> <i aria-hidden="true">▾</i></button></div>`).join('');
+  // 折疊：只有在頁面顯示時才量得到高度，所以換頁、縮放、字型載入後都重新判斷
+  function foldHL(){
+    $$('#highlights .box').forEach(b=>{
+      const d=b.querySelector('.hl-d'); if(!d.offsetParent) return;
+      if(b.classList.contains('open')){ d.style.maxHeight=d.scrollHeight+'px'; return; }
+      const lim=parseFloat(getComputedStyle(d).lineHeight)*6;
+      b.classList.toggle('long', d.scrollHeight > lim + 4);
+    });
+  }
+  $('#highlights').addEventListener('click',e=>{
+    const btn=e.target.closest('.hl-more'); if(!btn) return;
+    const b=btn.closest('.box'), d=b.querySelector('.hl-d'), open=!b.classList.contains('open');
+    if(open){ b.classList.add('open'); d.style.maxHeight=d.scrollHeight+'px'; }
+    else { d.style.maxHeight=d.scrollHeight+'px'; void d.offsetHeight; d.style.maxHeight=''; b.classList.remove('open');
+      if(b.getBoundingClientRect().top<0) b.scrollIntoView({block:'start'}); }
+    btn.setAttribute('aria-expanded',open); btn.querySelector('span').textContent=open?'收合':'展開全文';
+  });
   $('#timeline').innerHTML = (SEASON.timeline||[]).map(t=>`<div><b>${esc(t.date)}</b><span>${esc(t.label)}</span></div>`).join('');
   const yt = String(SEASON.video||'').match(/(?:youtu\.be\/|v=|embed\/|shorts\/)([\w-]{11})/);
   if (yt) { const v=$('#video'); v.classList.remove('slot'); v.style.border='1px solid var(--line2)';
@@ -723,7 +821,7 @@ nav.top a.brk::before,nav.top a.brk::after{display:none}
     if(top) window.scrollTo(0,0);
     closeDrawer();
     if(routed && !REDUCED){ const sb=$('#scanbar'); sb.classList.remove('run'); void sb.offsetWidth; sb.classList.add('run'); }
-    routed=true; moveInd(); setHalf();
+    routed=true; moveInd(); setHalf(); foldHL();
   }
   window.addEventListener('hashchange',()=>route());
 
@@ -780,6 +878,8 @@ nav.top a.brk::before,nav.top a.brk::after{display:none}
   setHalf();
   if(document.fonts) document.fonts.ready.then(setHalf);
   addEventListener('resize',setHalf);
+  addEventListener('resize',foldHL);
+  if(document.fonts) document.fonts.ready.then(foldHL);
   // 導覽括號：滑到哪個項目就移過去，離開時回到目前頁面
   const navTop=$('nav.top'), ind=navTop.querySelector('.nav-ind');
   // 括號在目標項目的正中央出現，再往左右展開到項目兩側
@@ -811,7 +911,7 @@ nav.top a.brk::before,nav.top a.brk::after{display:none}
   if(document.fonts) document.fonts.ready.then(placeInd);
 
   // 捲動進場
-  const RV_SEL='.sec-h, .tools > *, .chans > *, .grid > .box, .timeline > div, .video, .cols > .box, .fgrid > div, .loadmore';
+  const RV_SEL='.guides > .guide, .sec-h, .tools > *, .chans > *, .grid > .box, .timeline > div, .video, .cols > .box, .fgrid > div, .loadmore';
   const io = !REDUCED && 'IntersectionObserver' in window ? new IntersectionObserver(es=>es.forEach(en=>{
     if(!en.isIntersecting) return;
     const el=en.target; io.unobserve(el);

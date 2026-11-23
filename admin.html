@@ -196,6 +196,7 @@ input.bad{border-color:var(--red)}
     tools:    [{k:'title',l:'名稱'},{k:'sub',l:'說明'},{k:'icon',l:'圖示',t:'icon'},{k:'badge',l:'角標',h:'例如 NEW，可留空'},{k:'url',l:'連結',t:'link',full:1}],
     posts:    [{k:'title',l:'標題',full:1},{k:'sub',l:'小標題 / 摘要',t:'area',full:1},{k:'date',l:'日期',h:'例如 2026.11.23'},{k:'url',l:'連結',t:'link'},{k:'img',l:'封面圖（16:9）',t:'img',full:1}],
     channels: [{k:'name',l:'名稱'},{k:'k',l:'圖示文字',h:'1 個字，例如 D'},{k:'sub',l:'說明'},{k:'url',l:'連結',t:'link',h:'網址或 mailto:信箱'}],
+    guides:   [{k:'img',l:'圖片',t:'img',h:'長圖也可以，會依原比例完整顯示',full:1},{k:'caption',l:'說明文字',h:'選填，顯示在圖片下方',full:1}],
     hl:       [{k:'title',l:'標題'},{k:'desc',l:'說明',t:'area',full:1}],
     tl:       [{k:'date',l:'日期'},{k:'label',l:'事件'}],
   };
@@ -204,6 +205,7 @@ input.bad{border-color:var(--red)}
     tools:{icon:'map',title:'新工具',sub:'',url:'',badge:''},
     posts:{title:'新文章',sub:'',date:'',url:'',img:''},
     channels:{k:'?',name:'新頻道',sub:'',url:''},
+    guides:{img:'',caption:''},
     hl:{title:'新重點',desc:''},
     tl:{date:'',label:''},
   };
@@ -223,13 +225,14 @@ input.bad{border-color:var(--red)}
   function normalize(d){
     d.quick ||= []; d.tools ||= []; d.channels ||= []; d.categories ||= [];
     d.categories.forEach(c=>c.posts ||= []);
-    d.season ||= {}; d.season.highlights ||= []; d.season.timeline ||= [];
+    d.season ||= {}; d.season.highlights ||= []; d.season.timeline ||= []; d.season.guides ||= [];
     d.hero ||= {}; ['image','imageMobile','video'].forEach(k=>d.hero[k] ??= '');
     ['end','intro','video'].forEach(k=>d.season[k] ??= '');
     return d;
   }
   function listOf(id){
     if(id==='hero') return [data.hero];
+    if(id==='guides') return data.season.guides;
     if(id==='hl') return data.season.highlights;
     if(id==='tl') return data.season.timeline;
     if(id==='cats') return data.categories;
@@ -329,14 +332,14 @@ input.bad{border-color:var(--red)}
 
   // ================= 圖片上傳 =================
   let uploadTarget = null;
-  async function shrink(file){
+  async function shrink(file,max=1600,q=.85){
     if(!/image\/(jpeg|png|webp)/.test(file.type)) return file;
     const img = await createImageBitmap(file).catch(()=>null); if(!img) return file;
-    const max=1600; if(img.width<=max && file.size<=600*1024) return file;
+    if(img.width<=max && file.size<=600*1024) return file;
     const s=Math.min(1,max/img.width), c=document.createElement('canvas');
     c.width=Math.round(img.width*s); c.height=Math.round(img.height*s);
     c.getContext('2d').drawImage(img,0,0,c.width,c.height);
-    const blob = await new Promise(r=>c.toBlob(r,'image/webp',.85));
+    const blob = await new Promise(r=>c.toBlob(r,'image/webp',q));
     return blob && blob.size<file.size ? new File([blob],file.name.replace(/\.\w+$/,'')+'.webp',{type:'image/webp'}) : file;
   }
   $('#fileInput').addEventListener('change', async e=>{
@@ -345,7 +348,8 @@ input.bad{border-color:var(--red)}
     const {list,i,k} = uploadTarget;
     toast('圖片上傳中…');
     try{
-      const f = await shrink(file);
+      const big = list==='guides'||list==='hero';
+      const f = await shrink(file, big?2400:1600, big?.92:.85);
       if(f.size>8*1024*1024) throw new Error('圖片太大（超過 8MB）');
       const ext=(f.name.match(/\.\w+$/)||['.jpg'])[0].toLowerCase();
       const base=f.name.replace(/\.\w+$/,'').replace(/[^\w-]+/g,'-').replace(/^-+|-+$/g,'').slice(0,40)||'img';
@@ -458,7 +462,8 @@ input.bad{border-color:var(--red)}
           <label class="f">賽季影片 <em>YouTube 網址，留空顯示佔位</em><input type="text" data-season="video" value="${esc(s.video)}" spellcheck="false"></label>
           <label class="f full">賽季簡介<textarea data-season="intro">${esc(s.intro)}</textarea></label>
         </div>
-        <h2 style="font-size:17px;margin:0 0 10px">賽季重點</h2>${renderList('hl',{addLabel:'新增重點'})}
+        <h2 style="font-size:17px;margin:0 0 4px">賽季懶人包</h2><p class="desc" style="margin-bottom:10px">顯示在「賽季重點」上方的大圖，可放多張，依這裡的順序排列；沒有圖片時整個區塊會隱藏。</p>${renderList('guides',{addLabel:'新增圖片',titleKey:'caption'})}
+        <h2 style="font-size:17px;margin:28px 0 10px">賽季重點</h2>${renderList('hl',{addLabel:'新增重點'})}
         <h2 style="font-size:17px;margin:28px 0 10px">賽季時程</h2>${renderList('tl',{addLabel:'新增時程',titleKey:'label',subKey:'date'})}`;
     }
   }
