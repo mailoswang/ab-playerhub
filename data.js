@@ -33,7 +33,7 @@ window.SITE_DATA = {
       "sub": "一站式安全帳號與福利系統",
       "url": "https://pass.levelinfinite.com/?lang=zh-TW",
       "hot": false,
-      "img": "",
+      "img": "images/20261124-001919-IlLEwtYm_400x400.jpg",
       "span": "1"
     },
     {
