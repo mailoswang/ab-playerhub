@@ -290,6 +290,15 @@ window.SITE_DATA = {
       }
     ],
     "video": "https://www.youtube.com/watch?v=MWAwaHPsaGk&t=2s",
-    "guides": []
+    "guides": [
+      {
+        "img": "https://media.discordapp.net/attachments/1070193485589774366/1566767428665348157/bc2b9a4f0bcc9832.jpg?ex=6b056ce0&is=6b041b60&hm=0982cfcb9714661f21956f2505aff2092869fa39497b10cb6beaecc8c0cc32f6&format=webp&width=1536&height=864",
+        "caption": ""
+      },
+      {
+        "img": "https://media.discordapp.net/attachments/1070193485589774366/1566771079865835631/TW.jpg?ex=6b057046&is=6b041ec6&hm=88dafd22fe2695a3312a8d8ddf9b28948f138e88fed31f4aae0c0e1760433419&format=webp&width=1536&height=864",
+        "caption": ""
+      }
+    ]
   }
 };
