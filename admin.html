@@ -101,6 +101,21 @@ input.bad{border-color:var(--red)}
 
 /* 圖片欄位 */
 .img-field{display:flex;gap:10px;align-items:flex-start}
+/* 圖示選擇器 */
+.icon-pick{margin-top:4px;border:1px solid var(--line2);background:var(--field)}
+.icon-pick>summary{display:flex;align-items:center;gap:10px;min-height:48px;padding:6px 10px;cursor:pointer;list-style:none}
+.icon-pick>summary::-webkit-details-marker{display:none}
+.icon-pick>summary b{font-weight:500}
+.icon-pick>summary em{margin-left:auto;font-style:normal;font-size:13px;color:var(--or2)}
+.icon-cur{width:36px;height:36px;flex:none;display:grid;place-items:center;border:1px solid var(--line3);background:rgba(0,0,0,.35)}
+.icon-cur svg{width:22px;height:22px}
+.icon-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(88px,1fr));gap:6px;max-height:320px;overflow:auto;padding:10px;border-top:1px solid var(--line2)}
+.icon-grid button{display:grid;justify-items:center;gap:6px;padding:10px 4px 8px;border:1px solid var(--line2);background:var(--panel);color:var(--txt);cursor:pointer;font-size:12px;line-height:1.25;text-align:center}
+.icon-grid button svg{width:26px;height:26px}
+.icon-grid button:hover{border-color:var(--line3);background:var(--panel2)}
+.icon-grid button.on{border-color:var(--or-edge);background:rgba(226,97,3,.16);color:#fff}
+.icon-grid button span{color:var(--txt2)}
+.item .hico{width:20px;height:20px;flex:none;color:var(--txt2)}
 .img-field .thumb{width:112px;aspect-ratio:16/9;flex:none;background:var(--panel2) center/cover no-repeat;border:1px solid var(--line2);display:grid;place-items:center;font-size:11px;color:var(--txt3)}
 .img-field .col{flex:1;display:grid;gap:6px}
 .img-field .row{display:flex;gap:6px;flex-wrap:wrap}
@@ -116,6 +131,7 @@ input.bad{border-color:var(--red)}
 </style>
 </head>
 <body>
+<script src="icons.js"></script>
 
 <header>
   <div class="wrap bar">
@@ -189,7 +205,9 @@ input.bad{border-color:var(--red)}
 <script>
 {
   // ================= 設定 =================
-  const ICONS = {globe:'地球（內容）',wallet:'錢包（儲值）',flag:'旗幟（賽季）',cmd:'羅盤（指揮官）',map:'地圖',gun:'槍械',book:'書本（教學）',task:'清單（任務）',coin:'趨勢（物價）',cal:'日曆',gift:'禮物（兌換）',star:'星星',grid:'格狀',users:'人群（社群）',play:'播放',ext:'外連'};
+  // 圖示清單來自 icons.js（與網站共用）
+  const ICONS = Object.fromEntries((window.ICON_LIST||[]).map(x=>[x.id,x.label]));
+  const icoSvg = id=>`<svg aria-hidden="true"><use href="#i-${esc(ICONS[id]?id:'grid')}"/></svg>`;
   const LINK_HINT = '站內：#c2s0、#commander、#contact、scroll:feed；外部：https://…';
   const SCHEMA = {
     quick:    [{k:'span',l:'寬度',t:'select',h:'首頁一排 4 格',opts:{'1':'1 格','2':'2 格','3':'3 格','4':'整排'}},{k:'title',l:'名稱'},{k:'short',l:'手機短名稱',h:'建議 4 字內'},{k:'sub',l:'說明',t:'area'},{k:'icon',l:'圖示',t:'icon'},{k:'url',l:'連結',t:'link',full:1},{k:'img',l:'自訂圖示圖片',t:'img',h:'有圖片時會取代上方的圖示，建議正方形',full:1},{k:'hot',l:'橘色強調',t:'bool'}],
@@ -400,7 +418,11 @@ input.bad{border-color:var(--red)}
     const cls=`f${f.full?' full':''}`;
     if(f.t==='bool') return `<label class="check${f.full?' full':''}"><input type="checkbox" ${a} ${v?'checked':''}> ${esc(f.l)}</label>`;
     if(f.t==='select') return `<label class="${cls}">${lab}<select ${a}>${Object.entries(f.opts).map(([k,n])=>`<option value="${k}" ${k===String(v||Object.keys(f.opts)[0])?'selected':''}>${esc(n)}</option>`).join('')}</select></label>`;
-    if(f.t==='icon') return `<label class="${cls}">${lab}<select ${a}>${Object.entries(ICONS).map(([k,n])=>`<option value="${k}" ${k===v?'selected':''}>${esc(n)}</option>`).join('')}</select></label>`;
+    if(f.t==='icon') return `<div class="${cls}"><span style="font-size:13px;color:var(--txt2);font-weight:500">${lab}</span>
+      <details class="icon-pick">
+        <summary><span class="icon-cur">${icoSvg(v)}</span><b>${esc(ICONS[v]||'未選擇')}</b><em>更換圖示 ▾</em></summary>
+        <div class="icon-grid">${Object.entries(ICONS).map(([k,n])=>`<button type="button" class="${k===v?'on':''}" data-act="seticon" data-list="${esc(list)}" data-i="${i}" data-k="${f.k}" data-v="${k}" title="${esc(n)}" aria-pressed="${k===v}">${icoSvg(k)}<span>${esc(n)}</span></button>`).join('')}</div>
+      </details></div>`;
     if(f.t==='area') return `<label class="${cls}">${lab}<textarea ${a}>${esc(v)}</textarea></label>`;
     if(f.t==='img') return `<div class="${cls}"><span style="font-size:13px;color:var(--txt2);font-weight:500">${lab}</span>
       <div class="img-field" style="margin-top:4px">
@@ -424,7 +446,7 @@ input.bad{border-color:var(--red)}
   function renderList(list,{collapsible=false,addLabel='新增',addTop=false,titleKey='title',subKey=''}={}){
     const arr=listOf(list), sc=schemaOf(list);
     const items = arr.map((it,i)=>{
-      const head=`<span class="no">${String(i+1).padStart(2,'0')}</span><span class="ttl">${esc(it[titleKey]||'（未命名）')}${subKey&&it[subKey]?`<small>${esc(it[subKey])}</small>`:''}</span>${itemOps(list,i,arr.length)}`;
+      const head=`<span class="no">${String(i+1).padStart(2,'0')}</span>${it.icon?`<svg class="hico" aria-hidden="true"><use href="#i-${esc(it.icon)}"/></svg>`:''}<span class="ttl">${esc(it[titleKey]||'（未命名）')}${subKey&&it[subKey]?`<small>${esc(it[subKey])}</small>`:''}</span>${itemOps(list,i,arr.length)}`;
       const body=`<div class="ibody"><div class="fields">${sc.map(f=>field(list,i,f,it[f.k])).join('')}</div></div>`;
       return collapsible
         ? `<details class="item" data-obj="${i}" ${openSet.has(it)?'open':''}><summary>${head}</summary>${body}</details>`
@@ -545,6 +567,7 @@ input.bad{border-color:var(--red)}
     else if(act==='dup'){ const n=clone(arr[i]); arr.splice(i+1,0,n); openSet.add(n); }
     else if(act==='upload'){ uploadTarget={list,i,k:b.dataset.k}; return $('#fileInput').click(); }
     else if(act==='clearimg'){ arr[i][b.dataset.k]=''; }
+    else if(act==='seticon'){ arr[i][b.dataset.k]=b.dataset.v; }
     else return;
     setDirty(true); render();
   });
