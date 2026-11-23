@@ -146,7 +146,7 @@ window.SITE_DATA = {
           "url": "https://million-run.online/static/#board",
           "img": "images/discord-1573673165966680095.jpg",
           "action": "link",
-          "cta": "READ",
+          "cta": "GO",
           "zoom": ""
         },
         {
@@ -155,7 +155,7 @@ window.SITE_DATA = {
           "date": "2026.11.20",
           "url": "",
           "img": "images/discord-1573269140049895455.webp",
-          "action": "link",
+          "action": "image",
           "cta": "READ",
           "zoom": ""
         }
@@ -195,8 +195,8 @@ window.SITE_DATA = {
           "date": "2026.11.23",
           "url": "",
           "img": "images/discord-1574345336225402981.jpg",
-          "action": "link",
-          "cta": "READ",
+          "action": "none",
+          "cta": "",
           "zoom": ""
         }
       ]
@@ -210,7 +210,7 @@ window.SITE_DATA = {
           "date": "2026.07.01",
           "url": "",
           "img": "images/discord-1521680662707437658.jpg",
-          "action": "link",
+          "action": "image",
           "cta": "READ",
           "zoom": ""
         },
@@ -220,7 +220,7 @@ window.SITE_DATA = {
           "date": "2026.07.01",
           "url": "",
           "img": "images/discord-1521680463285063840.jpg",
-          "action": "link",
+          "action": "image",
           "cta": "READ",
           "zoom": ""
         }
