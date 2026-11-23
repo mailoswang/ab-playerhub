@@ -220,26 +220,20 @@ window.SITE_DATA = {
     {
       "k": "D",
       "name": "Discord",
-      "sub": "連結待補",
-      "url": ""
+      "sub": "",
+      "url": "https://discord.com/invite/arenabreakout"
     },
     {
       "k": "F",
       "name": "Facebook 粉絲專頁",
-      "sub": "連結待補",
-      "url": ""
+      "sub": "",
+      "url": "https://www.facebook.com/ArenaBreakoutZH/"
     },
     {
       "k": "Y",
       "name": "YouTube",
-      "sub": "連結待補",
-      "url": ""
-    },
-    {
-      "k": "@",
-      "name": "電子郵件",
-      "sub": "信箱待補",
-      "url": ""
+      "sub": "",
+      "url": "https://www.youtube.com/@ArenaBreakoutZH"
     }
   ],
   "season": {
