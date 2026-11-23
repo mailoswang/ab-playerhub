@@ -119,14 +119,14 @@ window.SITE_DATA = {
           "sub": "四人組隊，挑戰限時。上傳你的通關時間。分享至社群贏得更多獎勵",
           "date": "2026.11.21",
           "url": "https://million-run.online/static/#board",
-          "img": "https://cdn.discordapp.com/attachments/1230876560324821092/1573673165966680095/TW.png?ex=6b04d718&is=6b038598&hm=8c6a27951873d935f388aadb6dda6f33aef8bbccc3f70b82a67f3341f0842af1&"
+          "img": "images/discord-1573673165966680095.jpg"
         },
         {
           "title": "組隊出擊！全新生化 PvE 模式登場",
           "sub": "沒有特遣，也沒有偽裝——等著你的，是灣區生化模式中更致命、更恐怖的威脅",
           "date": "2026.11.20",
           "url": "",
-          "img": "https://media.discordapp.net/attachments/1179397382992056392/1573269140049895455/-TW.jpg?ex=6b055910&is=6b040790&hm=c82203a74ea1d4a3fd164401d9aee0a930620df9d20b293d66af3984c869d750&format=webp&width=1536&height=864"
+          "img": "images/discord-1573269140049895455.webp"
         }
       ]
     },
@@ -138,7 +138,7 @@ window.SITE_DATA = {
           "sub": "推出兩款全新聯動造型：聯邦特務與赤紅諜影！\n保持活躍即可獲得免費40抽！抽到任一造型，還會額外贈送克勞瑟·突擊匕首！\n這一次，拯救卡莫納！",
           "date": "2026.11.20",
           "url": "https://www.youtube.com/watch?v=tl9-eVZp0sw",
-          "img": "https://media.discordapp.net/attachments/1070193485589774366/1570711848171343972/TW_Version1.jpg?ex=6b0545e7&is=6b03f467&hm=af1cac95ab09ddbbb939b5e95282e198d1fd78c37d106d60b39cfa55f73debeb&format=webp&width=1536&height=864"
+          "img": "images/discord-1570711848171343972.webp"
         },
         {
           "title": "免費領取「侵蝕抑制·德爾文」",
@@ -157,7 +157,7 @@ window.SITE_DATA = {
           "sub": "嗨，特遣們！👋\n\n提醒一下：我們已將 C2S1 測試伺服器招募 的相關訊息寄送至你的遊戲內信箱，請盡快查看信件並完成報名。\n\n新版本將推出大量全新玩法內容！希望你能加入測試並分享回饋。若遇到任何問題，請隨時告訴我們，一起讓 C2S1 變得更好。\n\n-Arena Breakout 團隊-",
           "date": "2026.11.23",
           "url": "",
-          "img": "https://cdn.discordapp.com/attachments/1467051493306667040/1574345336225402981/3_7.png?ex=6b054eda&is=6b03fd5a&hm=f62ef5b90a0c5c6bd027d3b47a42d43727d7c991dc735c036b2f7aca3b7fd60c&"
+          "img": "images/discord-1574345336225402981.jpg"
         }
       ]
     },
@@ -169,14 +169,14 @@ window.SITE_DATA = {
           "sub": "我們為中文類別推出了新的審核功能！您可以使用下方圖片中的方法，回報聊天室內的重大違規行為給版主。\n我們誠摯邀請您測試此功能，讓我們持續優化與改進此功能\n注意：請勿檢舉所有小問題",
           "date": "2026.07.01",
           "url": "",
-          "img": "https://cdn.discordapp.com/attachments/1521679625854386376/1521680662707437658/4310e1e98d31b0e3.jpg?ex=6b04e08d&is=6b038f0d&hm=1bed01d8faa74ea4927db7387ba39f016425a8183c43888d445e63d6151c33e1&"
+          "img": "images/discord-1521680662707437658.jpg"
         },
         {
           "title": "遊戲帳號綁定LIPASS",
           "sub": "立即將你的暗區帳號綁定Level Infinite Pass(LIPass)，不僅快速穩定，還能享有額外的遊戲福利！\n\n🌐快速穩定登入：避免第三方渠道異常無法進入遊戲\n🛡️更高的安全性：避免社交帳號遭盜用連帶遊戲帳號\n🎁額外遊戲福利：每日登入遊戲與完成任務還可享有更多自選物資\n\n馬上前往遊戲設定中的「帳號管理」，將帳號綁定吧！ \n",
           "date": "2026.07.01",
           "url": "",
-          "img": "https://cdn.discordapp.com/attachments/1521679625854386376/1521680463285063840/image.png?ex=6b04e05d&is=6b038edd&hm=4176a7018a9fd20e673be5b9043701591f4663e98b8476ed656ffcc44dcd2cc1&"
+          "img": "images/discord-1521680463285063840.jpg"
         }
       ]
     }
@@ -208,22 +208,22 @@ window.SITE_DATA = {
       {
         "title": "新地圖 - 機場",
         "desc": "【新地圖-機場】\n瓜雅泊國際機場坐落於瓜雅泊南部，該機場最初主要服務於前往當地觀光的外國遊客。南北戰事初期，機場曾肩負撤離僑民的重要任務，隨著戰局發展，一度被南北雙方用作臨時前線指揮中心，並進行相應的軍事化改造。\n【首領】\n塔莉婭身為機場的首領，有機率出現在控制區的AOC控制室內或二樓拉閘處。首領小隊由兩名盾兵和兩名突擊步兵組成。\n淘汰塔莉婭後，可獲得其信物，攜帶信物可開啟首領專屬物資間。",
-        "img": "https://media.discordapp.net/attachments/1179397382992056392/1565320298352353280/TW_1.jpg?ex=6b056f21&is=6b041da1&hm=d1dd16791c0c4a00752b617d4aaf45509d3addfda39eab52e4a89d7baa0f00e4&format=webp&width=1536&height=864"
+        "img": "images/discord-1565320298352353280.webp"
       },
       {
         "title": "新地圖 - 灣區",
         "desc": "【新地圖-灣區】\n位於瓜雅泊軍港東北方的灣區，是一處向海延伸的半島狀突出部。戰前這裡曾是瓜雅泊的海濱觀光區——沿岸建設著美術館、商業街和醫療綜合設施，憑藉海岸線吸引了大量遊客和度假人群。",
-        "img": "https://cdn.discordapp.com/attachments/1070193485589774366/1567811363831549963/TW3.jpg?ex=6b05449d&is=6b03f31d&hm=4019f9fe45532da8563b7d8aff87204db1fad4c50d48df746d6f93e57a5dec50&"
+        "img": "images/discord-1567811363831549963.jpg"
       },
       {
         "title": "新武器",
         "desc": "「郎恪知」四管霰彈槍（賽季物資）：採用預壓-擊發雙扳機設計的古典四管霰彈槍。得益於特殊的扳機結構，瞄準時預壓後扳機，可有效提升射擊精度。\nJS9微聲衝鋒槍（賽季物資）：一款採用無托結構的微聲衝鋒槍，雖然槍身結構過於精巧，控槍有些難度，但消音效果極佳。\n戰術複合弩（特殊賽季物資）：專為隱密狙擊行動設計的軍用複合弩。雖然發射的弩矢初速不高，但憑藉較重的箭體，依然具備驚人的穿甲能力。\nAK15突擊步槍：與AK12同平台但不同口徑的現代化突擊步槍，主要用戶為特維拉軍隊中需要使用7.62mm子彈的特戰單位。",
-        "img": "https://media.discordapp.net/attachments/1070193485589774366/1563148889459134530/TW.jpg?ex=6b0571d9&is=6b042059&hm=10d05ac40ea15fa875ea517929d5a767edc81c42cdcf1d987957f3706e742f0f&format=webp&width=640&height=360"
+        "img": "images/discord-1563148889459134530.webp"
       },
       {
         "title": "載具系統回歸",
         "desc": "在北部山區、山谷、中新增可駕駛/乘坐的運輸工具（註：不可帶出，可經由所有撤離點撤離，運輸工具和後備箱物資將轉換為柯恩幣，平分給和司機同隊的隊友乘客）。\n新版本運輸工具將不再需要鑰匙開啟，直接於地圖中互動即可使用。\n\n運輸工具類型：\n摩托車（1人）---置物箱空間大小：3×3\n皮卡車（4人）---後行李箱空間大小：7×10\n吉普車（4人）---後行李箱空間大小：7×4",
-        "img": "https://media.discordapp.net/attachments/1179397382992056392/1565338006066434161/TW_2.jpg?ex=6b057f9f&is=6b042e1f&hm=57ac9244741ee7e60595244e7c91b0c9f5e2dbb6685cb8ed7cae889c5fa0d58b&format=webp&width=1536&height=864"
+        "img": "images/discord-1565338006066434161.webp"
       },
       {
         "title": "全新裝備",
@@ -236,7 +236,7 @@ window.SITE_DATA = {
       {
         "title": "新大金登場",
         "desc": "新增高價值物品：赫芙拉彩蛋、霍爾電推模型、「無名貢獻」紀念雕像、神經網路CPU、機密藥劑「厄律西翁」、電磁彈射組件、「新邊疆」太空島模型、原子鐘核心。",
-        "img": "https://media.discordapp.net/attachments/1179397382992056392/1566044608008552568/TW.jpg?ex=6b056eb2&is=6b041d32&hm=69797b0c89fec61af302437aa4280a0caea00b881aed9ed1a53218c5f67ebcf7&format=webp&width=1536&height=864"
+        "img": "images/discord-1566044608008552568.webp"
       },
       {
         "title": "系統功能更新",
@@ -256,12 +256,41 @@ window.SITE_DATA = {
     "video": "https://www.youtube.com/watch?v=MWAwaHPsaGk&t=2s",
     "guides": [
       {
-        "img": "https://media.discordapp.net/attachments/1070193485589774366/1566767428665348157/bc2b9a4f0bcc9832.jpg?ex=6b056ce0&is=6b041b60&hm=0982cfcb9714661f21956f2505aff2092869fa39497b10cb6beaecc8c0cc32f6&format=webp&width=1536&height=864",
+        "img": "images/discord-1566767428665348157.webp",
         "caption": ""
       },
       {
-        "img": "https://media.discordapp.net/attachments/1070193485589774366/1566771079865835631/TW.jpg?ex=6b057046&is=6b041ec6&hm=88dafd22fe2695a3312a8d8ddf9b28948f138e88fed31f4aae0c0e1760433419&format=webp&width=1536&height=864",
+        "img": "images/discord-1566771079865835631.webp",
         "caption": ""
+      }
+    ]
+  },
+  "join": {
+    "intro": "暗區指南針由一群熱愛暗區的玩家共同經營。\n如果你也想一起讓社群變得更好，歡迎加入我們！",
+    "roles": [
+      {
+        "title": "新手導師",
+        "open": true,
+        "desc": "協助新進玩家熟悉遊戲，解答問題、帶隊教學。",
+        "how": "加入方式待補",
+        "url": "",
+        "btn": ""
+      },
+      {
+        "title": "內容創作者",
+        "open": true,
+        "desc": "製作攻略、影片、圖文或實況，與社群分享你的暗區經驗。",
+        "how": "加入方式待補",
+        "url": "",
+        "btn": ""
+      },
+      {
+        "title": "社群版主",
+        "open": true,
+        "desc": "維護社群秩序、處理檢舉，並協助舉辦社群活動。",
+        "how": "加入方式待補",
+        "url": "",
+        "btn": ""
       }
     ]
   }

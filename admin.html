@@ -197,6 +197,7 @@ input.bad{border-color:var(--red)}
     posts:    [{k:'title',l:'標題',full:1},{k:'sub',l:'小標題 / 摘要',t:'area',full:1},{k:'date',l:'日期',h:'例如 2026.11.23'},{k:'url',l:'連結',t:'link'},{k:'img',l:'封面圖（16:9）',t:'img',full:1}],
     channels: [{k:'name',l:'名稱'},{k:'k',l:'圖示文字',h:'1 個字，例如 D'},{k:'sub',l:'說明',t:'area'},{k:'url',l:'連結',t:'link',h:'網址或 mailto:信箱'}],
     guides:   [{k:'img',l:'圖片',t:'img',h:'長圖也可以，會依原比例完整顯示',full:1},{k:'caption',l:'說明文字',t:'area',h:'選填，顯示在圖片下方',full:1}],
+    roles:    [{k:'title',l:'職缺類型',h:'例如 導師、創作者、社群版主'},{k:'open',l:'招募中（取消勾選會顯示「暫停招募」）',t:'bool'},{k:'desc',l:'簡介',t:'area',h:'這個職缺在做什麼',full:1},{k:'how',l:'加入方式',t:'area',h:'條件、流程、需要準備的資料等',full:1},{k:'url',l:'加入連結',t:'link',h:'報名表單、Discord 邀請連結等；留空顯示「即將公布」'},{k:'btn',l:'按鈕文字',h:'留空顯示「立即加入」'}],
     hl:       [{k:'title',l:'標題'},{k:'desc',l:'說明',t:'area',h:'按 Enter 換行；超過 6 行會自動折疊',full:1},{k:'img',l:'圖片',t:'img',h:'選填，顯示在說明下方，點擊可放大',full:1}],
     tl:       [{k:'date',l:'日期'},{k:'label',l:'事件',t:'area'}],
   };
@@ -207,9 +208,10 @@ input.bad{border-color:var(--red)}
     channels:{k:'?',name:'新頻道',sub:'',url:''},
     guides:{img:'',caption:''},
     hl:{title:'新重點',desc:'',img:''},
+    roles:{title:'新職缺',open:true,desc:'',how:'',url:'',btn:''},
     tl:{date:'',label:''},
   };
-  const TABS = [['hero','主視覺'],['content','內容中心'],['quick','首頁快速入口'],['tools','暗區指揮官'],['season','新賽季'],['channels','社群頻道']];
+  const TABS = [['hero','主視覺'],['content','內容中心'],['quick','首頁快速入口'],['tools','暗區指揮官'],['season','新賽季'],['join','加入我們'],['channels','社群頻道']];
   const PREVIEW_KEY='compass-preview', CFG_KEY='compass-admin', TOKEN_KEY='compass-admin-token';
 
   // ================= 狀態 =================
@@ -227,11 +229,13 @@ input.bad{border-color:var(--red)}
     d.categories.forEach(c=>c.posts ||= []);
     d.season ||= {}; d.season.highlights ||= []; d.season.timeline ||= []; d.season.guides ||= [];
     d.hero ||= {}; ['image','imageMobile','video'].forEach(k=>d.hero[k] ??= '');
+    d.join ||= {}; d.join.intro ??= ''; d.join.roles ||= [];
     ['end','intro','video'].forEach(k=>d.season[k] ??= '');
     return d;
   }
   function listOf(id){
     if(id==='hero') return [data.hero];
+    if(id==='roles') return data.join.roles;
     if(id==='guides') return data.season.guides;
     if(id==='hl') return data.season.highlights;
     if(id==='tl') return data.season.timeline;
@@ -447,6 +451,11 @@ input.bad{border-color:var(--red)}
     else if(tab==='channels'){
       P.innerHTML = `<h2>社群頻道</h2><p class="desc">首頁「社群營地」、聯絡我們頁與頁尾共用。</p>`+renderList('channels',{addLabel:'新增頻道',titleKey:'name',subKey:'sub'});
     }
+    else if(tab==='join'){
+      P.innerHTML = `<h2>加入我們</h2><p class="desc">「加入我們」頁面的招募職缺。依這裡的順序顯示；沒有任何職缺時，頁面會顯示「目前沒有開放的職缺」。</p>
+        <div class="fields" style="margin-bottom:24px"><label class="f full">頁面簡介 <em>顯示在頁面標題下方</em><textarea data-join="intro">${esc(data.join.intro)}</textarea></label></div>
+        <h2 style="font-size:17px;margin:0 0 10px">招募職缺</h2>${renderList('roles',{collapsible:true,addLabel:'新增職缺'})}`;
+    }
     else if(tab==='hero'){
       const H=[{k:'image',l:'電腦版背景圖',t:'img',h:'建議 1920×1080 橫圖',full:1},
                {k:'imageMobile',l:'手機版背景圖',t:'img',h:'建議 1080×1920 直圖；留空時使用電腦版',full:1},
@@ -473,6 +482,7 @@ input.bad{border-color:var(--red)}
   const panel=$('#panel');
   panel.addEventListener('input',e=>{
     const el=e.target;
+    if(el.dataset.join){ data.join[el.dataset.join]=el.value; return setDirty(true); }
     if(el.dataset.season){ data.season[el.dataset.season]=el.value; return setDirty(true); }
     if(el.id==='seasonEnd'){ data.season.end = el.value ? `${el.value}:00+08:00` : ''; return setDirty(true); }
     if(!el.dataset.list) return;
