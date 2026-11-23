@@ -79,7 +79,7 @@ nav.top a[aria-current=page]{color:#fff}
 .drawer a{display:flex;align-items:center;justify-content:space-between;min-height:54px;padding:0 6px;font-family:var(--fd);font-size:20px;border-bottom:1px solid var(--line)}
 .drawer a[aria-current=page]{color:var(--or2)}
 .drawer .btn{margin-top:16px;border-bottom:1px solid var(--or-edge)}
-@media(max-width:980px){nav.top,.bar>.live,.bar>.vsep,.bar>.btn{display:none}.menu-btn{display:grid}}
+@media(max-width:1100px){nav.top,.bar>.live,.bar>.vsep,.bar>.btn{display:none}.menu-btn{display:grid}}
 /* 加入我們 */
 #joinIntro{white-space:pre-line}
 .roles{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
@@ -109,7 +109,7 @@ nav.top a[aria-current=page]{color:#fff}
 
 /* ===== 主視覺 ===== */
 /* 首屏：主視覺 2/3 + 快速入口 1/3 */
-.first{height:calc(100svh - var(--top));min-height:600px;max-height:1000px;display:grid;grid-template-rows:minmax(0,2fr) auto minmax(0,1fr)}
+.first{height:calc(100svh - var(--top));min-height:600px;max-height:1000px;display:grid;grid-template-rows:minmax(0,2fr) auto minmax(min-content,1fr)}
 .hero{position:relative;display:grid;place-items:center;text-align:center;overflow:hidden;isolation:isolate}
 .hero .kv{position:absolute;inset:0;width:100%;height:100%;z-index:-2}
 .hero::after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,rgba(11,12,14,0) 45%,var(--bg) 98%)}
@@ -130,8 +130,8 @@ nav.top a[aria-current=page]{color:#fff}
 .quick .wrap{display:grid;gap:14px}
 .quick .lbl{display:flex;align-items:center;gap:10px;font-family:var(--fd);font-size:13px;letter-spacing:.28em;color:var(--txt3)}
 .quick .lbl::after{content:"";flex:1;height:1px;background:var(--line)}
-.qgrid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:14px}
-.q{position:relative;display:flex;align-items:center;gap:14px;padding:18px;min-height:104px;background:linear-gradient(180deg,var(--panel2),var(--panel));border:1px solid var(--line2);transition:border-color .2s,transform .25s var(--ease)}
+.qgrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.q{position:relative;display:flex;align-items:center;gap:14px;padding:14px 18px;min-height:84px;background:linear-gradient(180deg,var(--panel2),var(--panel));border:1px solid var(--line2);transition:border-color .2s,transform .25s var(--ease)}
 .q::before{content:"";position:absolute;left:-1px;top:-1px;width:12px;height:12px;border-left:2px solid var(--or);border-top:2px solid var(--or);opacity:0;transition:opacity .2s}
 .q:hover{border-color:var(--line3);transform:translateY(-2px)}
 .q:hover::before{opacity:1}
@@ -147,13 +147,18 @@ nav.top a[aria-current=page]{color:#fff}
 .q .short{display:none}
 .q .ext{position:absolute;right:10px;top:10px;width:14px;height:14px;color:var(--txt3);transition:color .2s}
 .q:hover .ext{color:var(--or2)}
+.q[data-span="2"]{grid-column:span 2}.q[data-span="3"]{grid-column:span 3}.q[data-span="4"]{grid-column:1/-1}
+.q.wide{border-left:2px solid var(--or);background:linear-gradient(100deg,rgba(226,97,3,.16),transparent 55%),linear-gradient(180deg,var(--panel2),var(--panel))}
+.q.wide b{font-size:clamp(18px,2vw,24px);letter-spacing:.03em}
+.q.wide .qi{width:56px;height:56px}
 @media(max-width:1180px){
   .qgrid{gap:10px}
-  .q{flex-direction:column;justify-content:center;text-align:center;gap:10px;padding:14px 8px;min-height:0}
-  .q b{font-size:15px}.q small{display:none}
+  .q:not(.wide){flex-direction:column;justify-content:center;text-align:center;gap:10px;padding:14px 8px;min-height:0}
+  .q:not(.wide) b{font-size:15px}.q:not(.wide) small{display:none}
 }
 @media(max-width:560px){
   .quick .wrap{gap:10px}
+  .quick .lbl{display:none}
   .qgrid{gap:6px}
   .q{padding:12px 4px;gap:8px}
   .q .qi{width:42px;height:42px}.q .qi svg{width:22px;height:22px}
@@ -161,6 +166,12 @@ nav.top a[aria-current=page]{color:#fff}
   .q .long{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
   .q .short{display:inline}
   .q .ext{right:4px;top:4px;width:11px;height:11px}
+  .q.wide{padding:10px 12px;gap:10px}
+  .q.wide .qi{width:42px;height:42px}
+  .q.wide b{font-size:16px;white-space:normal}
+  .q.wide small{font-size:12px}
+  .q.wide .long{position:static;width:auto;height:auto;overflow:visible;clip:auto}
+  .q.wide .short{display:none}
   .first{min-height:540px}
   .hero p.lead{font-size:15px}
 }
@@ -494,6 +505,7 @@ nav.top a.brk::before,nav.top a.brk::after{display:none}
     <nav class="top" aria-label="主選單">
       <span class="nav-ind" aria-hidden="true"></span>
       <a class="brk" href="#home">首頁</a>
+      <a class="brk" href="#c2s1">C2S1 體驗服</a>
       <a class="brk" href="#c2s0">C2S0 新賽季</a>
       <a class="brk" href="#commander">暗區指揮官</a>
       <a class="brk" href="#join">加入我們</a>
@@ -509,6 +521,7 @@ nav.top a.brk::before,nav.top a.brk::after{display:none}
 </header>
 <nav class="drawer" id="drawer" aria-label="手機選單">
   <a href="#home">首頁 <span>›</span></a>
+  <a href="#c2s1">C2S1 體驗服專區 <span>›</span></a>
   <a href="#c2s0">C2S0 新賽季 <span>›</span></a>
   <a href="#commander">暗區指揮官 <span>›</span></a>
   <a href="#join">加入我們 <span>›</span></a>
@@ -638,6 +651,25 @@ nav.top a.brk::before,nav.top a.brk::after{display:none}
   </div></div>
 </section>
 
+<!-- ================= C2S1 體驗服專區 ================= -->
+<section data-page="c2s1">
+  <div class="page-hero">
+    <div class="wrap">
+      <span class="chip" id="c2s1Chip"></span>
+      <h1 id="c2s1Title"></h1>
+      <p id="c2s1Intro" style="white-space:pre-line"></p>
+    </div>
+  </div>
+  <div class="band" id="c2s1TlBand"><div class="wrap">
+    <div class="sec-h"><span class="ico"><svg><use href="#i-cal"/></svg></span><div><h2>體驗服時程</h2><small>TIMELINE</small></div></div>
+    <div class="timeline" id="c2s1Timeline" style="max-width:760px"></div>
+  </div></div>
+  <div class="band alt"><div class="wrap">
+    <div class="sec-h"><span class="ico"><svg><use href="#i-globe"/></svg></span><div><h2>體驗服情報</h2><small>BRIEFING</small></div></div>
+    <div class="cards cards-in" id="c2s1Cards"></div>
+  </div></div>
+</section>
+
 <!-- ================= 暗區指揮官 ================= -->
 <section data-page="commander">
   <div class="page-hero">
@@ -719,7 +751,7 @@ nav.top a.brk::before,nav.top a.brk::after{display:none}
         <a class="logo" href="#home"><svg aria-hidden="true"><use href="#logo"/></svg><span><b>暗區指南針</b><small>ARENA BREAKOUT HUB</small></span></a>
         <p style="color:var(--txt3);font-size:15px;margin:14px 0 0;max-width:24em">由玩家維護的暗區突圍社群入口網站，收錄攻略、工具與社群內容。</p>
       </div>
-      <div><h4>SITE</h4><ul><li><a href="#home">首頁</a></li><li><a href="#c2s0">C2S0 新賽季</a></li><li><a href="#commander">暗區指揮官</a></li><li><a href="#join">加入我們</a></li><li><a href="#contact">聯絡我們</a></li></ul></div>
+      <div><h4>SITE</h4><ul><li><a href="#home">首頁</a></li><li><a href="#c2s1">C2S1 體驗服專區</a></li><li><a href="#c2s0">C2S0 新賽季</a></li><li><a href="#commander">暗區指揮官</a></li><li><a href="#join">加入我們</a></li><li><a href="#contact">聯絡我們</a></li></ul></div>
       <div><h4>CONTENT</h4><ul id="footCats"></ul></div>
       <div><h4>COMMUNITY</h4><ul id="footChans"></ul></div>
     </div>
@@ -802,6 +834,21 @@ nav.top a.brk::before,nav.top a.brk::after{display:none}
     </article>`;
   }).join('') : '<div class="roles-empty">目前沒有開放的職缺，敬請期待。</div>';
 
+  // C2S1 體驗服專區
+  const C2S1 = D.c2s1 || {};
+  $('#c2s1Chip').textContent = C2S1.chip || 'C2S1 · 體驗服';
+  $('#c2s1Title').textContent = C2S1.title || 'C2S1 體驗服專區';
+  $('#c2s1Intro').textContent = C2S1.intro || '';
+  const C1TL = (C2S1.timeline||[]).filter(t=>t.date||t.label);
+  $('#c2s1TlBand').hidden = !C1TL.length;
+  $('#c2s1Timeline').innerHTML = C1TL.map(t=>`<div><b>${esc(t.date)}</b><span>${esc(t.label)}</span></div>`).join('');
+  const C1POSTS = (C2S1.posts||[]).filter(p=>p.title||p.img);
+  // 卡片要用到後面才定義的函式，所以在最後初始化時才產生（見 renderC2S1）
+  function renderC2S1(){
+    $('#c2s1Cards').innerHTML = C1POSTS.length ? C1POSTS.map((p,i)=>cardHTML(p,i,C2S1.tag||'體驗服')).join('') : '<div class="empty">目前還沒有體驗服情報，敬請期待。</div>';
+  }
+  $('#c2s1Cards').addEventListener('click',e=>{ const b=e.target.closest('[data-zoom]'); if(b) zoomCard(C1POSTS, C1POSTS[+b.dataset.zoom]); });
+
   // 新賽季頁：懶人包大圖
   const GUIDES = (SEASON.guides||[]).filter(g=>g.img);
   if (GUIDES.length) {
@@ -855,7 +902,8 @@ nav.top a.brk::before,nav.top a.brk::after{display:none}
     const attrs = ext ? `href="${esc(t.url)}" target="_blank" rel="noopener noreferrer"`
                 : sc  ? `href="#home" data-scroll="${esc(t.url.slice(7))}"`
                 : `href="${esc(t.url)}"`;
-    return `<a class="q${t.hot?' hot':''}" style="--i:${qi}" ${attrs}>
+    const span=Math.min(4,Math.max(1,parseInt(t.span,10)||1));
+    return `<a class="q${t.hot?' hot':''}${span>1?' wide':''}" data-span="${span}" style="--i:${qi}" ${attrs}>
       ${t.img?`<span class="qi logo"><img src="${esc(t.img)}" alt="" loading="lazy"></span>`:`<span class="qi">${ico(t.icon)}</span>`}
       <span><b><span class="long">${esc(t.title)}</span><span class="short" aria-hidden="true">${esc(t.short||t.title)}</span></b><small>${esc(t.sub)}</small></span>
       ${ext?'<svg class="ext" aria-hidden="true"><use href="#i-ext"/></svg><span class="sr">（另開新分頁）</span>':''}
@@ -894,20 +942,26 @@ nav.top a.brk::before,nav.top a.brk::after{display:none}
   }
   // 卡片點擊動作：link 開啟連結（預設）、image 放大圖片、none 不可點擊
   const cardAct = p => p.action==='image' && (p.zoom||p.img) ? 'image' : p.action==='none' ? 'none' : 'link';
-  const zoomList = () => (POSTS[cat]||[]).filter(p=>cardAct(p)==='image').map(p=>({img:p.zoom||p.img, caption:p.title}));
+  // 一張卡片（內容中心、C2S1 專區共用）；label 是左上角標籤，from 之前的卡片不播放進場動畫
+  function cardHTML(p,i,label,from=0){
+    const act=cardAct(p), cta=p.cta===undefined?'READ':p.cta;   // 舊資料沒有 cta 欄位時沿用 READ；空字串則不顯示
+    const cls=`card${i<from?' old':''}${act==='none'?' static':''}`, sty=`style="--i:${Math.max(0,i-from)}"`;
+    const inner=`
+      <div class="thumb">${p.img?`<img src="${esc(p.img)}" alt="" loading="lazy">`:ph(i)+'<span class="ph">16:9</span>'}${label?`<span class="cat">${esc(label)}</span>`:''}</div>
+      <div class="body"><h3>${esc(p.title)}</h3><p>${esc(p.sub)}</p><div class="meta"><span>${esc(p.date||'')}</span>${cta?`<i>${esc(cta)} ›</i>`:''}</div></div>`;
+    if(act==='image') return `<button type="button" class="${cls}" ${sty} data-zoom="${i}" aria-label="放大圖片：${esc(p.title)}">${inner}</button>`;
+    if(act==='none') return `<div class="${cls}" ${sty}>${inner}</div>`;
+    const ext=/^https?:/.test(p.url||'');
+    return `<a class="${cls}" ${sty} href="${esc(p.url)}" ${isTodo(p.url)?'data-todo':''} ${ext?'target="_blank" rel="noopener noreferrer"':''}>${inner}</a>`;
+  }
+  // 點「放大顯示圖片」的卡片：在同一組卡片中可左右切換
+  function zoomCard(list, p){
+    const zl=list.filter(x=>cardAct(x)==='image').map(x=>({img:x.zoom||x.img, caption:x.title}));
+    openLB(zl, Math.max(0, zl.findIndex(x=>x.img===(p.zoom||p.img))));
+  }
   function renderCards(){
     const all=POSTS[cat]||[], items=all.slice(0,shown);
-    cards.innerHTML = items.length ? items.map((p,i)=>{
-      const act=cardAct(p), cta=p.cta===undefined?'READ':p.cta;   // 舊資料沒有 cta 欄位時沿用 READ；空字串則不顯示
-      const cls=`card${i<animFrom?' old':''}${act==='none'?' static':''}`, sty=`style="--i:${Math.max(0,i-animFrom)}"`;
-      const inner=`
-        <div class="thumb">${p.img?`<img src="${esc(p.img)}" alt="" loading="lazy">`:ph(i)+'<span class="ph">16:9</span>'}<span class="cat">${esc(cat)}</span></div>
-        <div class="body"><h3>${esc(p.title)}</h3><p>${esc(p.sub)}</p><div class="meta"><span>${esc(p.date||'')}</span>${cta?`<i>${esc(cta)} ›</i>`:''}</div></div>`;
-      if(act==='image') return `<button type="button" class="${cls}" ${sty} data-zoom="${i}" aria-label="放大圖片：${esc(p.title)}">${inner}</button>`;
-      if(act==='none') return `<div class="${cls}" ${sty}>${inner}</div>`;
-      const ext=/^https?:/.test(p.url||'');
-      return `<a class="${cls}" ${sty} href="${esc(p.url)}" ${isTodo(p.url)?'data-todo':''} ${ext?'target="_blank" rel="noopener noreferrer"':''}>${inner}</a>`;
-    }).join('') : '<div class="empty">此分類目前沒有內容</div>';
+    cards.innerHTML = items.length ? items.map((p,i)=>cardHTML(p,i,cat,animFrom)).join('') : '<div class="empty">此分類目前沒有內容</div>';
     moreBtn.hidden = shown>=all.length;
     count.textContent = all.length ? `${items.length} / ${all.length}` : '';
   }
@@ -915,8 +969,7 @@ nav.top a.brk::before,nav.top a.brk::after{display:none}
   tabs.addEventListener('click',e=>{ const b=e.target.closest('button'); if(b) setCat(b.dataset.c); });
   cards.addEventListener('click',e=>{
     const b=e.target.closest('[data-zoom]'); if(!b) return;
-    const p=(POSTS[cat]||[])[+b.dataset.zoom], list=zoomList();
-    openLB(list, Math.max(0, list.findIndex(x=>x.img===(p.zoom||p.img))));
+    const list=POSTS[cat]||[]; zoomCard(list, list[+b.dataset.zoom]);
   });
   tabs.addEventListener('keydown',e=>{
     if(!['ArrowLeft','ArrowRight'].includes(e.key)) return;
@@ -969,7 +1022,7 @@ nav.top a.brk::before,nav.top a.brk::after{display:none}
   });
 
   // 路由
-  const PAGES=['home','c2s0','commander','join','contact'];
+  const PAGES=['home','c2s1','c2s0','commander','join','contact'];
   let routed=false;
   function route(top=true){
     const h=location.hash.slice(1), p=PAGES.includes(h)?h:'home';
@@ -1115,7 +1168,7 @@ nav.top a.brk::before,nav.top a.brk::after{display:none}
     requestAnimationFrame(step);
   }
 
-  renderTabs(); renderCards(); route();
+  renderTabs(); renderCards(); renderC2S1(); route();
 }
 </script>
 </body>

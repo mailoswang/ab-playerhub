@@ -7,13 +7,34 @@ window.SITE_DATA = {
   },
   "quick": [
     {
+      "span": "3",
+      "icon": "star",
+      "title": "C2S1 體驗服專區",
+      "short": "C2S1 體驗服",
+      "sub": "測試時程、體驗服情報一次看",
+      "url": "#c2s1",
+      "hot": false,
+      "img": ""
+    },
+    {
+      "icon": "flag",
+      "title": "C2S0 新賽季",
+      "short": "C2S0",
+      "sub": "C2S0 重點與時程",
+      "url": "#c2s0",
+      "hot": false,
+      "img": "",
+      "span": "1"
+    },
+    {
       "icon": "globe",
       "title": "內容中心",
       "short": "內容中心",
       "sub": "活動、資訊、公告、社群",
       "url": "scroll:feed",
       "hot": false,
-      "img": ""
+      "img": "",
+      "span": "1"
     },
     {
       "icon": "wallet",
@@ -22,7 +43,8 @@ window.SITE_DATA = {
       "sub": "儲值工具 · midasbuy.com",
       "url": "https://www.midasbuy.com/midasbuy/hk/shop/uamo?from=self#/pages/shop/items",
       "hot": false,
-      "img": "images/logo-midasbuy.jpg"
+      "img": "images/logo-midasbuy.jpg",
+      "span": "1"
     },
     {
       "icon": "wallet",
@@ -31,16 +53,8 @@ window.SITE_DATA = {
       "sub": "儲值工具 · buffbuff.com",
       "url": "https://buffbuff.com/zh-tw/top-up/arena-breakout",
       "hot": false,
-      "img": "images/logo-buffbuff.png"
-    },
-    {
-      "icon": "flag",
-      "title": "新賽季情報",
-      "short": "新賽季",
-      "sub": "C2S0 重點與時程",
-      "url": "#c2s0",
-      "hot": false,
-      "img": ""
+      "img": "images/logo-buffbuff.png",
+      "span": "1"
     },
     {
       "icon": "users",
@@ -49,7 +63,8 @@ window.SITE_DATA = {
       "sub": "導師、創作者、版主招募中",
       "url": "#join",
       "hot": false,
-      "img": ""
+      "img": "",
+      "span": "1"
     }
   ],
   "tools": [
@@ -312,6 +327,58 @@ window.SITE_DATA = {
         "how": "",
         "url": "",
         "btn": ""
+      }
+    ]
+  },
+  "c2s1": {
+    "chip": "C2S1 · 體驗服",
+    "title": "C2S1 體驗服專區",
+    "tag": "體驗服",
+    "intro": "C2S1 體驗服的測試時程與最新情報整理。\n內容會隨官方公告持續更新。",
+    "timeline": [
+      {
+        "date": "日期待補",
+        "label": "體驗服招募開始"
+      },
+      {
+        "date": "日期待補",
+        "label": "體驗服開放測試"
+      },
+      {
+        "date": "日期待補",
+        "label": "體驗服結束"
+      }
+    ],
+    "posts": [
+      {
+        "title": "情報標題 1",
+        "sub": "情報摘要，例如新地圖、新武器、系統調整",
+        "date": "",
+        "img": "",
+        "action": "link",
+        "cta": "READ",
+        "url": "",
+        "zoom": ""
+      },
+      {
+        "title": "情報標題 2",
+        "sub": "情報摘要，例如新地圖、新武器、系統調整",
+        "date": "",
+        "img": "",
+        "action": "link",
+        "cta": "READ",
+        "url": "",
+        "zoom": ""
+      },
+      {
+        "title": "情報標題 3",
+        "sub": "情報摘要，例如新地圖、新武器、系統調整",
+        "date": "",
+        "img": "",
+        "action": "link",
+        "cta": "READ",
+        "url": "",
+        "zoom": ""
       }
     ]
   }
