@@ -7,7 +7,7 @@ window.SITE_DATA = {
   },
   "quick": [
     {
-      "span": "3",
+      "span": "2",
       "icon": "star",
       "title": "C2S1 體驗服專區",
       "short": "C2S1 體驗服",
@@ -22,6 +22,16 @@ window.SITE_DATA = {
       "short": "C2S0",
       "sub": "C2S0 重點與時程",
       "url": "#c2s0",
+      "hot": false,
+      "img": "",
+      "span": "1"
+    },
+    {
+      "icon": "gift",
+      "title": "Li PASS",
+      "short": "LiPASS",
+      "sub": "一站式安全帳號與福利系統",
+      "url": "https://pass.levelinfinite.com/?lang=zh-TW",
       "hot": false,
       "img": "",
       "span": "1"
