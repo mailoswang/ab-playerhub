@@ -1,5 +1,10 @@
 // 由後台 admin.html 產生與更新；也可以直接手動編輯（需維持合法 JSON 格式）
 window.SITE_DATA = {
+  "hero": {
+    "image": "",
+    "imageMobile": "",
+    "video": ""
+  },
   "quick": [
     {
       "icon": "globe",

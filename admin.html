@@ -207,7 +207,7 @@ input.bad{border-color:var(--red)}
     hl:{title:'新重點',desc:''},
     tl:{date:'',label:''},
   };
-  const TABS = [['content','內容中心'],['quick','首頁快速入口'],['tools','暗區指揮官'],['season','新賽季'],['channels','社群頻道']];
+  const TABS = [['hero','主視覺'],['content','內容中心'],['quick','首頁快速入口'],['tools','暗區指揮官'],['season','新賽季'],['channels','社群頻道']];
   const PREVIEW_KEY='compass-preview', CFG_KEY='compass-admin', TOKEN_KEY='compass-admin-token';
 
   // ================= 狀態 =================
@@ -224,10 +224,12 @@ input.bad{border-color:var(--red)}
     d.quick ||= []; d.tools ||= []; d.channels ||= []; d.categories ||= [];
     d.categories.forEach(c=>c.posts ||= []);
     d.season ||= {}; d.season.highlights ||= []; d.season.timeline ||= [];
+    d.hero ||= {}; ['image','imageMobile','video'].forEach(k=>d.hero[k] ??= '');
     ['end','intro','video'].forEach(k=>d.season[k] ??= '');
     return d;
   }
   function listOf(id){
+    if(id==='hero') return [data.hero];
     if(id==='hl') return data.season.highlights;
     if(id==='tl') return data.season.timeline;
     if(id==='cats') return data.categories;
@@ -440,6 +442,13 @@ input.bad{border-color:var(--red)}
     }
     else if(tab==='channels'){
       P.innerHTML = `<h2>社群頻道</h2><p class="desc">首頁「社群營地」、聯絡我們頁與頁尾共用。</p>`+renderList('channels',{addLabel:'新增頻道',titleKey:'name',subKey:'sub'});
+    }
+    else if(tab==='hero'){
+      const H=[{k:'image',l:'電腦版背景圖',t:'img',h:'建議 1920×1080 橫圖',full:1},
+               {k:'imageMobile',l:'手機版背景圖',t:'img',h:'建議 1080×1920 直圖；留空時使用電腦版',full:1},
+               {k:'video',l:'背景影片',h:'選填。mp4 路徑（例如 images/kv.mp4）或網址；有影片時優先播放，圖片會當作載入前的預覽',full:1}];
+      P.innerHTML = `<h2>主視覺</h2><p class="desc">首頁最上方的背景。都留空時顯示預設的羅盤插畫；設定後，煙霧與進場動畫會疊在圖片上。請只使用你有權使用的素材。</p>
+        <div class="fields">${H.map(f=>field('hero',0,f,data.hero[f.k])).join('')}</div>`;
     }
     else if(tab==='season'){
       const s=data.season, endLocal=(s.end.match(/^\d{4}-\d\d-\d\dT\d\d:\d\d/)||[''])[0];
