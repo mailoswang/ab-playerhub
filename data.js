@@ -309,7 +309,8 @@ window.SITE_DATA = {
         "img": "images/discord-1566771079865835631.webp",
         "caption": ""
       }
-    ]
+    ],
+    "heroImg": "images/20261124-004000-bg.jpg"
   },
   "join": {
     "intro": "暗區指南針由一群熱愛暗區的玩家共同經營。\n如果你也想一起讓社群變得更好，歡迎加入我們！",
