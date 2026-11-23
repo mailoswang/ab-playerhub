@@ -260,6 +260,8 @@ input.bad{border-color:var(--red)}
     if(id==='roles') return data.join.roles;
     if(id==='c2s1tl') return data.c2s1.timeline;
     if(id==='c2s1posts') return data.c2s1.posts;
+    if(id==='seasonobj') return [data.season];
+    if(id==='c2s1obj') return [data.c2s1];
     if(id==='guides') return data.season.guides;
     if(id==='hl') return data.season.highlights;
     if(id==='tl') return data.season.timeline;
@@ -378,7 +380,7 @@ input.bad{border-color:var(--red)}
     const {list,i,k} = uploadTarget;
     toast('圖片上傳中…');
     try{
-      const big = list==='guides'||list==='hero'||list==='hl';
+      const big = ['guides','hero','hl','seasonobj','c2s1obj'].includes(list);
       const f = await shrink(file, big?2400:1600, big?.92:.85);
       if(f.size>8*1024*1024) throw new Error('圖片太大（超過 8MB）');
       const ext=(f.name.match(/\.\w+$/)||['.jpg'])[0].toLowerCase();
@@ -490,6 +492,7 @@ input.bad{border-color:var(--red)}
           <label class="f">標題上方標籤<input type="text" data-c2s1="chip" value="${esc(c.chip)}" placeholder="C2S1 · 體驗服"></label>
           <label class="f">卡片左上角標籤<input type="text" data-c2s1="tag" value="${esc(c.tag)}" placeholder="體驗服"></label>
           <label class="f full">頁面簡介<textarea data-c2s1="intro">${esc(c.intro)}</textarea></label>
+          ${field('c2s1obj',0,{k:'heroImg',l:'標題區背景圖',t:'img',h:'選填，淡淡地顯示在頁面標題後方；建議橫圖 1920×600 以上',full:1},c.heroImg)}
         </div>
         <h2 style="font-size:17px;margin:0 0 10px">體驗服時程</h2>${renderList('c2s1tl',{addLabel:'新增時程',titleKey:'label',subKey:'date'})}
         <h2 style="font-size:17px;margin:28px 0 10px">體驗服情報卡片</h2>${renderList('c2s1posts',{collapsible:true,addLabel:'新增卡片',addTop:true,subKey:'date'})}`;
@@ -513,6 +516,7 @@ input.bad{border-color:var(--red)}
           <label class="f">賽季結束時間 <em>台灣時間，用於倒數；留空顯示 --</em><input type="datetime-local" id="seasonEnd" value="${esc(endLocal)}"></label>
           <label class="f">賽季影片 <em>YouTube 網址，留空顯示佔位</em><input type="text" data-season="video" value="${esc(s.video)}" spellcheck="false"></label>
           <label class="f full">賽季簡介<textarea data-season="intro">${esc(s.intro)}</textarea></label>
+          ${field('seasonobj',0,{k:'heroImg',l:'標題區背景圖',t:'img',h:'選填，淡淡地顯示在頁面標題後方；建議橫圖 1920×600 以上',full:1},s.heroImg)}
         </div>
         <h2 style="font-size:17px;margin:0 0 4px">賽季懶人包</h2><p class="desc" style="margin-bottom:10px">顯示在「賽季重點」上方的大圖，可放多張，依這裡的順序排列；沒有圖片時整個區塊會隱藏。</p>${renderList('guides',{addLabel:'新增圖片',titleKey:'caption'})}
         <h2 style="font-size:17px;margin:28px 0 10px">賽季重點</h2>${renderList('hl',{addLabel:'新增重點'})}

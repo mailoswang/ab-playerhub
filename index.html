@@ -254,6 +254,12 @@ button.card{width:100%;padding:0;font:inherit;color:inherit;text-align:left;curs
 
 /* ===== 內頁 ===== */
 .page-hero{position:relative;padding:clamp(56px,8vw,110px) 0 clamp(36px,5vw,56px);border-bottom:1px solid var(--line);overflow:hidden;background:radial-gradient(70% 120% at 80% 0%,rgba(226,97,3,.18),transparent 60%),linear-gradient(180deg,#14171a,var(--bg))}
+/* 內頁標題區背景圖（後台設定）：淡淡地融入，左側與底部漸暗以保持文字清楚 */
+.page-hero .wrap{position:relative;z-index:1}
+.pg-bg{position:absolute;inset:0;z-index:0;opacity:.35;pointer-events:none}
+.pg-bg img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 30%;animation:kvIn 1.6s var(--ease) both}
+.pg-bg::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,var(--bg) 0%,rgba(11,12,14,.82) 30%,rgba(11,12,14,.25) 70%,rgba(11,12,14,.45) 100%),linear-gradient(180deg,rgba(11,12,14,.2) 0%,transparent 40%,var(--bg) 100%)}
+@media(max-width:700px){.pg-bg{opacity:.3}.pg-bg::after{background:linear-gradient(180deg,rgba(11,12,14,.55) 0%,rgba(11,12,14,.75) 55%,var(--bg) 100%)}}
 .page-hero h1{margin:16px 0 10px;font-family:"Noto Sans TC",sans-serif;font-weight:900;font-size:clamp(36px,5.4vw,64px);line-height:1.05;letter-spacing:.04em}
 .page-hero p{margin:0;color:var(--txt2);max-width:38em}
 #seasonIntro{white-space:pre-line}
@@ -816,6 +822,14 @@ nav.top a.brk::before,nav.top a.brk::after{display:none}
     </article>`;
   }).join('') : '<div class="roles-empty">目前沒有開放的職缺，敬請期待。</div>';
 
+  // 內頁標題區背景圖
+  function pageBg(page, url){
+    const ph=$(`[data-page="${page}"] .page-hero`); if(!ph || !url) return;
+    ph.insertAdjacentHTML('afterbegin', `<div class="pg-bg" aria-hidden="true"><img src="${esc(url)}" alt="" decoding="async"></div>`);
+  }
+  pageBg('c2s0', SEASON.heroImg);
+  pageBg('c2s1', (D.c2s1||{}).heroImg);
+
   // C2S1 體驗服專區
   const C2S1 = D.c2s1 || {};
   $('#c2s1Chip').textContent = C2S1.chip || 'C2S1 · 體驗服';
@@ -852,13 +866,16 @@ nav.top a.brk::before,nav.top a.brk::after{display:none}
   const HL_IMGS = HL.map((h,i)=>({img:h.img, caption:h.title, i})).filter(x=>x.img);
   $('#highlights').innerHTML = HL.map((h,i)=>`<div class="box"><div class="n">${String(i+1).padStart(2,'0')}</div><h3>${esc(h.title)}</h3><p class="hl-d">${esc(h.desc)}</p><button type="button" class="hl-more" aria-expanded="false"><span>展開全文</span> <i aria-hidden="true">▾</i></button>${
       h.img ? `<button type="button" class="hl-img" data-hlimg="${i}" aria-label="放大檢視：${esc(h.title)}"><img src="${esc(h.img)}" alt="${esc(h.title)}" loading="lazy" decoding="async"><span class="zoom" aria-hidden="true">⤢ 放大</span></button>`
-      : HL_IMGS.length ? '<span class="hl-img empty" aria-hidden="true"></span>' : ''}</div>`).join('');
+      : ''}</div>`).join('');
   // 折疊：只有在頁面顯示時才量得到高度，所以換頁、縮放、字型載入後都重新判斷
   function foldHL(){
+    // 有些重點有圖片、有些沒有時：沒圖片的卡片把圖片那塊高度拿來多顯示文字，卡片仍然一樣高
+    const anyImg=$('#highlights .hl-img'), imgH=anyImg && anyImg.offsetParent ? anyImg.offsetHeight + parseFloat(getComputedStyle(anyImg).marginTop) : 0;
     $$('#highlights .box').forEach(b=>{
       const d=b.querySelector('.hl-d'); if(!d.offsetParent) return;
+      const lim=parseFloat(getComputedStyle(d).lineHeight)*6 + (b.querySelector('.hl-img') ? 0 : imgH);
+      d.style.setProperty('--clamp', lim+'px');
       if(b.classList.contains('open')){ d.style.maxHeight=d.scrollHeight+'px'; return; }
-      const lim=parseFloat(getComputedStyle(d).lineHeight)*6;
       b.classList.toggle('long', d.scrollHeight > lim + 4);
     });
     $('#highlights').classList.toggle('has-long', !!$('#highlights .box.long'));
