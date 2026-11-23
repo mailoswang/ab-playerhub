@@ -192,13 +192,13 @@ input.bad{border-color:var(--red)}
   const ICONS = {globe:'地球（內容）',wallet:'錢包（儲值）',flag:'旗幟（賽季）',cmd:'羅盤（指揮官）',map:'地圖',gun:'槍械',book:'書本（教學）',task:'清單（任務）',coin:'趨勢（物價）',cal:'日曆',gift:'禮物（兌換）',star:'星星',grid:'格狀',users:'人群（社群）',play:'播放',ext:'外連'};
   const LINK_HINT = '站內：#c2s0、#commander、#contact、scroll:feed；外部：https://…';
   const SCHEMA = {
-    quick:    [{k:'title',l:'名稱'},{k:'short',l:'手機短名稱',h:'建議 4 字內'},{k:'sub',l:'說明'},{k:'icon',l:'圖示',t:'icon'},{k:'url',l:'連結',t:'link',full:1},{k:'img',l:'自訂圖示圖片',t:'img',h:'有圖片時會取代上方的圖示，建議正方形',full:1},{k:'hot',l:'橘色強調',t:'bool'}],
-    tools:    [{k:'title',l:'名稱'},{k:'sub',l:'說明'},{k:'icon',l:'圖示',t:'icon'},{k:'badge',l:'角標',h:'例如 NEW，可留空'},{k:'url',l:'連結',t:'link',full:1}],
+    quick:    [{k:'title',l:'名稱'},{k:'short',l:'手機短名稱',h:'建議 4 字內'},{k:'sub',l:'說明',t:'area'},{k:'icon',l:'圖示',t:'icon'},{k:'url',l:'連結',t:'link',full:1},{k:'img',l:'自訂圖示圖片',t:'img',h:'有圖片時會取代上方的圖示，建議正方形',full:1},{k:'hot',l:'橘色強調',t:'bool'}],
+    tools:    [{k:'title',l:'名稱'},{k:'sub',l:'說明',t:'area'},{k:'icon',l:'圖示',t:'icon'},{k:'badge',l:'角標',h:'例如 NEW，可留空'},{k:'url',l:'連結',t:'link',full:1}],
     posts:    [{k:'title',l:'標題',full:1},{k:'sub',l:'小標題 / 摘要',t:'area',full:1},{k:'date',l:'日期',h:'例如 2026.11.23'},{k:'url',l:'連結',t:'link'},{k:'img',l:'封面圖（16:9）',t:'img',full:1}],
-    channels: [{k:'name',l:'名稱'},{k:'k',l:'圖示文字',h:'1 個字，例如 D'},{k:'sub',l:'說明'},{k:'url',l:'連結',t:'link',h:'網址或 mailto:信箱'}],
-    guides:   [{k:'img',l:'圖片',t:'img',h:'長圖也可以，會依原比例完整顯示',full:1},{k:'caption',l:'說明文字',h:'選填，顯示在圖片下方',full:1}],
+    channels: [{k:'name',l:'名稱'},{k:'k',l:'圖示文字',h:'1 個字，例如 D'},{k:'sub',l:'說明',t:'area'},{k:'url',l:'連結',t:'link',h:'網址或 mailto:信箱'}],
+    guides:   [{k:'img',l:'圖片',t:'img',h:'長圖也可以，會依原比例完整顯示',full:1},{k:'caption',l:'說明文字',t:'area',h:'選填，顯示在圖片下方',full:1}],
     hl:       [{k:'title',l:'標題'},{k:'desc',l:'說明',t:'area',h:'按 Enter 換行；超過 6 行會自動折疊',full:1},{k:'img',l:'圖片',t:'img',h:'選填，顯示在說明下方，點擊可放大',full:1}],
-    tl:       [{k:'date',l:'日期'},{k:'label',l:'事件'}],
+    tl:       [{k:'date',l:'日期'},{k:'label',l:'事件',t:'area'}],
   };
   const BLANK = {
     quick:{icon:'globe',title:'新入口',short:'',sub:'',url:'',img:'',hot:false},

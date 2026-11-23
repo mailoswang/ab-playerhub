@@ -84,7 +84,7 @@ nav.top a[aria-current=page]{color:#fff}
 
 /* ===== 主視覺 ===== */
 /* 首屏：主視覺 2/3 + 快速入口 1/3 */
-.first{height:calc(100svh - var(--top));min-height:600px;max-height:1000px;display:grid;grid-template-rows:minmax(0,2fr) minmax(0,1fr)}
+.first{height:calc(100svh - var(--top));min-height:600px;max-height:1000px;display:grid;grid-template-rows:minmax(0,2fr) auto minmax(0,1fr)}
 .hero{position:relative;display:grid;place-items:center;text-align:center;overflow:hidden;isolation:isolate}
 .hero .kv{position:absolute;inset:0;width:100%;height:100%;z-index:-2}
 .hero::after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,rgba(11,12,14,0) 45%,var(--bg) 98%)}
@@ -330,7 +330,29 @@ footer ul a:hover{color:var(--or2)}
 .bt small span{color:var(--or2)}
 .bt .bar{width:220px;height:2px;background:var(--line2);overflow:hidden}
 .bt .bar i{display:block;height:100%;background:var(--or);box-shadow:0 0 8px var(--or2);transform:scaleX(0);transform-origin:left}
-.booting .hero,.booting .hero *,.booting .quick,.booting .quick *{animation-play-state:paused!important}
+.booting .hero,.booting .hero *,.booting .quick,.booting .quick *,.booting .ticker,.booting .ticker *{animation-play-state:paused!important}
+/* 保留後台輸入的換行 */
+.card h3,.card p,.tool b,.tool span,.q small,.chan b,.chan span,.timeline b,.timeline span,.box h3,.guide figcaption,#lb .lb-cap{white-space:pre-line}
+
+/* 首頁跑馬燈：內容中心各分類前兩篇 */
+.ticker{position:relative;display:flex;align-items:stretch;height:44px;background:#0d0f11;border-top:1px solid var(--line2);overflow:hidden;animation:fadeIn .8s ease 1.05s both}
+.ticker .tk-tag{flex:none;display:flex;align-items:center;gap:8px;padding:0 16px 0 max(16px,calc((100% - 1400px)/2));background:var(--or);color:#fff;font-weight:700;font-size:14px;letter-spacing:.06em;position:relative;z-index:1}
+.ticker .tk-tag::after{content:"";position:absolute;right:-12px;top:0;bottom:0;width:12px;background:var(--or);clip-path:polygon(0 0,100% 50%,0 100%)}
+.ticker .tk-tag i{width:7px;height:7px;background:#fff;animation:tkBlink 1.2s steps(2,start) infinite}
+@keyframes tkBlink{to{visibility:hidden}}
+.ticker .tk-view{flex:1;min-width:0;overflow:hidden;display:flex;align-items:center;padding-left:24px;-webkit-mask-image:linear-gradient(90deg,transparent,#000 40px,#000 calc(100% - 40px),transparent);mask-image:linear-gradient(90deg,transparent,#000 40px,#000 calc(100% - 40px),transparent)}
+.ticker .tk-track{display:flex;flex:none;white-space:nowrap;animation:tkScroll var(--tk-dur,40s) linear infinite;will-change:transform}
+.ticker:hover .tk-track,.ticker:focus-within .tk-track{animation-play-state:paused}
+@keyframes tkScroll{to{transform:translate3d(-50%,0,0)}}
+.ticker .tk-group{display:flex;flex:none}
+.tk-item{display:inline-flex;align-items:center;height:44px;padding:0 28px 0 0;color:#dfe3e6;font-size:15px}
+.tk-item b{color:var(--or2);font-weight:700}
+.tk-item .sep{color:var(--txt3);margin:0 .35em}
+.tk-item:hover span{color:#fff;text-decoration:underline;text-underline-offset:4px}
+.tk-item::after{content:"◆";margin-left:28px;color:var(--line3);font-size:9px}
+@media(max-width:560px){.ticker{height:40px}.tk-item{height:40px;font-size:14px}.ticker .tk-tag{font-size:13px;padding:0 12px}.ticker .tk-view{padding-left:18px}}
+@media(prefers-reduced-motion:reduce){.ticker .tk-view{overflow-x:auto;-webkit-mask-image:none;mask-image:none}.ticker .tk-group+.tk-group{display:none}}
+
 
 /* 主視覺進場 */
 .hero .kv{transform:translate3d(calc(var(--px,0)*-18px),calc(var(--py,0)*-12px),0) scale(1.05);transition:transform .8s var(--ease)}
@@ -506,6 +528,12 @@ nav.top a.brk::before,nav.top a.brk::after{display:none}
       <div class="slogan"><span class="sl-t">撤離之前，先找方向</span></div>
       <p class="lead">攻略、工具、活動、社群創作，一個入口全部直達。給每一位進入暗區的先鋒。</p>
     </div>
+  </div>
+
+  <!-- 跑馬燈：內容中心各分類前兩篇 -->
+  <div class="ticker" id="ticker" role="region" aria-label="最新消息" hidden>
+    <span class="tk-tag"><i aria-hidden="true"></i>最新消息</span>
+    <div class="tk-view"><div class="tk-track" id="tkTrack"></div></div>
   </div>
 
   <!-- 快速入口（首屏下方 1/3） -->
@@ -820,6 +848,34 @@ nav.top a.brk::before,nav.top a.brk::after{display:none}
 
   // 尚未提供連結的項目：點了不跳頁
   document.addEventListener('click',e=>{ const a=e.target.closest('[data-todo]'); if(a) e.preventDefault(); });
+
+  // 跑馬燈：每個分類取前兩篇，格式「分類丨標題」
+  const TK = CATS.flatMap(c=>(POSTS[c]||[]).slice(0,2).filter(p=>p.title).map(p=>({cat:c, ...p})));
+  const tkTrack=$('#tkTrack');
+  function tkItems(hidden){
+    return TK.map(p=>{
+      const t=esc(String(p.title).replace(/\s*\n\s*/g,' '));
+      const link = isTodo(p.url) ? `href="#home" data-jump="${esc(p.cat)}"`
+                 : /^https?:/.test(p.url) ? `href="${esc(p.url)}" target="_blank" rel="noopener noreferrer"` : `href="${esc(p.url)}"`;
+      return `<a class="tk-item" ${link} ${hidden?'tabindex="-1"':''}><b>${esc(p.cat)}</b><span class="sep">丨</span><span>${t}</span></a>`;
+    }).join('');
+  }
+  function buildTicker(){
+    if(!TK.length) return;
+    $('#ticker').hidden=false;
+    const view=tkTrack.parentElement;
+    // 一組內容不夠寬時重複，讓捲動時不會出現空白
+    let reps=1; tkTrack.innerHTML=`<div class="tk-group">${tkItems()}</div>`;
+    const one=tkTrack.firstElementChild.scrollWidth||1;
+    if(view.clientWidth) reps=Math.max(1,Math.ceil(view.clientWidth/one));
+    const group=Array.from({length:reps},()=>tkItems()).join('');
+    tkTrack.innerHTML=`<div class="tk-group">${group}</div><div class="tk-group" aria-hidden="true">${Array.from({length:reps},()=>tkItems(true)).join('')}</div>`;
+    const w=tkTrack.firstElementChild.scrollWidth;
+    tkTrack.style.setProperty('--tk-dur', Math.max(12, w/70).toFixed(1)+'s');   // 約每秒 70px
+  }
+  buildTicker();
+  if(document.fonts) document.fonts.ready.then(buildTicker);
+  let tkRT; addEventListener('resize',()=>{ clearTimeout(tkRT); tkRT=setTimeout(buildTicker,200); });
 
   // 頁內捲動 / 頁尾分類捷徑
   document.addEventListener('click',e=>{
