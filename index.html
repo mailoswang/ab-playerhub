@@ -4,12 +4,26 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>暗區指南針</title>
-<meta name="description" content="暗區突圍社群入口網站：攻略、工具、活動與社群內容一站直達。">
+<meta name="description" content="暗區突圍玩家社群入口：攻略懶人包、體驗服情報、活動公告、儲值入口與社群招募，一站直達。">
+<meta name="theme-color" content="#0b0c0e">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="icon" href="favicon-192.png" type="image/png" sizes="192x192">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="暗區指南針">
+<meta property="og:title" content="暗區指南針｜暗區突圍玩家社群入口">
+<meta property="og:description" content="攻略懶人包、體驗服情報、活動公告、儲值入口與社群招募，一站直達。撤離之前，先找方向。">
+<meta property="og:url" content="https://ab-playerhub.online/">
+<meta property="og:image" content="https://ab-playerhub.online/og-image.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="zh_TW">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Roboto+Condensed:wght@400;500;700&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
 <script>
-try{if(!sessionStorage.getItem('compass-boot')&&!matchMedia('(prefers-reduced-motion: reduce)').matches&&!/[?&]preview/.test(location.search))document.documentElement.classList.add('booting')}catch(e){}
+try{if(localStorage.getItem('compass-boot-day')!==new Date().toDateString()&&!matchMedia('(prefers-reduced-motion: reduce)').matches&&!/[?&]preview/.test(location.search))document.documentElement.classList.add('booting')}catch(e){}
 </script>
 <style>
 /* 視覺語言參考官方站與社群活動站：近黑底、鐵灰面板、暗區橘；
@@ -20,7 +34,7 @@ try{if(!sessionStorage.getItem('compass-boot')&&!matchMedia('(prefers-reduced-mo
   --bg:#0b0c0e;--bg2:#121417;--panel:#14171a;--panel2:#1b1f23;--field:#0c0e10;
   --line:rgba(200,215,225,.085);--line2:rgba(200,215,225,.17);--line3:rgba(210,222,230,.32);
   --txt:#f5f5f5;--txt2:#aab3ba;--txt3:#7b8389;
-  --or:#e26103;--or2:#ff733a;--or-edge:#ff8a4f;--or-ink:#121210;
+  --or:#e26103;--or-d:#c24f00;--or2:#ff733a;--or-edge:#ff8a4f;--or-ink:#121210;
   --green:#3fbf7f;
   --fd:"Oswald","Noto Sans TC","Arial Narrow",sans-serif;
   --fb:"Roboto Condensed","Noto Sans TC","Arial Narrow",Arial,sans-serif;
@@ -36,6 +50,9 @@ img{display:block;max-width:100%}
 button{font:inherit;color:inherit}
 .wrap{width:var(--wrap);margin:0 auto}
 .fd{font-family:var(--fd);letter-spacing:.02em}
+.skip{position:fixed;left:12px;top:-60px;z-index:200;padding:10px 16px;background:var(--or-d);color:#fff;font-weight:700;transition:top .2s}
+.skip:focus{top:12px}
+#main:focus{outline:none}
 :focus-visible{outline:2px solid var(--or2);outline-offset:3px}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 
@@ -120,7 +137,7 @@ nav.top a[aria-current=page]{color:#fff}
 .ember{position:absolute;bottom:-10px;width:3px;height:3px;background:var(--or2);box-shadow:0 0 6px var(--or2);z-index:-1;animation:rise linear infinite;opacity:0}
 @keyframes rise{0%{transform:translate(0,0);opacity:0}10%{opacity:.9}100%{transform:translate(var(--dx),-80vh);opacity:0}}
 .hero-in{padding:12px 0;width:min(880px,calc(100% - 32px))}
-.chip{display:inline-flex;align-items:center;gap:8px;padding:6px 18px;background:var(--or);border:1px solid var(--or-edge);color:#fff;font-weight:700;font-size:15px;letter-spacing:.04em}
+.chip{display:inline-flex;align-items:center;gap:8px;padding:6px 18px;background:var(--or-d);border:1px solid var(--or-edge);color:#fff;font-weight:700;font-size:15px;letter-spacing:.04em}
 .hero h1{margin:18px 0 6px;font-family:"Noto Sans TC",sans-serif;font-weight:900;font-size:clamp(34px,5.6vw,68px);line-height:1;letter-spacing:.08em;text-shadow:0 6px 30px rgba(0,0,0,.6)}
 .hero .slogan{display:inline-flex;align-items:center;gap:12px;margin:10px 0 0;font-family:var(--fd);font-size:clamp(15px,1.8vw,20px);letter-spacing:.2em;color:#e9ecee}
 .hero .slogan::before,.hero .slogan::after{content:"";width:8px;height:30px;border:1.5px solid var(--txt2)}
@@ -217,7 +234,11 @@ nav.top a[aria-current=page]{color:#fff}
 .tool span{display:block;color:var(--txt3);font-size:14px;line-height:1.4;margin-top:2px}
 .tool .arr{margin-left:auto;color:var(--txt3);transition:color .2s,transform .2s}
 .tool:hover .arr{color:var(--or2);transform:translateX(3px)}
-.tool .badge{position:absolute;right:-1px;top:-10px;background:var(--or);color:#fff;font-size:11px;font-weight:700;padding:1px 8px}
+.tool.soon{cursor:default;opacity:.7}
+.tool.soon:hover{transform:none;border-color:var(--line2)}
+.tool.soon:hover::before{opacity:0}
+.tool .soon-tag{margin-left:auto;flex:none;font-style:normal;font-size:12px;color:var(--txt3);border:1px solid var(--line2);padding:2px 8px}
+.tool .badge{position:absolute;right:-1px;top:-10px;background:var(--or-d);color:#fff;font-size:11px;font-weight:700;padding:1px 8px}
 @media(max-width:560px){.tool{flex-direction:column;align-items:flex-start;gap:12px;padding:16px}.tool .arr{display:none}.tool b{font-size:16px}.tool span{font-size:13px}}
 
 /* 內容中心 */
@@ -236,7 +257,7 @@ nav.top a[aria-current=page]{color:#fff}
 .thumb{position:relative;aspect-ratio:16/9;overflow:hidden;background:var(--panel2)}
 .thumb svg,.thumb img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .5s var(--ease)}
 .card:hover .thumb svg,.card:hover .thumb img{transform:scale(1.04)}
-.thumb .cat{position:absolute;left:0;top:12px;background:var(--or);color:#fff;font-size:13px;font-weight:700;padding:2px 12px}
+.thumb .cat{position:absolute;left:0;top:12px;background:var(--or-d);color:#fff;font-size:13px;font-weight:700;padding:2px 12px}
 .thumb .ph{position:absolute;right:10px;bottom:8px;font-size:12px;color:var(--txt3);font-family:var(--fd);letter-spacing:.1em}
 .card .body{padding:16px 18px 18px;display:flex;flex-direction:column;gap:6px;flex:1}
 .card h3{margin:0;font-size:19px;line-height:1.35;font-weight:700}
@@ -357,7 +378,7 @@ input:focus,select:focus,textarea:focus{border-color:var(--or2);outline:none}
 footer{border-top:1px solid var(--line2);background:#08090a;padding:56px 0 calc(32px + env(safe-area-inset-bottom))}
 .fgrid{display:grid;grid-template-columns:1.6fr repeat(3,minmax(0,1fr));gap:32px}
 @media(max-width:760px){.fgrid{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}.fgrid>div:first-child{grid-column:1/-1}}
-footer h4{margin:0 0 14px;font-family:var(--fd);font-weight:500;font-size:14px;letter-spacing:.2em;color:var(--txt3)}
+footer h2{margin:0 0 14px;font-family:var(--fd);font-weight:500;font-size:14px;letter-spacing:.2em;color:var(--txt3)}
 footer ul{list-style:none;margin:0;padding:0;display:grid;gap:8px}
 footer ul a{color:var(--txt2);font-size:15px}
 footer ul a:hover{color:var(--or2)}
@@ -387,7 +408,7 @@ footer ul a:hover{color:var(--or2)}
 #boot.out{clip-path:inset(0 0 100% 0)}
 .bt{position:relative;display:grid;justify-items:center;gap:14px;text-align:center}
 .bt svg{width:96px;height:96px}
-.bt .needle{transform-box:view-box;transform-origin:50% 50%;animation:needle 1.25s cubic-bezier(.2,.7,.3,1) both}
+.bt .needle{transform-box:view-box;transform-origin:50% 50%;animation:needle .9s cubic-bezier(.2,.7,.3,1) both}
 @keyframes needle{0%{transform:rotate(-220deg)}70%{transform:rotate(380deg)}85%{transform:rotate(348deg)}100%{transform:rotate(360deg)}}
 .bt b{font-family:"Noto Sans TC",sans-serif;font-weight:900;font-size:26px;letter-spacing:.2em;animation:spaceIn .9s var(--ease) both}
 .bt small{font-family:var(--fd);font-size:12px;letter-spacing:.3em;color:var(--txt3)}
@@ -400,8 +421,8 @@ footer ul a:hover{color:var(--or2)}
 
 /* 首頁跑馬燈：內容中心各分類前兩篇 */
 .ticker{position:relative;display:flex;align-items:stretch;height:44px;background:#0d0f11;border-top:1px solid var(--line2);overflow:hidden;animation:fadeIn .8s ease 1.05s both}
-.ticker .tk-tag{flex:none;display:flex;align-items:center;gap:8px;padding:0 16px 0 max(16px,calc((100% - 1400px)/2));background:var(--or);color:#fff;font-weight:700;font-size:14px;letter-spacing:.06em;position:relative;z-index:1}
-.ticker .tk-tag::after{content:"";position:absolute;right:-12px;top:0;bottom:0;width:12px;background:var(--or);clip-path:polygon(0 0,100% 50%,0 100%)}
+.ticker .tk-tag{flex:none;display:flex;align-items:center;gap:8px;padding:0 16px 0 max(16px,calc((100% - 1400px)/2));background:var(--or-d);color:#fff;font-weight:700;font-size:14px;letter-spacing:.06em;position:relative;z-index:1}
+.ticker .tk-tag::after{content:"";position:absolute;right:-12px;top:0;bottom:0;width:12px;background:var(--or-d);clip-path:polygon(0 0,100% 50%,0 100%)}
 .ticker .tk-tag i{width:7px;height:7px;background:#fff;animation:tkBlink 1.2s steps(2,start) infinite}
 @keyframes tkBlink{to{visibility:hidden}}
 .ticker .tk-view{flex:1;min-width:0;overflow:hidden;display:flex;align-items:center;padding-left:24px;-webkit-mask-image:linear-gradient(90deg,transparent,#000 40px,#000 calc(100% - 40px),transparent);mask-image:linear-gradient(90deg,transparent,#000 40px,#000 calc(100% - 40px),transparent)}
@@ -499,6 +520,7 @@ nav.top a.brk::before,nav.top a.brk::after{display:none}
   </defs>
 </svg>
 
+<a class="skip" href="#" data-skip>跳到主要內容</a>
 <header>
   <div class="wrap bar">
     <a class="logo" href="#home" aria-label="暗區指南針 首頁">
@@ -533,7 +555,7 @@ nav.top a.brk::before,nav.top a.brk::after{display:none}
   <a class="btn pri" href="https://arenabreakout.com/" target="_blank" rel="noopener noreferrer"><svg><use href="#i-ext"/></svg>官方網站</a>
 </nav>
 
-<main>
+<main id="main" tabindex="-1">
 <!-- ================= 首頁 ================= -->
 <section data-page="home">
  <div class="first">
@@ -616,7 +638,6 @@ nav.top a.brk::before,nav.top a.brk::after{display:none}
       <div class="sec-h">
         <span class="ico"><svg><use href="#i-globe"/></svg></span>
         <div><h2>內容中心</h2><small>CONTENT HUB</small></div>
-        <a class="more" href="#" data-todo>更多 <i>+</i></a>
       </div>
       <div class="tabs" role="tablist" id="tabs"></div>
       <div class="cards" id="cards" role="tabpanel"></div>
@@ -730,7 +751,7 @@ nav.top a.brk::before,nav.top a.brk::after{display:none}
     <div class="wrap">
       <span class="chip">CONTACT</span>
       <h1>有問題，找指南針</h1>
-      <p>合作洽詢、內容投稿、錯誤回報都歡迎。說明文字待補。</p>
+      <p id="contactIntro" style="white-space:pre-line"></p>
     </div>
   </div>
   <div class="band"><div class="wrap cols">
@@ -771,9 +792,9 @@ nav.top a.brk::before,nav.top a.brk::after{display:none}
         <a class="logo" href="#home"><svg aria-hidden="true"><use href="#logo"/></svg><span><b>暗區指南針</b><small>ARENA BREAKOUT HUB</small></span></a>
         <p style="color:var(--txt3);font-size:15px;margin:14px 0 0;max-width:24em">由玩家維護的暗區突圍社群入口網站，收錄攻略、工具與社群內容。</p>
       </div>
-      <div><h4>SITE</h4><ul><li><a href="#home">首頁</a></li><li><a href="#c2s1">C2S1 體驗服專區</a></li><li><a href="#c2s0">C2S0 新賽季</a></li><li><a href="#commander">暗區指揮官</a></li><li><a href="#join">加入我們</a></li><li><a href="#contact">聯絡我們</a></li></ul></div>
-      <div><h4>CONTENT</h4><ul id="footCats"></ul></div>
-      <div><h4>COMMUNITY</h4><ul id="footChans"></ul></div>
+      <div><h2>SITE</h2><ul><li><a href="#home">首頁</a></li><li><a href="#c2s1">C2S1 體驗服專區</a></li><li><a href="#c2s0">C2S0 新賽季</a></li><li><a href="#commander">暗區指揮官</a></li><li><a href="#join">加入我們</a></li><li><a href="#contact">聯絡我們</a></li></ul></div>
+      <div><h2>CONTENT</h2><ul id="footCats"></ul></div>
+      <div><h2>COMMUNITY</h2><ul id="footChans"></ul></div>
     </div>
     <div class="legal">
       <span>© 2026 暗區指南針 · 非官方社群網站</span>
@@ -803,6 +824,8 @@ nav.top a.brk::before,nav.top a.brk::after{display:none}
   const esc = s=>String(s ?? '').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
   const ico = id=>`<svg aria-hidden="true"><use href="#i-${id}"/></svg>`;
   const isTodo = u=>!u || u==='#';
+  // 連結只接受 https://、http://、#、mailto:、scroll: 或站內相對路徑；其他（例如 javascript:）一律改成 #
+  const safeHref = u=>{ u=String(u??'').trim(); return esc(/^(https?:\/\/|#|mailto:|scroll:)/i.test(u) || (u && !/^[a-z][a-z0-9+.-]*:/i.test(u)) ? u : '#'); };
 
   // 主視覺圖片 / 影片
   const HERO = D.hero || {};
@@ -844,7 +867,7 @@ nav.top a.brk::before,nav.top a.brk::after{display:none}
     const ext = /^https?:/.test(r.url||'');
     const btn = !open ? '<span class="tbd">目前暫停招募</span>'
       : isTodo(r.url) ? '<span class="tbd">加入連結即將公布</span>'
-      : `<a class="btn pri" href="${esc(r.url)}" ${ext?'target="_blank" rel="noopener noreferrer"':''}>${esc(r.btn||'立即加入')} ›</a>`;
+      : `<a class="btn pri" href="${safeHref(r.url)}" ${ext?'target="_blank" rel="noopener noreferrer"':''}>${esc(r.btn||'立即加入')} ›</a>`;
     return `<article class="role${open?'':' off'}">
       <div class="role-top"><span class="n">${String(i+1).padStart(2,'0')}</span><span class="role-st"><i></i>${open?'招募中':'暫停招募'}</span></div>
       <h3>${esc(r.title)}</h3>
@@ -930,9 +953,9 @@ nav.top a.brk::before,nav.top a.brk::after{display:none}
   // 首頁快速入口
   $('#quickGrid').innerHTML = QUICK.map((t,qi)=>{
     const ext=/^https?:/.test(t.url), sc=t.url.startsWith('scroll:');
-    const attrs = ext ? `href="${esc(t.url)}" target="_blank" rel="noopener noreferrer"`
+    const attrs = ext ? `href="${safeHref(t.url)}" target="_blank" rel="noopener noreferrer"`
                 : sc  ? `href="#home" data-scroll="${esc(t.url.slice(7))}"`
-                : `href="${esc(t.url)}"`;
+                : `href="${safeHref(t.url)}"`;
     const span=Math.min(4,Math.max(1,parseInt(t.span,10)||1));
     // 寬圖片只在 2 格以上的方塊使用
     const wimg = span>1 && t.wideImg ? t.wideImg : '', wmode = t.wideMode==='icon' ? 'icon' : 'bg';
@@ -948,20 +971,20 @@ nav.top a.brk::before,nav.top a.brk::after{display:none}
 
   // 暗區指揮官工具
   $('#toolGrid').innerHTML = TOOLS.map(t=>`
-    <a class="tool" href="${esc(t.url)}" ${isTodo(t.url)?'data-todo':''}>
+    ${isTodo(t.url) ? `<div class="tool soon">` : `<a class="tool" href="${safeHref(t.url)}" ${/^https?:/.test(t.url)?'target="_blank" rel="noopener noreferrer"':''}>`}
       ${t.badge?`<span class="badge">${esc(t.badge)}</span>`:''}
       <span class="ti">${ico(t.icon)}</span>
       <span><b>${esc(t.title)}</b><span>${esc(t.sub)}</span></span>
-      <svg class="arr" width="20" height="20" aria-hidden="true"><use href="#i-arrow"/></svg>
-    </a>`).join('');
+      ${isTodo(t.url) ? '<em class="soon-tag">即將推出</em>' : '<svg class="arr" width="20" height="20" aria-hidden="true"><use href="#i-arrow"/></svg>'}
+    ${isTodo(t.url) ? '</div>' : '</a>'}`).join('');
 
   // 社群頻道
   const chanHTML = CHANNELS.map(c=>`
-    <a class="chan" href="${esc(c.url)}" ${isTodo(c.url)?'data-todo':''}>
+    <a class="chan" href="${safeHref(c.url)}" ${isTodo(c.url)?'data-todo':''}>
       <span class="ci">${esc(c.k)}</span><span><b>${esc(c.name)}</b><span>${esc(c.sub)}</span></span><span class="arr">›</span>
     </a>`).join('');
   $('#chans').innerHTML = chanHTML; $('#chans2').innerHTML = chanHTML;
-  $('#footChans').innerHTML = CHANNELS.map(c=>`<li><a href="${esc(c.url)}" ${isTodo(c.url)?'data-todo':''}>${esc(c.name)}</a></li>`).join('');
+  $('#footChans').innerHTML = CHANNELS.map(c=>`<li><a href="${safeHref(c.url)}" ${isTodo(c.url)?'data-todo':''}>${esc(c.name)}</a></li>`).join('');
   $('#footCats').innerHTML = CATS.map(c=>`<li><a href="#home" data-jump="${esc(c)}">${esc(c)}</a></li>`).join('');
 
   // 內容中心
@@ -974,7 +997,7 @@ nav.top a.brk::before,nav.top a.brk::after{display:none}
     <path d="M0 ${78-i%2*5} Q50 ${64} 100 ${72} T160 ${66} V90H0Z" fill="#16191c"/>
     <circle cx="${120-i%3*22}" cy="26" r="10" fill="#e26103" fill-opacity=".16"/></svg>`;
   function renderTabs(){
-    tabs.innerHTML = CATS.map(c=>`<button role="tab" aria-selected="${c===cat}" data-c="${esc(c)}">${esc(c)}<sup>${(POSTS[c]||[]).length}</sup></button>`).join('');
+    tabs.innerHTML = CATS.map(c=>`<button role="tab" aria-selected="${c===cat}" aria-controls="cards" tabindex="${c===cat?0:-1}" data-c="${esc(c)}">${esc(c)}<sup>${(POSTS[c]||[]).length}</sup></button>`).join('');
   }
   // 卡片點擊動作：link 開啟連結（預設）、image 放大圖片、none 不可點擊
   const cardAct = p => p.action==='image' && (p.zoom||p.img) ? 'image' : p.action==='none' ? 'none' : 'link';
@@ -988,7 +1011,7 @@ nav.top a.brk::before,nav.top a.brk::after{display:none}
     if(act==='image') return `<button type="button" class="${cls}" ${sty} data-zoom="${i}" aria-label="放大圖片：${esc(p.title)}">${inner}</button>`;
     if(act==='none') return `<div class="${cls}" ${sty}>${inner}</div>`;
     const ext=/^https?:/.test(p.url||'');
-    return `<a class="${cls}" ${sty} href="${esc(p.url)}" ${isTodo(p.url)?'data-todo':''} ${ext?'target="_blank" rel="noopener noreferrer"':''}>${inner}</a>`;
+    return `<a class="${cls}" ${sty} href="${safeHref(p.url)}" ${isTodo(p.url)?'data-todo':''} ${ext?'target="_blank" rel="noopener noreferrer"':''}>${inner}</a>`;
   }
   // 點「放大顯示圖片」的卡片：在同一組卡片中可左右切換
   function zoomCard(list, p){
@@ -1014,6 +1037,9 @@ nav.top a.brk::before,nav.top a.brk::after{display:none}
   });
   moreBtn.addEventListener('click',()=>{ animFrom=shown; shown+=STEP; renderCards(); });
 
+  // 跳到主要內容（網址用 # 切頁，所以用程式移動焦點）
+  $('[data-skip]').addEventListener('click',e=>{ e.preventDefault(); const m=$('#main'); m.focus(); m.scrollIntoView(); });
+
   // 尚未提供連結的項目：點了不跳頁
   document.addEventListener('click',e=>{ const a=e.target.closest('[data-todo]'); if(a) e.preventDefault(); });
 
@@ -1024,7 +1050,7 @@ nav.top a.brk::before,nav.top a.brk::after{display:none}
     return TK.map(p=>{
       const t=esc(String(p.title).replace(/\s*\n\s*/g,' '));
       const link = isTodo(p.url) ? `href="#home" data-jump="${esc(p.cat)}"`
-                 : /^https?:/.test(p.url) ? `href="${esc(p.url)}" target="_blank" rel="noopener noreferrer"` : `href="${esc(p.url)}"`;
+                 : /^https?:/.test(p.url) ? `href="${safeHref(p.url)}" target="_blank" rel="noopener noreferrer"` : `href="${safeHref(p.url)}"`;
       return `<a class="tk-item" ${link} ${hidden?'tabindex="-1"':''}><b>${esc(p.cat)}</b><span class="sep">丨</span><span>${t}</span></a>`;
     }).join('');
   }
@@ -1062,6 +1088,8 @@ nav.top a.brk::before,nav.top a.brk::after{display:none}
   let routed=false;
   function route(top=true){
     const h=location.hash.slice(1), p=PAGES.includes(h)?h:'home';
+    const PT={c2s1:(D.c2s1&&D.c2s1.title)||'C2S1 體驗服專區', c2s0:'C2S0 新賽季', commander:'暗區指揮官', join:'加入我們', contact:'聯絡我們'};
+    document.title = p==='home' ? '暗區指南針｜暗區突圍玩家社群入口' : `${PT[p]}｜暗區指南針`;
     $$('[data-page]').forEach(s=>s.classList.toggle('on',s.dataset.page===p));
     $$('nav a').forEach(a=>{ const cur=a.getAttribute('href')==='#'+p && !a.dataset.scroll; cur?a.setAttribute('aria-current','page'):a.removeAttribute('aria-current'); });
     if(top) window.scrollTo(0,0);
@@ -1084,6 +1112,7 @@ nav.top a.brk::before,nav.top a.brk::after{display:none}
   // 表單（示意）
   // 留言表單：直接送到 Google 表單（後台「聯絡我們」設定網址、欄位代號與類型選項）
   const CONTACT = D.contact || {}, CE = CONTACT.entries || {};
+  $('#contactIntro').textContent = CONTACT.intro || '合作洽詢、錯誤回報或任何建議，都歡迎透過下方表單或社群頻道與我們聯絡。';
   const gfUrl = String(CONTACT.formUrl||'').trim();
   const gfReady = /^https:\/\/docs\.google\.com\/forms\/d\/e\/[\w-]+\//.test(gfUrl) && CE.name && CE.mail && CE.type && CE.msg;
   $('#f-type').innerHTML = (CONTACT.types && CONTACT.types.length ? CONTACT.types : ['其他']).map(t=>`<option>${esc(t)}</option>`).join('');
@@ -1107,7 +1136,7 @@ nav.top a.brk::before,nav.top a.brk::after{display:none}
       setTimeout(()=>{ sendBtn.disabled=false; sendBtn.textContent='送出'; },15000);   // 避免連續重複送出
       return;
     }catch(err){
-      say(`送出失敗，請稍後再試，或<a href="${esc(gfUrl)}" target="_blank" rel="noopener noreferrer">直接開啟留言表單</a>填寫。`, true);
+      say(`送出失敗，請稍後再試，或<a href="${safeHref(gfUrl)}" target="_blank" rel="noopener noreferrer">直接開啟留言表單</a>填寫。`, true);
     }
     sendBtn.disabled=false; sendBtn.textContent='送出';
   });
@@ -1218,8 +1247,8 @@ nav.top a.brk::before,nav.top a.brk::after{display:none}
   // 開機畫面（每個工作階段第一次進站時）
   const root=document.documentElement, boot=$('#boot');
   if(root.classList.contains('booting')){
-    try{ sessionStorage.setItem('compass-boot','1'); }catch{}
-    const bar=$('#btBar'), pct=$('#btPct'), D=1300, t0=performance.now();
+    try{ localStorage.setItem('compass-boot-day', new Date().toDateString()); }catch{}
+    const bar=$('#btBar'), pct=$('#btPct'), D=850, t0=performance.now();
     const ease=k=>1-Math.pow(1-k,3);
     const step=t=>{
       const k=Math.min(1,(t-t0)/D), v=ease(k);

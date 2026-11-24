@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
 <title>暗區指南針 · 後台</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -199,7 +200,7 @@ input.bad{border-color:var(--red)}
 </main>
 
 <div id="toast" role="status" aria-live="polite"></div>
-<input type="file" id="fileInput" accept="image/*" hidden>
+<input type="file" id="fileInput" accept="image/png,image/jpeg,image/webp,image/gif" hidden>
 
 <script src="data.js"></script>
 <script>
@@ -377,6 +378,7 @@ input.bad{border-color:var(--red)}
   }
   $('#fileInput').addEventListener('change', async e=>{
     const file=e.target.files[0]; e.target.value=''; if(!file||!uploadTarget) return;
+    if(!/^image\/(png|jpeg|webp|gif)$/.test(file.type)) return toast('只接受 PNG、JPG、WebP、GIF 圖片（基於安全考量不接受 SVG）','err',6000);
     if(!sha) return toast('上傳圖片需要先連線到 GitHub','err');
     const {list,i,k} = uploadTarget;
     toast('圖片上傳中…');
@@ -503,6 +505,7 @@ input.bad{border-color:var(--red)}
       const entry=(k,l)=>`<label class="f">${l}<input type="text" data-contact="entry.${k}" value="${esc(en[k])}" placeholder="entry.123456789" spellcheck="false"></label>`;
       P.innerHTML = `<h2>聯絡我們</h2><p class="desc">「聯絡我們」頁面的留言表單會直接送到 Google 表單，留言可在該表單連結的 Google 試算表查看。</p>
         <div class="fields">
+          <label class="f full">頁面說明 <em>顯示在「聯絡我們」標題下方</em><textarea data-contact="intro">${esc(c.intro||'')}</textarea></label>
           <label class="f full">Google 表單網址 <em>表單「傳送」→ 連結，格式 https://docs.google.com/forms/d/e/…/viewform</em><input type="text" data-contact="formUrl" value="${esc(c.formUrl)}" spellcheck="false"></label>
           <label class="f full">類型選項 <em>一行一個；必須和 Google 表單「類型」題目的選項完全相同，否則該筆留言會被 Google 拒收</em><textarea data-contact="types" style="min-height:110px">${esc((c.types||[]).join('\n'))}</textarea></label>
         </div>
@@ -548,7 +551,7 @@ input.bad{border-color:var(--red)}
       const k=el.dataset.contact;
       if(k==='types') data.contact.types=el.value.split('\n').map(x=>x.trim()).filter(Boolean);
       else if(k.startsWith('entry.')) data.contact.entries[k.slice(6)]=el.value.trim();
-      else data.contact[k]=el.value.trim();
+      else data.contact[k]= k==='intro' ? el.value : el.value.trim();
       return setDirty(true);
     }
     if(el.dataset.join){ data.join[el.dataset.join]=el.value; return setDirty(true); }
