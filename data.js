@@ -67,14 +67,26 @@ window.SITE_DATA = {
       "span": "1"
     },
     {
-      "icon": "users",
-      "title": "加入我們",
-      "short": "加入我們",
-      "sub": "導師、創作者、版主招募中",
+      "icon": "video",
+      "title": "成為創作者",
+      "short": "成為創作者",
+      "sub": "暗區創作者招募中",
       "url": "#join",
       "hot": false,
       "img": "",
       "span": "1"
+    },
+    {
+      "span": "1",
+      "wideImg": "",
+      "wideMode": "bg",
+      "icon": "userplus",
+      "title": "成為精英導師",
+      "short": "成為導師",
+      "sub": "暗區精英導師招募中",
+      "url": "#join",
+      "img": "",
+      "hot": false
     }
   ],
   "tools": [
