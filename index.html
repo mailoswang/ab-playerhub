@@ -129,7 +129,7 @@ nav.top a[aria-current=page]{color:#fff}
 .first{display:grid;grid-template-rows:auto auto auto}
 .hero{position:relative;display:grid;place-items:center;text-align:center;overflow:hidden;isolation:isolate;height:clamp(240px,34svh,400px)}
 /* 雷達：以標題為中心，完整的圓（高度比主視覺略大，上下會稍微裁切） */
-.radar{position:absolute;left:50%;top:50%;height:150%;aspect-ratio:1;z-index:-1;pointer-events:none;transform:translate(-50%,-50%) translate3d(calc(var(--px,0)*-10px),calc(var(--py,0)*-8px),0);transition:transform .8s var(--ease)}
+.radar{position:absolute;left:50%;top:50%;height:150%;aspect-ratio:1;z-index:-1;pointer-events:none;transform:translate(-50%,-50%)}
 .radar .blip{opacity:0;animation:blip 6s ease-out infinite;animation-delay:var(--d,0s)}
 @keyframes blip{0%{opacity:0}4%{opacity:1}40%{opacity:.15}100%{opacity:0}}
 .hero .kv{position:absolute;inset:0;width:100%;height:100%;z-index:-2}
@@ -440,14 +440,14 @@ footer ul a:hover{color:var(--or2)}
 
 
 /* 主視覺進場 */
-.hero .kv{transform:translate3d(calc(var(--px,0)*-18px),calc(var(--py,0)*-12px),0) scale(1.05);transition:transform .8s var(--ease)}
+.hero .kv{transform:scale(1.05)}
 /* 主視覺圖片 / 影片（由後台設定；沒設定時顯示插畫背景） */
-.hero-media{position:absolute;inset:0;z-index:-2;overflow:hidden;transform:translate3d(calc(var(--px,0)*-14px),calc(var(--py,0)*-10px),0) scale(1.06);transition:transform .8s var(--ease)}
+.hero-media{position:absolute;inset:0;z-index:-2;overflow:hidden;transform:scale(1.06)}
 .hero-media img,.hero-media video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;animation:kvIn 2.2s var(--ease) both}
 .hero-media::after{content:"";position:absolute;inset:0;background:radial-gradient(80% 70% at 50% 55%,rgba(11,12,14,.25),rgba(11,12,14,.7))}
 @keyframes kvIn{from{opacity:0;transform:scale(1.08)}to{opacity:1;transform:none}}
 .hero.has-media .kv{opacity:.35}
-.hero-in{position:relative;transform:translate3d(calc(var(--px,0)*8px),calc(var(--py,0)*6px),0);transition:transform .8s var(--ease)}
+.hero-in{position:relative}
 .hero .dial{transform-box:view-box;transform-origin:50% 50%;animation:dialIn 1.8s var(--ease) both}
 .hero .ping{transform-box:fill-box;transform-origin:center;animation:ping 2.2s ease-out infinite}
 .hero .chip{animation:clipIn .6s cubic-bezier(.7,0,.2,1) .15s both}
@@ -1232,17 +1232,6 @@ nav.top a.brk::before,nav.top a.brk::after{display:none}
     });
     io.observe($('#cards'));
   } else $('#cards').classList.add('cards-in');
-
-  // 主視覺：滑鼠視差
-  if(!REDUCED && matchMedia('(pointer: fine)').matches){
-    const hero=$('.hero'); let raf=0;
-    hero.addEventListener('pointermove',e=>{
-      const r=hero.getBoundingClientRect(), x=(e.clientX-r.left)/r.width-.5, y=(e.clientY-r.top)/r.height-.5;
-      cancelAnimationFrame(raf);
-      raf=requestAnimationFrame(()=>{ hero.style.setProperty('--px',x.toFixed(3)); hero.style.setProperty('--py',y.toFixed(3)); });
-    });
-    hero.addEventListener('pointerleave',()=>{ hero.style.setProperty('--px',0); hero.style.setProperty('--py',0); });
-  }
 
   // 開機畫面（每個工作階段第一次進站時）
   const root=document.documentElement, boot=$('#boot');
