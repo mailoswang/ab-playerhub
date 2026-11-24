@@ -23,7 +23,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Roboto+Condensed:wght@400;500;700&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
 <script>
-try{if(localStorage.getItem('compass-boot-day')!==new Date().toDateString()&&!matchMedia('(prefers-reduced-motion: reduce)').matches&&!/[?&]preview/.test(location.search))document.documentElement.classList.add('booting')}catch(e){}
+try{if(!matchMedia('(prefers-reduced-motion: reduce)').matches&&!/[?&]preview/.test(location.search))document.documentElement.classList.add('booting')}catch(e){}
 </script>
 <style>
 /* 視覺語言參考官方站與社群活動站：近黑底、鐵灰面板、暗區橘；
@@ -408,7 +408,7 @@ footer ul a:hover{color:var(--or2)}
 #boot.out{clip-path:inset(0 0 100% 0)}
 .bt{position:relative;display:grid;justify-items:center;gap:14px;text-align:center}
 .bt svg{width:96px;height:96px}
-.bt .needle{transform-box:view-box;transform-origin:50% 50%;animation:needle .9s cubic-bezier(.2,.7,.3,1) both}
+.bt .needle{transform-box:view-box;transform-origin:50% 50%;animation:needle 1.25s cubic-bezier(.2,.7,.3,1) both}
 @keyframes needle{0%{transform:rotate(-220deg)}70%{transform:rotate(380deg)}85%{transform:rotate(348deg)}100%{transform:rotate(360deg)}}
 .bt b{font-family:"Noto Sans TC",sans-serif;font-weight:900;font-size:26px;letter-spacing:.2em;animation:spaceIn .9s var(--ease) both}
 .bt small{font-family:var(--fd);font-size:12px;letter-spacing:.3em;color:var(--txt3)}
@@ -1247,8 +1247,7 @@ nav.top a.brk::before,nav.top a.brk::after{display:none}
   // 開機畫面（每個工作階段第一次進站時）
   const root=document.documentElement, boot=$('#boot');
   if(root.classList.contains('booting')){
-    try{ localStorage.setItem('compass-boot-day', new Date().toDateString()); }catch{}
-    const bar=$('#btBar'), pct=$('#btPct'), D=850, t0=performance.now();
+    const bar=$('#btBar'), pct=$('#btPct'), D=1300, t0=performance.now();
     const ease=k=>1-Math.pow(1-k,3);
     const step=t=>{
       const k=Math.min(1,(t-t0)/D), v=ease(k);
