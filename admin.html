@@ -210,7 +210,7 @@ input.bad{border-color:var(--red)}
   const icoSvg = id=>`<svg aria-hidden="true"><use href="#i-${esc(ICONS[id]?id:'grid')}"/></svg>`;
   const LINK_HINT = '站內：#c2s0、#commander、#contact、scroll:feed；外部：https://…';
   const SCHEMA = {
-    quick:    [{k:'span',l:'寬度',t:'select',h:'首頁一排 4 格',opts:{'1':'1 格','2':'2 格','3':'3 格','4':'整排'}},{k:'title',l:'名稱'},{k:'short',l:'手機短名稱',h:'建議 4 字內'},{k:'sub',l:'說明',t:'area'},{k:'icon',l:'圖示',t:'icon'},{k:'url',l:'連結',t:'link',full:1},{k:'img',l:'自訂圖示圖片',t:'img',h:'有圖片時會取代上方的圖示，建議正方形',full:1},{k:'hot',l:'橘色強調',t:'bool'}],
+    quick:    [{k:'span',l:'寬度',t:'select',h:'首頁一排 4 格',opts:{'1':'1 格','2':'2 格','3':'3 格','4':'整排'}},{k:'title',l:'名稱'},{k:'short',l:'手機短名稱',h:'建議 4 字內'},{k:'sub',l:'說明',t:'area'},{k:'icon',l:'圖示',t:'icon'},{k:'url',l:'連結',t:'link',full:1},{k:'img',l:'自訂圖示圖片',t:'img',h:'有圖片時會取代上方的圖示，建議正方形',full:1},{k:'wideImg',l:'寬圖片（寬度 2 格以上才會顯示）',t:'img',h:'建議橫圖，例如 1200×400',full:1},{k:'wideMode',l:'寬圖片顯示方式',t:'select',opts:{bg:'漸變融入背景（保留圖示與文字）',icon:'取代原本的圖示'}},{k:'hot',l:'橘色強調',t:'bool'}],
     tools:    [{k:'title',l:'名稱'},{k:'sub',l:'說明',t:'area'},{k:'icon',l:'圖示',t:'icon'},{k:'badge',l:'角標',h:'例如 NEW，可留空'},{k:'url',l:'連結',t:'link',full:1}],
     posts:    [{k:'title',l:'標題',full:1},{k:'sub',l:'小標題 / 摘要',t:'area',full:1},{k:'date',l:'日期',h:'例如 2026.11.23'},{k:'img',l:'封面圖（16:9）',t:'img',full:1},
                {k:'action',l:'點擊卡片時',t:'select',opts:{link:'開啟連結',image:'放大顯示圖片',none:'不動作（卡片不可點擊）'}},{k:'cta',l:'按鈕文字',h:'例如 閱讀全文、查看大圖；留空不顯示箭頭'},
@@ -222,7 +222,7 @@ input.bad{border-color:var(--red)}
     tl:       [{k:'date',l:'日期'},{k:'label',l:'事件',t:'area'}],
   };
   const BLANK = {
-    quick:{span:'1',icon:'globe',title:'新入口',short:'',sub:'',url:'',img:'',hot:false},
+    quick:{span:'1',wideImg:'',wideMode:'bg',icon:'globe',title:'新入口',short:'',sub:'',url:'',img:'',hot:false},
     tools:{icon:'map',title:'新工具',sub:'',url:'',badge:''},
     posts:{title:'新文章',sub:'',date:'',img:'',action:'link',cta:'READ',url:'',zoom:''},
     channels:{k:'?',name:'新頻道',sub:'',url:''},
@@ -476,7 +476,7 @@ input.bad{border-color:var(--red)}
         :'<div class="empty">尚未建立分類</div>'}`;
     }
     else if(tab==='quick'){
-      P.innerHTML = `<h2>首頁快速入口</h2><p class="desc">首頁主視覺下方的入口，建議維持 5 個以內，手機上會排成一列。</p>`+renderList('quick',{addLabel:'新增入口',subKey:'sub'});
+      P.innerHTML = `<h2>首頁快速入口</h2><p class="desc">首頁主視覺下方的入口。一排 4 格，超過會自動排到下一排；可用「寬度」讓某一格佔 2～3 格或整排。</p>`+renderList('quick',{addLabel:'新增入口',subKey:'sub'});
     }
     else if(tab==='tools'){
       P.innerHTML = `<h2>暗區指揮官</h2><p class="desc">「暗區指揮官」頁面的工具格。連結留空時，點擊不會跳轉。</p>`+renderList('tools',{collapsible:true,addLabel:'新增工具',subKey:'sub'});
