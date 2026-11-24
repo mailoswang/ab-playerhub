@@ -154,37 +154,22 @@ window.SITE_DATA = {
           "zoom": ""
         },
         {
+          "title": "Arena Breakout ×《惡靈古堡4》聯動",
+          "sub": "推出兩款全新聯動造型：聯邦特務與赤紅諜影！\n保持活躍即可獲得免費40抽！抽到任一造型，還會額外贈送克勞瑟·突擊匕首！\n這一次，拯救卡莫納！",
+          "date": "2026.11.24",
+          "img": "images/discord-1570711848171343972.webp",
+          "action": "link",
+          "cta": "READ",
+          "url": "https://www.youtube.com/watch?v=tl9-eVZp0sw",
+          "zoom": ""
+        },
+        {
           "title": "組隊出擊！全新生化 PvE 模式登場",
           "sub": "沒有特遣，也沒有偽裝——等著你的，是灣區生化模式中更致命、更恐怖的威脅",
           "date": "2026.11.20",
           "url": "",
           "img": "images/discord-1573269140049895455.webp",
           "action": "image",
-          "cta": "READ",
-          "zoom": ""
-        }
-      ]
-    },
-    {
-      "name": "資訊",
-      "posts": [
-        {
-          "title": "Arena Breakout ×《惡靈古堡4》聯動",
-          "sub": "推出兩款全新聯動造型：聯邦特務與赤紅諜影！\n保持活躍即可獲得免費40抽！抽到任一造型，還會額外贈送克勞瑟·突擊匕首！\n這一次，拯救卡莫納！",
-          "date": "2026.11.20",
-          "url": "https://www.youtube.com/watch?v=tl9-eVZp0sw",
-          "img": "images/discord-1570711848171343972.webp",
-          "action": "link",
-          "cta": "READ",
-          "zoom": ""
-        },
-        {
-          "title": "免費領取「侵蝕抑制·德爾文」",
-          "sub": "各位先鋒，免費德爾文外觀等你來領！\n完成聯絡人任務，即可免費領取「侵蝕抑制·德爾文」外觀！\n全新 PvE 模式「灣區：爆發」現已正式上線！集結隊友，一起迎戰感染者！",
-          "date": "2026.11.23",
-          "url": "https://www.youtube.com/watch?v=kaLjW0-EMVA",
-          "img": "images/20261123-211335-EN.jpg",
-          "action": "link",
           "cta": "READ",
           "zoom": ""
         }
