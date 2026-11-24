@@ -231,7 +231,7 @@ input.bad{border-color:var(--red)}
     roles:{title:'新職缺',open:true,desc:'',how:'',url:'',btn:''},
     tl:{date:'',label:''},
   };
-  const TABS = [['hero','主視覺'],['content','內容中心'],['quick','首頁快速入口'],['c2s1','C2S1 體驗服'],['tools','暗區指揮官'],['season','C2S0 新賽季'],['join','加入我們'],['channels','社群頻道']];
+  const TABS = [['hero','主視覺'],['content','內容中心'],['quick','首頁快速入口'],['c2s1','C2S1 體驗服'],['tools','暗區指揮官'],['season','C2S0 新賽季'],['join','加入我們'],['contact','聯絡我們'],['channels','社群頻道']];
   const PREVIEW_KEY='compass-preview', CFG_KEY='compass-admin', TOKEN_KEY='compass-admin-token';
 
   // ================= 狀態 =================
@@ -250,6 +250,7 @@ input.bad{border-color:var(--red)}
     d.season ||= {}; d.season.highlights ||= []; d.season.timeline ||= []; d.season.guides ||= [];
     d.hero ||= {}; ['image','imageMobile','video'].forEach(k=>d.hero[k] ??= '');
     d.join ||= {}; d.join.intro ??= ''; d.join.roles ||= [];
+    d.contact ||= {}; d.contact.formUrl ??= ''; d.contact.entries ||= {}; ['name','mail','type','msg'].forEach(k=>d.contact.entries[k] ??= ''); d.contact.types ||= [];
     d.c2s1 ||= {}; ['chip','title','intro','tag'].forEach(k=>d.c2s1[k] ??= ''); d.c2s1.timeline ||= []; d.c2s1.posts ||= [];
     d.c2s1.posts.forEach(p=>{ p.action ||= 'link'; p.cta ??= 'READ'; p.zoom ??= ''; });
     ['end','intro','video'].forEach(k=>d.season[k] ??= '');
@@ -497,6 +498,19 @@ input.bad{border-color:var(--red)}
         <h2 style="font-size:17px;margin:0 0 10px">體驗服時程</h2>${renderList('c2s1tl',{addLabel:'新增時程',titleKey:'label',subKey:'date'})}
         <h2 style="font-size:17px;margin:28px 0 10px">體驗服情報卡片</h2>${renderList('c2s1posts',{collapsible:true,addLabel:'新增卡片',addTop:true,subKey:'date'})}`;
     }
+    else if(tab==='contact'){
+      const c=data.contact, en=c.entries;
+      const entry=(k,l)=>`<label class="f">${l}<input type="text" data-contact="entry.${k}" value="${esc(en[k])}" placeholder="entry.123456789" spellcheck="false"></label>`;
+      P.innerHTML = `<h2>聯絡我們</h2><p class="desc">「聯絡我們」頁面的留言表單會直接送到 Google 表單，留言可在該表單連結的 Google 試算表查看。</p>
+        <div class="fields">
+          <label class="f full">Google 表單網址 <em>表單「傳送」→ 連結，格式 https://docs.google.com/forms/d/e/…/viewform</em><input type="text" data-contact="formUrl" value="${esc(c.formUrl)}" spellcheck="false"></label>
+          <label class="f full">類型選項 <em>一行一個；必須和 Google 表單「類型」題目的選項完全相同，否則該筆留言會被 Google 拒收</em><textarea data-contact="types" style="min-height:110px">${esc((c.types||[]).join('\n'))}</textarea></label>
+        </div>
+        <details class="help" style="margin-top:16px"><summary>進階：Google 表單欄位代號</summary>
+          <p style="margin:8px 0 12px">每個題目在 Google 表單裡有固定代號（entry.數字）。只有在 Google 表單刪除或重建題目時才需要修改；新增選項不用改。</p>
+          <div class="fields">${entry('name','暱稱')}${entry('mail','聯絡信箱')}${entry('type','類型')}${entry('msg','內容')}</div>
+        </details>`;
+    }
     else if(tab==='join'){
       P.innerHTML = `<h2>加入我們</h2><p class="desc">「加入我們」頁面的招募職缺。依這裡的順序顯示；沒有任何職缺時，頁面會顯示「目前沒有開放的職缺」。</p>
         <div class="fields" style="margin-bottom:24px"><label class="f full">頁面簡介 <em>顯示在頁面標題下方</em><textarea data-join="intro">${esc(data.join.intro)}</textarea></label></div>
@@ -530,6 +544,13 @@ input.bad{border-color:var(--red)}
   panel.addEventListener('input',e=>{
     const el=e.target;
     if(el.dataset.c2s1){ data.c2s1[el.dataset.c2s1]=el.value; return setDirty(true); }
+    if(el.dataset.contact){
+      const k=el.dataset.contact;
+      if(k==='types') data.contact.types=el.value.split('\n').map(x=>x.trim()).filter(Boolean);
+      else if(k.startsWith('entry.')) data.contact.entries[k.slice(6)]=el.value.trim();
+      else data.contact[k]=el.value.trim();
+      return setDirty(true);
+    }
     if(el.dataset.join){ data.join[el.dataset.join]=el.value; return setDirty(true); }
     if(el.dataset.season){ data.season[el.dataset.season]=el.value; return setDirty(true); }
     if(el.id==='seasonEnd'){ data.season.end = el.value ? `${el.value}:00+08:00` : ''; return setDirty(true); }

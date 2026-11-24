@@ -349,6 +349,9 @@ textarea{min-height:140px;resize:vertical}
 input:focus,select:focus,textarea:focus{border-color:var(--or2);outline:none}
 .ok{display:none;padding:14px 16px;background:rgba(226,97,3,.1);border:1px solid var(--or);color:var(--or2)}
 .ok.show{display:block}
+.ok.err{background:rgba(229,72,77,.1);border-color:#e5484d;color:#ff8f93}
+.ok a{color:inherit;text-decoration:underline}
+.hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
 
 /* ===== 頁尾 ===== */
 footer{border-top:1px solid var(--line2);background:#08090a;padding:56px 0 calc(32px + env(safe-area-inset-bottom))}
@@ -738,14 +741,13 @@ nav.top a.brk::before,nav.top a.brk::after{display:none}
     <div class="box">
       <div class="sec-h" style="margin-bottom:20px"><div><h2>留言給我們</h2><small>MESSAGE</small></div></div>
       <form id="form">
-        <label class="f">暱稱<input required autocomplete="nickname"></label>
-        <label class="f">聯絡信箱<input type="email" required autocomplete="email"></label>
-        <label class="f">類型
-          <select><option>合作洽詢</option><option>內容投稿</option><option>錯誤回報</option><option>其他</option></select>
-        </label>
-        <label class="f">內容<textarea required></textarea></label>
-        <button class="btn pri" type="submit">送出</button>
-        <div class="ok" id="ok" role="status">已收到內容（目前為示意，尚未串接後端，訊息不會真的寄出）。</div>
+        <label class="f">暱稱<input id="f-name" required maxlength="60" autocomplete="nickname"></label>
+        <label class="f">聯絡信箱<input id="f-mail" type="email" required maxlength="120" autocomplete="email"></label>
+        <label class="f">類型<select id="f-type"></select></label>
+        <label class="f">內容<textarea id="f-msg" required maxlength="3000"></textarea></label>
+        <input class="hp" id="f-hp" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
+        <button class="btn pri" type="submit" id="f-send">送出</button>
+        <div class="ok" id="ok" role="status"></div>
       </form>
     </div>
   </div></div>
@@ -1080,7 +1082,35 @@ nav.top a.brk::before,nav.top a.brk::after{display:none}
   document.addEventListener('keydown',e=>{ if(e.key==='Escape') closeDrawer(); });
 
   // 表單（示意）
-  $('#form').addEventListener('submit',e=>{ e.preventDefault(); $('#ok').classList.add('show'); e.target.reset(); });
+  // 留言表單：直接送到 Google 表單（後台「聯絡我們」設定網址、欄位代號與類型選項）
+  const CONTACT = D.contact || {}, CE = CONTACT.entries || {};
+  const gfUrl = String(CONTACT.formUrl||'').trim();
+  const gfReady = /^https:\/\/docs\.google\.com\/forms\/d\/e\/[\w-]+\//.test(gfUrl) && CE.name && CE.mail && CE.type && CE.msg;
+  $('#f-type').innerHTML = (CONTACT.types && CONTACT.types.length ? CONTACT.types : ['其他']).map(t=>`<option>${esc(t)}</option>`).join('');
+  const okBox=$('#ok'), sendBtn=$('#f-send');
+  const say=(html,err)=>{ okBox.innerHTML=html; okBox.classList.add('show'); okBox.classList.toggle('err',!!err); };
+  $('#form').addEventListener('submit',async e=>{
+    e.preventDefault();
+    const f=e.target;
+    if($('#f-hp').value){ say('已送出，感謝你的留言！'); f.reset(); return; }   // 機器人陷阱欄位被填寫：假裝成功
+    if(!gfReady){ say('留言功能尚未開放，請先透過上方的社群頻道與我們聯絡。', true); return; }
+    sendBtn.disabled=true; sendBtn.textContent='送出中…';
+    const body=new URLSearchParams();
+    body.append(CE.name,$('#f-name').value.trim());
+    body.append(CE.mail,$('#f-mail').value.trim());
+    body.append(CE.type,$('#f-type').value);
+    body.append(CE.msg,$('#f-msg').value.trim());
+    try{
+      // Google 表單不允許跨網站讀取回應，所以只能確認「已送出」
+      await fetch(gfUrl.replace(/\/viewform.*$/,'/formResponse'),{method:'POST',mode:'no-cors',body});
+      say('已送出，感謝你的留言！我們會盡快回覆。'); f.reset();
+      setTimeout(()=>{ sendBtn.disabled=false; sendBtn.textContent='送出'; },15000);   // 避免連續重複送出
+      return;
+    }catch(err){
+      say(`送出失敗，請稍後再試，或<a href="${esc(gfUrl)}" target="_blank" rel="noopener noreferrer">直接開啟留言表單</a>填寫。`, true);
+    }
+    sendBtn.disabled=false; sendBtn.textContent='送出';
+  });
 
   // 賽季倒數
   const cd=$('#countdown');

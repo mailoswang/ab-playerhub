@@ -389,5 +389,19 @@ window.SITE_DATA = {
         "zoom": ""
       }
     ]
+  },
+  "contact": {
+    "formUrl": "https://docs.google.com/forms/d/e/1FAIpQLSczbpmJ03l9WbpqO6GHf3Fbnf4A5d8nh0b5OY9k8K2cQj__DA/viewform",
+    "entries": {
+      "name": "entry.2093414523",
+      "mail": "entry.90883012",
+      "type": "entry.691962048",
+      "msg": "entry.655885281"
+    },
+    "types": [
+      "合作洽詢",
+      "錯誤回報",
+      "其他"
+    ]
   }
 };
