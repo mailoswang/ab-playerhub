@@ -137,6 +137,10 @@ window.SITE_DATA = {
   ],
   "categories": [
     {
+      "name": "本週更新",
+      "posts": []
+    },
+    {
       "name": "活動",
       "posts": [
         {
