@@ -87,6 +87,18 @@ window.SITE_DATA = {
       "url": "#join",
       "img": "",
       "hot": false
+    },
+    {
+      "span": "1",
+      "wideImg": "",
+      "wideMode": "bg",
+      "icon": "mail",
+      "title": "聯繫社群版主",
+      "short": "聯繫版主",
+      "sub": "",
+      "url": "https://discord.com/channels/1018816353030901801/1554181221465194497",
+      "img": "",
+      "hot": false
     }
   ],
   "tools": [
