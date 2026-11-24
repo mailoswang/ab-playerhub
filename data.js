@@ -8,7 +8,7 @@ window.SITE_DATA = {
   "quick": [
     {
       "span": "2",
-      "icon": "fire",
+      "icon": "flask",
       "title": "C2S1 體驗服專區",
       "short": "C2S1 體驗服",
       "sub": "測試時程、體驗服情報一次看",
@@ -17,7 +17,7 @@ window.SITE_DATA = {
       "img": ""
     },
     {
-      "icon": "flag",
+      "icon": "rocket",
       "title": "C2S0 新賽季",
       "short": "C2S0",
       "sub": "C2S0 重點與時程",
@@ -27,7 +27,7 @@ window.SITE_DATA = {
       "span": "1"
     },
     {
-      "icon": "gift",
+      "icon": "shield",
       "title": "Li PASS",
       "short": "LiPASS",
       "sub": "一站式安全帳號與福利系統",
@@ -37,7 +37,7 @@ window.SITE_DATA = {
       "span": "1"
     },
     {
-      "icon": "globe",
+      "icon": "news",
       "title": "內容中心",
       "short": "內容中心",
       "sub": "活動、資訊、公告、社群",
