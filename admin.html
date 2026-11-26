@@ -232,7 +232,7 @@ input.bad{border-color:var(--red)}
     roles:{title:'新職缺',open:true,desc:'',how:'',url:'',btn:''},
     tl:{date:'',label:''},
   };
-  const TABS = [['hero','主視覺'],['content','內容中心'],['quick','首頁快速入口'],['c2s1','C2S1 體驗服'],['tools','暗區指揮官'],['season','C2S0 新賽季'],['join','加入我們'],['contact','聯絡我們'],['channels','社群頻道']];
+  const TABS = [['hero','主視覺'],['content','內容中心'],['quick','首頁快速入口'],['c2s1','C2S1 體驗服'],['tools','暗區指揮官'],['season','C2S0 新賽季'],['toolspage','工具'],['join','加入我們'],['contact','聯絡我們'],['channels','社群頻道']];
   const PREVIEW_KEY='compass-preview', CFG_KEY='compass-admin', TOKEN_KEY='compass-admin-token';
 
   // ================= 狀態 =================
@@ -249,6 +249,8 @@ input.bad{border-color:var(--red)}
     d.quick ||= []; d.tools ||= []; d.channels ||= []; d.categories ||= [];
     d.categories.forEach(c=>{ c.posts ||= []; c.posts.forEach(p=>{ p.action ||= 'link'; p.cta ??= 'READ'; p.zoom ??= ''; }); });
     d.season ||= {}; d.season.highlights ||= []; d.season.timeline ||= []; d.season.guides ||= [];
+    d.toolsPage ||= {}; ['chip','title','intro','heroImg','end','video'].forEach(k=>d.toolsPage[k] ??= ''); d.toolsPage.labels ||= {};
+    ['guides','highlights','timeline'].forEach(k=>d.toolsPage[k] ||= []);
     d.hero ||= {}; ['image','imageMobile','video'].forEach(k=>d.hero[k] ??= '');
     d.join ||= {}; d.join.intro ??= ''; d.join.roles ||= [];
     d.contact ||= {}; d.contact.formUrl ??= ''; d.contact.entries ||= {}; ['name','mail','type','msg'].forEach(k=>d.contact.entries[k] ??= ''); d.contact.types ||= [];
@@ -263,6 +265,10 @@ input.bad{border-color:var(--red)}
     if(id==='c2s1tl') return data.c2s1.timeline;
     if(id==='c2s1posts') return data.c2s1.posts;
     if(id==='seasonobj') return [data.season];
+    if(id==='tpobj') return [data.toolsPage];
+    if(id==='tp-guides') return data.toolsPage.guides;
+    if(id==='tp-hl') return data.toolsPage.highlights;
+    if(id==='tp-tl') return data.toolsPage.timeline;
     if(id==='c2s1obj') return [data.c2s1];
     if(id==='guides') return data.season.guides;
     if(id==='hl') return data.season.highlights;
@@ -272,7 +278,7 @@ input.bad{border-color:var(--red)}
     return data[id];
   }
   // 清單種類：同一種欄位設定可用在不同位置（例如 C2S1 卡片沿用內容中心文章的欄位）
-  const kindOf = id=> id.startsWith('posts:')||id==='c2s1posts' ? 'posts' : id==='c2s1tl' ? 'tl' : id;
+  const kindOf = id=> id.startsWith('posts:')||id==='c2s1posts' ? 'posts' : id==='c2s1tl'||id==='tp-tl' ? 'tl' : id==='tp-guides' ? 'guides' : id==='tp-hl' ? 'hl' : id;
   const schemaOf = id=>SCHEMA[kindOf(id)];
 
   // ================= 設定存取 =================
@@ -383,7 +389,7 @@ input.bad{border-color:var(--red)}
     const {list,i,k} = uploadTarget;
     toast('圖片上傳中…');
     try{
-      const big = ['guides','hero','hl','seasonobj','c2s1obj'].includes(list);
+      const big = ['guides','hero','hl','seasonobj','c2s1obj','tpobj','tp-guides','tp-hl'].includes(list);
       const f = await shrink(file, big?2400:1600, big?.92:.85);
       if(f.size>8*1024*1024) throw new Error('圖片太大（超過 8MB）');
       const ext=(f.name.match(/\.\w+$/)||['.jpg'])[0].toLowerCase();
@@ -526,6 +532,24 @@ input.bad{border-color:var(--red)}
       P.innerHTML = `<h2>主視覺</h2><p class="desc">首頁最上方的背景。都留空時顯示預設的羅盤插畫；設定後，煙霧與進場動畫會疊在圖片上。請只使用你有權使用的素材。</p>
         <div class="fields">${H.map(f=>field('hero',0,f,data.hero[f.k])).join('')}</div>`;
     }
+    else if(tab==='toolspage'){
+      const t=data.toolsPage, L=t.labels, endLocal=(String(t.end).match(/^\d{4}-\d\d-\d\dT\d\d:\d\d/)||[''])[0];
+      const lab=(k,l,ph)=>`<label class="f">${l}<input type="text" data-tplabel="${k}" value="${esc(L[k]||'')}" placeholder="${ph}"></label>`;
+      P.innerHTML = `<h2>工具</h2><p class="desc">「工具」頁面的內容，版面與 C2S0 新賽季相同。每個區塊沒有內容時會自動隱藏；全部都沒有內容時顯示「內容準備中」。</p>
+        <div class="fields" style="margin-bottom:24px">
+          <label class="f">頁面標題<input type="text" data-tp="title" value="${esc(t.title)}" placeholder="工具"></label>
+          <label class="f">標題上方標籤<input type="text" data-tp="chip" value="${esc(t.chip)}" placeholder="TOOLS"></label>
+          <label class="f full">頁面簡介<textarea data-tp="intro">${esc(t.intro)}</textarea></label>
+          <label class="f">倒數結束時間 <em>選填，台灣時間；留空不顯示倒數</em><input type="datetime-local" id="tpEnd" value="${esc(endLocal)}"></label>
+          <label class="f">教學影片 <em>YouTube 網址，留空不顯示</em><input type="text" data-tp="video" value="${esc(t.video)}" spellcheck="false"></label>
+          ${field('tpobj',0,{k:'heroImg',l:'標題區背景圖',t:'img',h:'選填，淡淡地顯示在頁面標題後方；建議橫圖 1920×600 以上',full:1},t.heroImg)}
+        </div>
+        <h2 style="font-size:17px;margin:0 0 10px">區塊標題</h2>
+        <div class="fields" style="margin-bottom:24px">${lab('guides','大圖區塊','工具懶人包')}${lab('hl','文章區塊','工具文章')}${lab('tl','時程區塊','更新紀錄')}${lab('video','影片區塊','教學影片')}</div>
+        <h2 style="font-size:17px;margin:0 0 4px">大圖</h2><p class="desc" style="margin-bottom:10px">顯示在文章上方的大圖（例如懶人包、長圖），點擊可放大。</p>${renderList('tp-guides',{addLabel:'新增圖片',titleKey:'caption'})}
+        <h2 style="font-size:17px;margin:28px 0 4px">文章</h2><p class="desc" style="margin-bottom:10px">標題、內文（按 Enter 換行，超過 6 行自動折疊）、圖片。</p>${renderList('tp-hl',{collapsible:true,addLabel:'新增文章'})}
+        <h2 style="font-size:17px;margin:28px 0 10px">時程</h2>${renderList('tp-tl',{addLabel:'新增時程',titleKey:'label',subKey:'date'})}`;
+    }
     else if(tab==='season'){
       const s=data.season, endLocal=(s.end.match(/^\d{4}-\d\d-\d\dT\d\d:\d\d/)||[''])[0];
       P.innerHTML = `<h2>C2S0 新賽季</h2><p class="desc">「C2S0 新賽季」頁面的內容。</p>
@@ -555,6 +579,9 @@ input.bad{border-color:var(--red)}
       return setDirty(true);
     }
     if(el.dataset.join){ data.join[el.dataset.join]=el.value; return setDirty(true); }
+    if(el.dataset.tp){ data.toolsPage[el.dataset.tp]=el.value; return setDirty(true); }
+    if(el.dataset.tplabel){ data.toolsPage.labels[el.dataset.tplabel]=el.value; return setDirty(true); }
+    if(el.id==='tpEnd'){ data.toolsPage.end = el.value ? `${el.value}:00+08:00` : ''; return setDirty(true); }
     if(el.dataset.season){ data.season[el.dataset.season]=el.value; return setDirty(true); }
     if(el.id==='seasonEnd'){ data.season.end = el.value ? `${el.value}:00+08:00` : ''; return setDirty(true); }
     if(!el.dataset.list) return;

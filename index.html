@@ -296,13 +296,13 @@ button.card{width:100%;padding:0;font:inherit;color:inherit;text-align:left;curs
 @media(max-width:700px){.pg-bg{opacity:.3}.pg-bg::after{background:linear-gradient(180deg,rgba(11,12,14,.55) 0%,rgba(11,12,14,.75) 55%,var(--bg) 100%)}}
 .page-hero h1{margin:16px 0 10px;font-family:"Noto Sans TC",sans-serif;font-weight:900;font-size:clamp(36px,5.4vw,64px);line-height:1.05;letter-spacing:.04em}
 .page-hero p{margin:0;color:var(--txt2);max-width:38em}
-#seasonIntro{white-space:pre-line}
+#seasonIntro,.ap-intro{white-space:pre-line}
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:16px}
 .box{background:var(--panel);border:1px solid var(--line2);padding:24px}
 .box h3{margin:0 0 8px;font-size:20px}
 .box p{margin:0;color:var(--txt2);white-space:pre-line}
 /* 賽季重點：超過 6 行時折疊 */
-#highlights{align-items:start}
+.hl-grid{align-items:start}
 .box .hl-d{--clamp:9.6em;min-height:var(--clamp)}
 .box.long .hl-d{overflow:hidden;transition:max-height .45s var(--ease)}
 .box.long:not(.open) .hl-d{max-height:var(--clamp);-webkit-mask-image:linear-gradient(180deg,#000 55%,transparent);mask-image:linear-gradient(180deg,#000 55%,transparent)}
@@ -311,8 +311,8 @@ button.card{width:100%;padding:0;font:inherit;color:inherit;text-align:left;curs
 .hl-more i{font-style:normal;display:inline-block;transition:transform .3s var(--ease)}
 .box.long .hl-more{display:inline-flex}
 /* 統一高度：只要有一則需要折疊，其他卡片也保留按鈕的位置 */
-#highlights.has-long .hl-more{display:inline-flex}
-#highlights.has-long .box:not(.long) .hl-more{visibility:hidden}
+.hl-grid.has-long .hl-more{display:inline-flex}
+.hl-grid.has-long .box:not(.long) .hl-more{visibility:hidden}
 /* 重點圖片：統一 16:9 外框，完整顯示圖片，點擊放大 */
 .hl-img{position:relative;display:block;width:100%;aspect-ratio:16/9;margin-top:16px;padding:0;border:1px solid var(--line2);background:#0c0e10;overflow:hidden;cursor:zoom-in}
 .hl-img img{display:block;width:100%;height:100%;object-fit:contain;transition:transform .4s var(--ease)}
@@ -501,6 +501,7 @@ nav.top a.brk::before,nav.top a.brk::after{display:none}
 .spin{transform-box:fill-box;transform-origin:center;animation:sw 7s linear infinite}
 @keyframes sw{to{transform:rotate(360deg)}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{transition:none!important;animation:none!important;scroll-behavior:auto!important}.ember,.hl,#scanbar{display:none}.hero .kv,.hero-in{transform:none!important}}
+.cols.one{grid-template-columns:minmax(0,1fr)}
 </style>
 </head>
 <body>
@@ -533,6 +534,7 @@ nav.top a.brk::before,nav.top a.brk::after{display:none}
       <a class="brk" href="#home">首頁</a>
       <a class="brk" href="#c2s1">C2S1 體驗服</a>
       <a class="brk" href="#c2s0">C2S0 新賽季</a>
+      <a class="brk" href="#tools">工具</a>
       <a class="brk" href="#commander">暗區指揮官</a>
       <a class="brk" href="#join">加入我們</a>
       <a class="brk" href="#contact">聯絡我們</a>
@@ -549,6 +551,7 @@ nav.top a.brk::before,nav.top a.brk::after{display:none}
   <a href="#home">首頁 <span>›</span></a>
   <a href="#c2s1">C2S1 體驗服專區 <span>›</span></a>
   <a href="#c2s0">C2S0 新賽季 <span>›</span></a>
+  <a href="#tools">工具 <span>›</span></a>
   <a href="#commander">暗區指揮官 <span>›</span></a>
   <a href="#join">加入我們 <span>›</span></a>
   <a href="#contact">聯絡我們 <span>›</span></a>
@@ -679,7 +682,7 @@ nav.top a.brk::before,nav.top a.brk::after{display:none}
   </div></div>
   <div class="band"><div class="wrap">
     <div class="sec-h"><span class="ico"><svg><use href="#i-star"/></svg></span><div><h2>賽季重點</h2><small>HIGHLIGHTS</small></div></div>
-    <div class="grid" id="highlights"></div>
+    <div class="grid hl-grid" id="highlights"></div>
   </div></div>
   <div class="band" style="padding-top:0"><div class="wrap cols">
     <div>
@@ -691,6 +694,39 @@ nav.top a.brk::before,nav.top a.brk::after{display:none}
       <div class="video slot" id="video"><span class="ph">16:9 影片或主視覺</span><span class="play"><svg><use href="#i-play"/></svg></span></div>
     </div>
   </div></div>
+</section>
+
+<!-- ================= 工具 ================= -->
+<section data-page="tools">
+  <div class="page-hero">
+    <div class="wrap">
+      <span class="chip" id="tpChip"></span>
+      <h1 id="tpTitle"></h1>
+      <p class="ap-intro" id="tpIntro"></p>
+      <div class="count" id="tpCount" aria-label="倒數" hidden>
+        <div><b data-u="d">--</b><span>天</span></div><div><b data-u="h">--</b><span>小時</span></div><div><b data-u="m">--</b><span>分</span></div><div><b data-u="s">--</b><span>秒</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="band" id="tpGuidesBand" hidden><div class="wrap">
+    <div class="sec-h"><span class="ico"><svg><use href="#i-book"/></svg></span><div><h2 id="tpGuidesH"></h2><small>QUICK GUIDE</small></div></div>
+    <div class="guides" id="tpGuides"></div>
+  </div></div>
+  <div class="band" id="tpHlBand" hidden><div class="wrap">
+    <div class="sec-h"><span class="ico"><svg><use href="#i-wrench"/></svg></span><div><h2 id="tpHlH"></h2><small>ARTICLES</small></div></div>
+    <div class="grid hl-grid" id="tpHl"></div>
+  </div></div>
+  <div class="band" id="tpMoreBand" style="padding-top:0" hidden><div class="wrap cols" id="tpMoreCols">
+    <div id="tpTlCol">
+      <div class="sec-h"><span class="ico"><svg><use href="#i-cal"/></svg></span><div><h2 id="tpTlH"></h2><small>TIMELINE</small></div></div>
+      <div class="timeline" id="tpTl"></div>
+    </div>
+    <div id="tpVideoCol">
+      <div class="sec-h"><span class="ico"><svg><use href="#i-play"/></svg></span><div><h2 id="tpVideoH"></h2><small>VIDEO</small></div></div>
+      <div class="video" id="tpVideo"></div>
+    </div>
+  </div></div>
+  <div class="band" id="tpEmpty" hidden><div class="wrap"><div class="empty">內容準備中，敬請期待。</div></div></div>
 </section>
 
 <!-- ================= C2S1 體驗服專區 ================= -->
@@ -792,7 +828,7 @@ nav.top a.brk::before,nav.top a.brk::after{display:none}
         <a class="logo" href="#home"><svg aria-hidden="true"><use href="#logo"/></svg><span><b>暗區指南針</b><small>ARENA BREAKOUT HUB</small></span></a>
         <p style="color:var(--txt3);font-size:15px;margin:14px 0 0;max-width:24em">由玩家維護的暗區突圍社群入口網站，收錄攻略、工具與社群內容。</p>
       </div>
-      <div><h2>SITE</h2><ul><li><a href="#home">首頁</a></li><li><a href="#c2s1">C2S1 體驗服專區</a></li><li><a href="#c2s0">C2S0 新賽季</a></li><li><a href="#commander">暗區指揮官</a></li><li><a href="#join">加入我們</a></li><li><a href="#contact">聯絡我們</a></li></ul></div>
+      <div><h2>SITE</h2><ul><li><a href="#home">首頁</a></li><li><a href="#c2s1">C2S1 體驗服專區</a></li><li><a href="#c2s0">C2S0 新賽季</a></li><li><a href="#tools">工具</a></li><li><a href="#commander">暗區指揮官</a></li><li><a href="#join">加入我們</a></li><li><a href="#contact">聯絡我們</a></li></ul></div>
       <div><h2>CONTENT</h2><ul id="footCats"></ul></div>
       <div><h2>COMMUNITY</h2><ul id="footChans"></ul></div>
     </div>
@@ -884,6 +920,7 @@ nav.top a.brk::before,nav.top a.brk::after{display:none}
   }
   pageBg('c2s0', SEASON.heroImg);
   pageBg('c2s1', (D.c2s1||{}).heroImg);
+  pageBg('tools', (D.toolsPage||{}).heroImg);
 
   // C2S1 體驗服專區
   const C2S1 = D.c2s1 || {};
@@ -900,55 +937,100 @@ nav.top a.brk::before,nav.top a.brk::after{display:none}
   }
   $('#c2s1Cards').addEventListener('click',e=>{ const b=e.target.closest('[data-zoom]'); if(b) zoomCard(C1POSTS, C1POSTS[+b.dataset.zoom]); });
 
-  // 新賽季頁：懶人包大圖
-  const GUIDES = (SEASON.guides||[]).filter(g=>g.img);
-  if (GUIDES.length) {
-    $('#guidesBand').hidden = false;
-    $('#guides').innerHTML = GUIDES.map((g,i)=>`
+  // ===== 文章型頁面的共用區塊（C2S0 新賽季、工具頁共用） =====
+  // 懶人包大圖：沒有圖片時整個區塊隱藏
+  function renderGuides(list, band, box, altBase){
+    const G=(list||[]).filter(g=>g.img);
+    band.hidden=!G.length; if(!G.length) return 0;
+    box.innerHTML=G.map((g,i)=>`
       <figure class="guide">
         <button type="button" data-guide="${i}" aria-label="放大檢視${g.caption?'：'+esc(g.caption):` 第 ${i+1} 張`}">
-          <img src="${esc(g.img)}" alt="${esc(g.caption||`賽季懶人包 ${i+1}`)}" loading="lazy" decoding="async">
+          <img src="${esc(g.img)}" alt="${esc(g.caption||`${altBase} ${i+1}`)}" loading="lazy" decoding="async">
           <span class="zoom" aria-hidden="true">⤢ 點擊放大</span>
         </button>
-        ${g.caption?`<figcaption>${GUIDES.length>1?`<b>${String(i+1).padStart(2,'0')}</b>`:''}${esc(g.caption)}</figcaption>`:''}
+        ${g.caption?`<figcaption>${G.length>1?`<b>${String(i+1).padStart(2,'0')}</b>`:''}${esc(g.caption)}</figcaption>`:''}
       </figure>`).join('');
-    $('#guides').addEventListener('click',e=>{ const b=e.target.closest('[data-guide]'); if(b) openLB(GUIDES, +b.dataset.guide); });
+    box.addEventListener('click',e=>{ const b=e.target.closest('[data-guide]'); if(b) openLB(G, +b.dataset.guide); });
+    return G.length;
+  }
+  // 重點／文章卡片：超過 6 行折疊、可放圖片並放大
+  const FOLDS=[];
+  function renderHighlights(grid, list){
+    const HL=list||[], IMGS=HL.map((h,i)=>({img:h.img, caption:h.title, i})).filter(x=>x.img);
+    grid.innerHTML=HL.map((h,i)=>`<div class="box"><div class="n">${String(i+1).padStart(2,'0')}</div><h3>${esc(h.title)}</h3><p class="hl-d">${esc(h.desc)}</p><button type="button" class="hl-more" aria-expanded="false"><span>展開全文</span> <i aria-hidden="true">▾</i></button>${
+        h.img ? `<button type="button" class="hl-img" data-hlimg="${i}" aria-label="放大檢視：${esc(h.title)}"><img src="${esc(h.img)}" alt="${esc(h.title)}" loading="lazy" decoding="async"><span class="zoom" aria-hidden="true">⤢ 放大</span></button>` : ''}</div>`).join('');
+    // 折疊：只有在頁面顯示時才量得到高度；沒圖片的卡片把圖片那塊高度拿來多顯示文字
+    const fold=()=>{
+      const anyImg=grid.querySelector('.hl-img'), imgH=anyImg && anyImg.offsetParent ? anyImg.offsetHeight + parseFloat(getComputedStyle(anyImg).marginTop) : 0;
+      grid.querySelectorAll('.box').forEach(b=>{
+        const d=b.querySelector('.hl-d'); if(!d.offsetParent) return;
+        const lim=parseFloat(getComputedStyle(d).lineHeight)*6 + (b.querySelector('.hl-img') ? 0 : imgH);
+        d.style.setProperty('--clamp', lim+'px');
+        if(b.classList.contains('open')){ d.style.maxHeight=d.scrollHeight+'px'; return; }
+        b.classList.toggle('long', d.scrollHeight > lim + 4);
+      });
+      grid.classList.toggle('has-long', !!grid.querySelector('.box.long'));
+    };
+    grid.addEventListener('click',e=>{
+      const ib=e.target.closest('[data-hlimg]');
+      if(ib){ const idx=IMGS.findIndex(x=>x.i===+ib.dataset.hlimg); return openLB(IMGS, idx); }
+      const btn=e.target.closest('.hl-more'); if(!btn) return;
+      const b=btn.closest('.box'), d=b.querySelector('.hl-d'), open=!b.classList.contains('open');
+      if(open){ b.classList.add('open'); d.style.maxHeight=d.scrollHeight+'px'; }
+      else { d.style.maxHeight=d.scrollHeight+'px'; void d.offsetHeight; d.style.maxHeight=''; b.classList.remove('open');
+        if(b.getBoundingClientRect().top<0) b.scrollIntoView({block:'start'}); }
+      btn.setAttribute('aria-expanded',open); btn.querySelector('span').textContent=open?'收合':'展開全文';
+    });
+    FOLDS.push(fold);
+    return HL.length;
+  }
+  function foldHL(){ FOLDS.forEach(f=>f()); }
+  function renderTimeline(el, list){
+    const T=(list||[]).filter(t=>t.date||t.label);
+    el.innerHTML=T.map(t=>`<div><b>${esc(t.date)}</b><span>${esc(t.label)}</span></div>`).join('');
+    return T.length;
+  }
+  // YouTube 影片：回傳是否有影片
+  function renderVideo(el, url, title){
+    const yt=String(url||'').match(/(?:youtu\.be\/|v=|embed\/|shorts\/)([\w-]{11})/);
+    if(!yt) return false;
+    el.classList.remove('slot'); el.style.border='1px solid var(--line2)';
+    el.innerHTML=`<iframe src="https://www.youtube-nocookie.com/embed/${yt[1]}" title="${esc(title)}" style="position:absolute;inset:0;width:100%;height:100%;border:0" allow="encrypted-media; picture-in-picture" allowfullscreen loading="lazy"></iframe>`;
+    return true;
+  }
+  function countdown(el, end){
+    const t=end?new Date(end).getTime():NaN;
+    el.hidden=!(t>0); if(el.hidden) return;
+    const set=(u,v)=>el.querySelector(`[data-u=${u}]`).textContent=v;
+    const tick=()=>{ const d=t-Date.now(); if(!(d>0)){ ['d','h','m','s'].forEach(u=>set(u,'00')); return; }
+      set('d',String(Math.floor(d/864e5)).padStart(2,'0')); set('h',String(Math.floor(d/36e5)%24).padStart(2,'0'));
+      set('m',String(Math.floor(d/6e4)%60).padStart(2,'0')); set('s',String(Math.floor(d/1e3)%60).padStart(2,'0')); };
+    tick(); setInterval(tick,1000);
   }
 
-  // 新賽季頁
+  // C2S0 新賽季頁
+  renderGuides(SEASON.guides, $('#guidesBand'), $('#guides'), '賽季懶人包');
   $('#seasonIntro').textContent = SEASON.intro || '';
-  const HL = SEASON.highlights||[];
-  const HL_IMGS = HL.map((h,i)=>({img:h.img, caption:h.title, i})).filter(x=>x.img);
-  $('#highlights').innerHTML = HL.map((h,i)=>`<div class="box"><div class="n">${String(i+1).padStart(2,'0')}</div><h3>${esc(h.title)}</h3><p class="hl-d">${esc(h.desc)}</p><button type="button" class="hl-more" aria-expanded="false"><span>展開全文</span> <i aria-hidden="true">▾</i></button>${
-      h.img ? `<button type="button" class="hl-img" data-hlimg="${i}" aria-label="放大檢視：${esc(h.title)}"><img src="${esc(h.img)}" alt="${esc(h.title)}" loading="lazy" decoding="async"><span class="zoom" aria-hidden="true">⤢ 放大</span></button>`
-      : ''}</div>`).join('');
-  // 折疊：只有在頁面顯示時才量得到高度，所以換頁、縮放、字型載入後都重新判斷
-  function foldHL(){
-    // 有些重點有圖片、有些沒有時：沒圖片的卡片把圖片那塊高度拿來多顯示文字，卡片仍然一樣高
-    const anyImg=$('#highlights .hl-img'), imgH=anyImg && anyImg.offsetParent ? anyImg.offsetHeight + parseFloat(getComputedStyle(anyImg).marginTop) : 0;
-    $$('#highlights .box').forEach(b=>{
-      const d=b.querySelector('.hl-d'); if(!d.offsetParent) return;
-      const lim=parseFloat(getComputedStyle(d).lineHeight)*6 + (b.querySelector('.hl-img') ? 0 : imgH);
-      d.style.setProperty('--clamp', lim+'px');
-      if(b.classList.contains('open')){ d.style.maxHeight=d.scrollHeight+'px'; return; }
-      b.classList.toggle('long', d.scrollHeight > lim + 4);
-    });
-    $('#highlights').classList.toggle('has-long', !!$('#highlights .box.long'));
-  }
-  $('#highlights').addEventListener('click',e=>{
-    const ib=e.target.closest('[data-hlimg]');
-    if(ib){ const idx=HL_IMGS.findIndex(x=>x.i===+ib.dataset.hlimg); return openLB(HL_IMGS, idx); }
-    const btn=e.target.closest('.hl-more'); if(!btn) return;
-    const b=btn.closest('.box'), d=b.querySelector('.hl-d'), open=!b.classList.contains('open');
-    if(open){ b.classList.add('open'); d.style.maxHeight=d.scrollHeight+'px'; }
-    else { d.style.maxHeight=d.scrollHeight+'px'; void d.offsetHeight; d.style.maxHeight=''; b.classList.remove('open');
-      if(b.getBoundingClientRect().top<0) b.scrollIntoView({block:'start'}); }
-    btn.setAttribute('aria-expanded',open); btn.querySelector('span').textContent=open?'收合':'展開全文';
-  });
-  $('#timeline').innerHTML = (SEASON.timeline||[]).map(t=>`<div><b>${esc(t.date)}</b><span>${esc(t.label)}</span></div>`).join('');
-  const yt = String(SEASON.video||'').match(/(?:youtu\.be\/|v=|embed\/|shorts\/)([\w-]{11})/);
-  if (yt) { const v=$('#video'); v.classList.remove('slot'); v.style.border='1px solid var(--line2)';
-    v.innerHTML=`<iframe src="https://www.youtube-nocookie.com/embed/${yt[1]}" title="賽季影片" style="position:absolute;inset:0;width:100%;height:100%;border:0" allow="encrypted-media; picture-in-picture" allowfullscreen loading="lazy"></iframe>`; }
+  renderHighlights($('#highlights'), SEASON.highlights);
+  renderTimeline($('#timeline'), SEASON.timeline);
+  renderVideo($('#video'), SEASON.video, '賽季影片');
+
+  // 工具頁（結構同 C2S0；沒有內容的區塊自動隱藏）
+  const TP = D.toolsPage || {}, TPL = TP.labels || {};
+  $('#tpChip').textContent = TP.chip || 'TOOLS';
+  $('#tpTitle').textContent = TP.title || '工具';
+  $('#tpIntro').textContent = TP.intro || '';
+  $('#tpGuidesH').textContent = TPL.guides || '工具懶人包';
+  $('#tpHlH').textContent = TPL.hl || '工具文章';
+  $('#tpTlH').textContent = TPL.tl || '更新紀錄';
+  $('#tpVideoH').textContent = TPL.video || '教學影片';
+  countdown($('#tpCount'), TP.end);
+  const tpG = renderGuides(TP.guides, $('#tpGuidesBand'), $('#tpGuides'), TPL.guides || '工具懶人包');
+  const tpH = renderHighlights($('#tpHl'), TP.highlights); $('#tpHlBand').hidden = !tpH;
+  const tpT = renderTimeline($('#tpTl'), TP.timeline), tpV = renderVideo($('#tpVideo'), TP.video, TPL.video || '教學影片');
+  $('#tpTlCol').hidden = !tpT; $('#tpVideoCol').hidden = !tpV;
+  $('#tpMoreCols').classList.toggle('one', !(tpT && tpV)); $('#tpMoreBand').hidden = !(tpT || tpV);
+  $('#tpEmpty').hidden = !!(tpG || tpH || tpT || tpV);
 
   // 首頁快速入口
   $('#quickGrid').innerHTML = QUICK.map((t,qi)=>{
@@ -1084,11 +1166,11 @@ nav.top a.brk::before,nav.top a.brk::after{display:none}
   });
 
   // 路由
-  const PAGES=['home','c2s1','c2s0','commander','join','contact'];
+  const PAGES=['home','c2s1','c2s0','tools','commander','join','contact'];
   let routed=false;
   function route(top=true){
     const h=location.hash.slice(1), p=PAGES.includes(h)?h:'home';
-    const PT={c2s1:(D.c2s1&&D.c2s1.title)||'C2S1 體驗服專區', c2s0:'C2S0 新賽季', commander:'暗區指揮官', join:'加入我們', contact:'聯絡我們'};
+    const PT={c2s1:(D.c2s1&&D.c2s1.title)||'C2S1 體驗服專區', c2s0:'C2S0 新賽季', tools:(D.toolsPage&&D.toolsPage.title)||'工具', commander:'暗區指揮官', join:'加入我們', contact:'聯絡我們'};
     document.title = p==='home' ? '暗區指南針｜暗區突圍玩家社群入口' : `${PT[p]}｜暗區指南針`;
     $$('[data-page]').forEach(s=>s.classList.toggle('on',s.dataset.page===p));
     $$('nav a').forEach(a=>{ const cur=a.getAttribute('href')==='#'+p && !a.dataset.scroll; cur?a.setAttribute('aria-current','page'):a.removeAttribute('aria-current'); });

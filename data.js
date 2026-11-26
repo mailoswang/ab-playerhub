@@ -99,6 +99,18 @@ window.SITE_DATA = {
       "url": "https://discord.com/channels/1018816353030901801/1554181221465194497",
       "img": "",
       "hot": false
+    },
+    {
+      "span": "1",
+      "wideImg": "",
+      "wideMode": "bg",
+      "icon": "wrench",
+      "title": "工具",
+      "short": "工具",
+      "sub": "工具文章與教學",
+      "url": "#tools",
+      "hot": false,
+      "img": ""
     }
   ],
   "tools": [
@@ -404,5 +416,22 @@ window.SITE_DATA = {
       "其他"
     ],
     "intro": "合作洽詢、錯誤回報或任何建議，都歡迎透過下方表單或社群頻道與我們聯絡。"
+  },
+  "toolsPage": {
+    "chip": "TOOLS",
+    "title": "工具",
+    "intro": "實用工具、攻略與教學文章整理。",
+    "heroImg": "",
+    "end": "",
+    "video": "",
+    "labels": {
+      "guides": "工具懶人包",
+      "hl": "工具文章",
+      "tl": "更新紀錄",
+      "video": "教學影片"
+    },
+    "guides": [],
+    "highlights": [],
+    "timeline": []
   }
 };
