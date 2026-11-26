@@ -67,7 +67,7 @@ window.SITE_DATA = {
       "span": "1"
     },
     {
-      "icon": "video",
+      "icon": "headset",
       "title": "成為創作者",
       "short": "成為創作者",
       "sub": "暗區創作者招募中",
@@ -80,7 +80,7 @@ window.SITE_DATA = {
       "span": "1",
       "wideImg": "",
       "wideMode": "bg",
-      "icon": "userplus",
+      "icon": "gradcap",
       "title": "成為精英導師",
       "short": "成為導師",
       "sub": "暗區精英導師招募中",
@@ -92,7 +92,7 @@ window.SITE_DATA = {
       "span": "1",
       "wideImg": "",
       "wideMode": "bg",
-      "icon": "mail",
+      "icon": "mentor",
       "title": "聯繫社群版主",
       "short": "聯繫版主",
       "sub": "",
@@ -105,8 +105,8 @@ window.SITE_DATA = {
       "wideImg": "",
       "wideMode": "bg",
       "icon": "wrench",
-      "title": "工具",
-      "short": "工具",
+      "title": "社群工具",
+      "short": "社群工具",
       "sub": "工具文章與教學",
       "url": "#tools",
       "hot": false,
@@ -425,13 +425,29 @@ window.SITE_DATA = {
     "end": "",
     "video": "",
     "labels": {
-      "guides": "工具懶人包",
-      "hl": "工具文章",
-      "tl": "更新紀錄",
-      "video": "教學影片"
+      "guides": "",
+      "hl": "",
+      "tl": "",
+      "video": ""
     },
     "guides": [],
-    "highlights": [],
+    "highlights": [
+      {
+        "title": " DC聊天室違規行為舉報功能",
+        "desc": " DC聊天室違規行為舉報功能\n\n我們為中文類別推出了新的審核功能！您可以使用下方圖片中的方法，回報聊天室內的重大違規行為給版主。\n我們誠摯邀請您測試此功能，讓我們持續優化與改進此功能\n注意：請勿檢舉所有小問題",
+        "img": "images/20261126-200012-img.jpg"
+      },
+      {
+        "title": "取得你的兌換碼",
+        "desc": "如何取得你的兌換碼\n\n步驟 1： 將你的 Arena Breakout 帳號綁定至 Discord 帳號。\n步驟 2： 返回遊戲內活動頁面，點擊「立即追蹤」。\n步驟 3： 點擊「立即追蹤」，接受邀請並加入 Arena Breakout Discord 伺服器。\n\n若無法自動跳轉，可直接前往以下頻道：\nhttps://discord.com/channels/1018816353030901801/1476124424817082529/1476291408506785877\n\n完成以上步驟後，機器人將透過 Discord 私訊發送你的兌換碼，你也可以直接使用 /code 指令領取兌換碼",
+        "img": "images/20261126-200101-img.webp"
+      },
+      {
+        "title": "遊戲帳號綁定LIPASS",
+        "desc": "遊戲帳號綁定LIPASS\n立即將你的暗區帳號綁定Level Infinite Pass(LIPass)，不僅快速穩定，還能享有額外的遊戲福利！\n\n🌐快速穩定登入：避免第三方渠道異常無法進入遊戲\n🛡️更高的安全性：避免社交帳號遭盜用連帶遊戲帳號\n🎁額外遊戲福利：每日登入遊戲與完成任務還可享有更多自選物資\n\n馬上前往遊戲設定中的「帳號管理」，將帳號綁定吧！",
+        "img": "images/20261126-200204-image.webp"
+      }
+    ],
     "timeline": []
   }
 };
