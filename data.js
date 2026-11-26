@@ -361,10 +361,6 @@ window.SITE_DATA = {
     "intro": "C2S1 體驗服的測試時程與最新情報整理。\n內容會隨官方公告持續更新。",
     "timeline": [
       {
-        "date": "2026.11.24",
-        "label": "寄發遊戲內參加問卷"
-      },
-      {
         "date": "TBD",
         "label": "體驗服招募開始"
       },
@@ -377,18 +373,7 @@ window.SITE_DATA = {
         "label": "體驗服結束"
       }
     ],
-    "posts": [
-      {
-        "title": "請查看遊戲內信件——C2S1 測試伺服器招募",
-        "sub": "嗨，特遣們！👋\n\n提醒一下：我們已將 C2S1 測試伺服器招募 的相關訊息寄送至你的遊戲內信箱，請盡快查看信件並完成報名。\n\n新版本將推出大量全新玩法內容！希望你能加入測試並分享回饋。若遇到任何問題，請隨時告訴我們，一起讓 C2S1 變得更好。\n\n-Arena Breakout 團隊-",
-        "date": "2026.11.24",
-        "img": "images/20261124-000934-3_7.webp",
-        "action": "none",
-        "cta": "",
-        "url": "",
-        "zoom": ""
-      }
-    ]
+    "posts": []
   },
   "contact": {
     "formUrl": "https://docs.google.com/forms/d/e/1FAIpQLSczbpmJ03l9WbpqO6GHf3Fbnf4A5d8nh0b5OY9k8K2cQj__DA/viewform",
