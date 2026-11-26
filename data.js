@@ -111,6 +111,18 @@ window.SITE_DATA = {
       "url": "#tools",
       "hot": false,
       "img": ""
+    },
+    {
+      "span": "1",
+      "wideImg": "",
+      "wideMode": "bg",
+      "icon": "trophy",
+      "title": "社群賽",
+      "short": "社群賽",
+      "sub": "",
+      "url": "",
+      "img": "",
+      "hot": false
     }
   ],
   "tools": [
