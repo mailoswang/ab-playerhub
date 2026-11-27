@@ -63,7 +63,7 @@ window.SITE_DATA = {
       "sub": "儲值工具 · buffbuff.com",
       "url": "https://buffbuff.com/zh-tw/top-up/arena-breakout",
       "hot": false,
-      "img": "images/logo-buffbuff.png",
+      "img": "images/logo-buffbuff.jpg",
       "span": "1"
     },
     {
