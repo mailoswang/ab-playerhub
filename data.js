@@ -191,6 +191,7 @@ window.SITE_DATA = {
           "title": "違規處理週報 2026/11/16-22",
           "sub": "",
           "date": "2026.11.27",
+          "ratio": "4:5",
           "img": "images/20261127-173744-tw.webp",
           "action": "image",
           "cta": "READ",

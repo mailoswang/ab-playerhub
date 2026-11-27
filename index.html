@@ -255,8 +255,10 @@ nav.top a[aria-current=page]{color:#fff}
 .card{display:flex;flex-direction:column;background:var(--panel);border:1px solid var(--line2);transition:border-color .2s,transform .25s var(--ease)}
 .card:hover{border-color:var(--line3);transform:translateY(-3px)}
 .thumb{position:relative;aspect-ratio:16/9;overflow:hidden;background:var(--panel2)}
-.thumb svg,.thumb img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .5s var(--ease)}
-.card:hover .thumb svg,.card:hover .thumb img{transform:scale(1.04)}
+.thumb svg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+/* 封面圖完整顯示不裁切：16:9（1920×1080）或直式 4:5（1440×1800） */
+.thumb img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;background:#0c0e10}
+.thumb.r45{aspect-ratio:4/5}
 .thumb .cat{position:absolute;left:0;top:12px;background:var(--or-d);color:#fff;font-size:13px;font-weight:700;padding:2px 12px}
 .thumb .ph{position:absolute;right:10px;bottom:8px;font-size:12px;color:var(--txt3);font-family:var(--fd);letter-spacing:.1em}
 .card .body{padding:16px 18px 18px;display:flex;flex-direction:column;gap:6px;flex:1}
@@ -269,7 +271,6 @@ nav.top a[aria-current=page]{color:#fff}
 button.card{width:100%;padding:0;font:inherit;color:inherit;text-align:left;cursor:zoom-in}
 .card.static{cursor:default}
 .card.static:hover{border-color:var(--line2);transform:none}
-.card.static:hover .thumb svg,.card.static:hover .thumb img{transform:none}
 .card .meta:empty,.card .meta:has(> span:empty:only-child){display:none}
 .loadmore{margin-top:28px;display:flex;flex-direction:column;align-items:center;gap:8px}
 .loadmore small{color:var(--txt3);font-family:var(--fd);letter-spacing:.08em}
@@ -1088,7 +1089,7 @@ nav.top a.brk::before,nav.top a.brk::after{display:none}
     const act=cardAct(p), cta=p.cta===undefined?'READ':p.cta;   // 舊資料沒有 cta 欄位時沿用 READ；空字串則不顯示
     const cls=`card${i<from?' old':''}${act==='none'?' static':''}`, sty=`style="--i:${Math.max(0,i-from)}"`;
     const inner=`
-      <div class="thumb">${p.img?`<img src="${esc(p.img)}" alt="" loading="lazy">`:ph(i)+'<span class="ph">16:9</span>'}${label?`<span class="cat">${esc(label)}</span>`:''}</div>
+      <div class="thumb${p.img&&p.ratio==='4:5'?' r45':''}">${p.img?`<img src="${esc(p.img)}" alt="" loading="lazy">`:ph(i)+'<span class="ph">16:9</span>'}${label?`<span class="cat">${esc(label)}</span>`:''}</div>
       <div class="body"><h3>${esc(p.title)}</h3><p>${esc(p.sub)}</p><div class="meta"><span>${esc(p.date||'')}</span>${cta?`<i>${esc(cta)} ›</i>`:''}</div></div>`;
     if(act==='image') return `<button type="button" class="${cls}" ${sty} data-zoom="${i}" aria-label="放大圖片：${esc(p.title)}">${inner}</button>`;
     if(act==='none') return `<div class="${cls}" ${sty}>${inner}</div>`;

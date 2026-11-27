@@ -117,7 +117,7 @@ input.bad{border-color:var(--red)}
 .icon-grid button.on{border-color:var(--or-edge);background:rgba(226,97,3,.16);color:#fff}
 .icon-grid button span{color:var(--txt2)}
 .item .hico{width:20px;height:20px;flex:none;color:var(--txt2)}
-.img-field .thumb{width:112px;aspect-ratio:16/9;flex:none;background:var(--panel2) center/cover no-repeat;border:1px solid var(--line2);display:grid;place-items:center;font-size:11px;color:var(--txt3)}
+.img-field .thumb{width:112px;aspect-ratio:16/9;flex:none;background:var(--panel2) center/contain no-repeat;border:1px solid var(--line2);display:grid;place-items:center;font-size:11px;color:var(--txt3)}
 .img-field .col{flex:1;display:grid;gap:6px}
 .img-field .row{display:flex;gap:6px;flex-wrap:wrap}
 
@@ -213,7 +213,7 @@ input.bad{border-color:var(--red)}
   const SCHEMA = {
     quick:    [{k:'span',l:'寬度',t:'select',h:'首頁一排 4 格',opts:{'1':'1 格','2':'2 格','3':'3 格','4':'整排'}},{k:'title',l:'名稱'},{k:'short',l:'手機短名稱',h:'建議 4 字內'},{k:'sub',l:'說明',t:'area'},{k:'icon',l:'圖示',t:'icon'},{k:'url',l:'連結',t:'link',full:1},{k:'img',l:'自訂圖示圖片',t:'img',h:'有圖片時會取代上方的圖示，建議正方形',full:1},{k:'wideImg',l:'寬圖片（寬度 2 格以上才會顯示）',t:'img',h:'建議橫圖，例如 1200×400',full:1},{k:'wideMode',l:'寬圖片顯示方式',t:'select',opts:{bg:'漸變融入背景（保留圖示與文字）',icon:'取代原本的圖示'}},{k:'hot',l:'橘色強調',t:'bool'}],
     tools:    [{k:'title',l:'名稱'},{k:'sub',l:'說明',t:'area'},{k:'icon',l:'圖示',t:'icon'},{k:'badge',l:'角標',h:'例如 NEW，可留空'},{k:'url',l:'連結',t:'link',full:1}],
-    posts:    [{k:'title',l:'標題',full:1},{k:'sub',l:'小標題 / 摘要',t:'area',full:1},{k:'date',l:'日期',h:'例如 2026.11.23'},{k:'img',l:'封面圖（16:9）',t:'img',full:1},
+    posts:    [{k:'title',l:'標題',full:1},{k:'sub',l:'小標題 / 摘要',t:'area',full:1},{k:'date',l:'日期',h:'例如 2026.11.23'},{k:'ratio',l:'封面圖比例',t:'select',h:'圖片會完整顯示不裁切',opts:{'16:9':'橫式 16:9（1920×1080）','4:5':'直式 4:5（1440×1800）'}},{k:'img',l:'封面圖',t:'img',h:'請依上方選擇的比例上傳',full:1},
                {k:'action',l:'點擊卡片時',t:'select',opts:{link:'開啟連結',image:'放大顯示圖片',none:'不動作（卡片不可點擊）'}},{k:'cta',l:'按鈕文字',h:'例如 閱讀全文、查看大圖；留空不顯示箭頭'},
                {k:'url',l:'連結',t:'link',h:'「開啟連結」時使用；外部網址會開新分頁',full:1},{k:'zoom',l:'放大圖片',t:'img',h:'選填；「放大顯示圖片」時使用，留空則放大封面圖',full:1}],
     channels: [{k:'name',l:'名稱'},{k:'k',l:'圖示文字',h:'1 個字，例如 D'},{k:'sub',l:'說明',t:'area'},{k:'url',l:'連結',t:'link',h:'網址或 mailto:信箱'}],
@@ -225,7 +225,7 @@ input.bad{border-color:var(--red)}
   const BLANK = {
     quick:{span:'1',wideImg:'',wideMode:'bg',icon:'globe',title:'新入口',short:'',sub:'',url:'',img:'',hot:false},
     tools:{icon:'map',title:'新工具',sub:'',url:'',badge:''},
-    posts:{title:'新文章',sub:'',date:'',img:'',action:'link',cta:'READ',url:'',zoom:''},
+    posts:{title:'新文章',sub:'',date:'',ratio:'16:9',img:'',action:'link',cta:'READ',url:'',zoom:''},
     channels:{k:'?',name:'新頻道',sub:'',url:''},
     guides:{img:'',caption:''},
     hl:{title:'新重點',desc:'',img:''},
