@@ -186,7 +186,18 @@ window.SITE_DATA = {
   "categories": [
     {
       "name": "本週更新",
-      "posts": []
+      "posts": [
+        {
+          "title": "違規處理週報 2026/11/16-22",
+          "sub": "",
+          "date": "2026.11.27",
+          "img": "images/20261127-173744-tw.webp",
+          "action": "image",
+          "cta": "READ",
+          "url": "",
+          "zoom": ""
+        }
+      ]
     },
     {
       "name": "活動",
