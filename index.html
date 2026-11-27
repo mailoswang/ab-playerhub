@@ -80,12 +80,13 @@ header{position:sticky;top:0;z-index:50;height:var(--top);background:linear-grad
 .logo b{display:block;font-family:"Noto Sans TC",sans-serif;font-weight:900;font-size:21px;line-height:1.1;letter-spacing:.06em}
 .logo small{display:block;font-family:var(--fd);font-size:11px;letter-spacing:.22em;color:var(--txt3)}
 .logo .div{width:1px;height:32px;background:var(--line3);margin:0 2px}
+.logo .game-logo{height:36px;width:auto;flex:none}
+@media(max-width:560px){.logo{gap:9px}.logo .game-logo{height:26px}}
+@media(max-width:340px){.logo .game-logo{display:none}}
 nav.top{margin-left:auto;display:flex;align-items:center;gap:6px}
 nav.top a{display:flex;align-items:center;height:44px;padding:0 16px;font-family:var(--fd);font-size:18px;color:#d9dde0;transition:color .2s}
 nav.top a:hover{color:#fff}
 nav.top a[aria-current=page]{color:#fff}
-.live{display:inline-flex;align-items:center;gap:8px;height:34px;padding:0 12px;border:1px solid rgba(63,191,127,.45);color:var(--green);font-size:14px;font-weight:700;white-space:nowrap}
-.live i{width:7px;height:7px;background:var(--green);box-shadow:0 0 8px var(--green)}
 .vsep{width:1px;height:28px;background:var(--line2)}
 
 /* 手機選單 */
@@ -96,7 +97,8 @@ nav.top a[aria-current=page]{color:#fff}
 .drawer a{display:flex;align-items:center;justify-content:space-between;min-height:54px;padding:0 6px;font-family:var(--fd);font-size:20px;border-bottom:1px solid var(--line)}
 .drawer a[aria-current=page]{color:var(--or2)}
 .drawer .btn{margin-top:16px;border-bottom:1px solid var(--or-edge)}
-@media(max-width:1100px){nav.top,.bar>.live,.bar>.vsep,.bar>.btn{display:none}.menu-btn{display:grid}}
+@media(max-width:1439px){header .bar{gap:18px}nav.top{gap:2px}nav.top a{padding:0 11px}}
+@media(max-width:1279px){nav.top,.bar>.vsep,.bar>.btn{display:none}.menu-btn{display:grid}}
 /* 加入我們 */
 #joinIntro{white-space:pre-line}
 .roles{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
@@ -529,6 +531,8 @@ nav.top a.brk::before,nav.top a.brk::after{display:none}
       <svg aria-hidden="true"><use href="#logo"/></svg>
       <span class="div" aria-hidden="true"></span>
       <span><b>暗區指南針</b><small>ARENA BREAKOUT HUB</small></span>
+      <span class="div" aria-hidden="true"></span>
+      <img class="game-logo" src="images/logo-ab-c2s0.png" width="380" height="100" alt="Arena Breakout Chapter 2 Season 0">
     </a>
     <nav class="top" aria-label="主選單">
       <span class="nav-ind" aria-hidden="true"></span>
@@ -541,7 +545,6 @@ nav.top a.brk::before,nav.top a.brk::after{display:none}
       <a class="brk" href="#contact">聯絡我們</a>
     </nav>
     <span class="vsep" aria-hidden="true"></span>
-    <span class="live"><i></i>社群持續更新</span>
     <a class="btn pri sm" href="https://arenabreakout.com/" target="_blank" rel="noopener noreferrer"><svg><use href="#i-ext"/></svg>官方網站</a>
     <button class="menu-btn" id="menuBtn" aria-label="開啟選單" aria-expanded="false" aria-controls="drawer">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path id="menuPath" d="M4 7h16M4 12h16M4 17h16"/></svg>
